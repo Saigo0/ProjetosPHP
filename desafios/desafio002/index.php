@@ -12,14 +12,12 @@
     </header>
     <main>
         <?php 
-            $valor = $_GET["button"];
-            if($valor == ""){
-                $valor = rand(1, 100);
-            }
-            echo "<p> Valor gerado: $valor";
+            $min = 0;
+            $max = 100;
+            $num = mt_rand($min, $max);
+            echo "<p>Gerando um número aleatório entre $min e $max... <br>O valor gerado foi <strong>$num</strong>";
         ?>
-
-        <p><a href="javascript:history.go(-1)">Gerar novamente</a></p>
+        <button onclick = "javascript:document.location.reload()">Gerar novamente</button>
     </main>
 </body>
 </html>
