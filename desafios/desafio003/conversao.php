@@ -13,8 +13,6 @@
             $cotacao = 5.17;
             $real = $_GET["din"];
             $dolar = $real/$cotacao;
-    
-    
             echo "<p> Seus R$ " . number_format($real, 2, ",", ".") . " equivalem a US$" . number_format($dolar, 2, ",", ".");
         ?>
     
