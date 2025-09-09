@@ -76,6 +76,10 @@
             $this->telefone = $telefone;
         }
 
+        public function getTelefone(){
+            return $this->telefone;
+        }
+
         public function __toString(){
             return "Id: " .$this->id. "/nNome: ".$this->nome."/nRG: ".$this->RG."/nCPF: ".$this->CPF."/nData de nascimento: ".$this->dataNascimento.
             "/nEmail: ".$this->email."/nEndereço: ".$this->endereco."/nTelefone: ".$this->telefone;
