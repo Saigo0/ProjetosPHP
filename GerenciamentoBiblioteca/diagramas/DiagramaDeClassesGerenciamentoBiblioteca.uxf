@@ -1,0 +1,333 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<diagram program="umlet" version="15.1">
+  <zoom_level>10</zoom_level>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>0</x>
+      <y>630</y>
+      <w>290</w>
+      <h>410</h>
+    </coordinates>
+    <panel_attributes>Livro
+--
+-id: int
+-ISBN: String
+-titulo: String
+-autor: String
+-editora: String
+-anoEdicao: int
+-numPaginas: int
+-localEdicao: String
+--
++getId(): int
++getISBN(): String
++setTitulo(titulo: String): bool
++getTitulo(): String
++setAutor(autor: String)
++getAutor(): String
++setEditora(editora: String): bool
++getEditora(): String
++setAnoEdicao(anoEdicao: int): bool
++getAnoEdicao(): int
++setNumPaginas(numPaginas: int): bool
++getNumPaginas(): int
++setLocalEdicao(localEdicao: String): bool
++getLocalEdicao(): String
++toString(): String
+
+</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>490</x>
+      <y>760</y>
+      <w>220</w>
+      <h>180</h>
+    </coordinates>
+    <panel_attributes>Exemplar
+--
+-id: int
+-codigoExemplar: String
+-livro_id: int
+-status: String
+--
++getId(): int
++getCodigoExemplar(): String
++setStatus(status: String): bool
++getStatus(): String
++toString(): String</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>1390</x>
+      <y>600</y>
+      <w>360</w>
+      <h>380</h>
+    </coordinates>
+    <panel_attributes>Emprestimo
+--
+-id: int
+-item_emprestimo_id: int
+-leitor_id: int
+-dataEmprestimo: DateTime
+-dataDevolucao: DateTime
+-status: String
+-descricao: String
+--
++getId(): int
++getExemplarId(): int
++getLeitorId(): int
++setDataEmprestimo(dataEmpestimo: DateTime): bool
++getDataEmprestimo(): DateTime
++setDataDevolucao(dataDevolucao: DateTime): bool
++getDataDevolucao(): DateTime
++setDataDevolvida(dataDevolvida: DateTime): bool
++getDataDevolvida(): DateTime
++setStatus(status: String): bool
++getStatus(): String
++setDescricao(descricao: String): bool
++getDescricao(): String
++toString(): String</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>2100</x>
+      <y>0</y>
+      <w>360</w>
+      <h>420</h>
+    </coordinates>
+    <panel_attributes>Pessoa
+--
+-nome: String
+-RG: String
+-CPF: String
+-dataNascimento: DateTime
+-email: String
+-endereco: String
+-telefone: String
+--
++setNome(nome: String): bool
++getNome(): String
++setRG(RG: String): bool
++getRG(): String
++setCPF(CPF: String): bool
++getCPF(): String
++setDataNassimento(dataNascimento: DateTime): bool
++getDataNascimento(): DateTime
++setEmail(email: String): bool
++getEmail(): String
++setEndereco(endereco: String): bool
++getEndereco(): String
++setTelefone(telefone: String): bool
++getTelefone(): String
++toString(): String</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>2120</x>
+      <y>500</y>
+      <w>320</w>
+      <h>260</h>
+    </coordinates>
+    <panel_attributes>Usuário
+--
+-id: int
+-login: String
+-nivelAcesso: String
+-senha: String
+-dataCadastro: DateTime
+--
++getId(): int
++setLogin(login: String): bool
++getLogin(): String
++setNivelAcesso(nivelAcesso: String):bool
++getNivelAcesso(): String
++setSenha(senha: String):bool
++setDataCadastro(dataCadastro: DateTime): bool
++getDataCadastro(): DateTime 
++toString(): String</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>1900</x>
+      <y>820</y>
+      <w>340</w>
+      <h>100</h>
+    </coordinates>
+    <panel_attributes>Leitor
+--
+-multasPendentes: bool
+--
++setMultasPendentes(multasPendentes: bool): bool
++getMultasPendentes(): bool
++toString(): String
+
+</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>2090</x>
+      <y>940</y>
+      <w>340</w>
+      <h>220</h>
+    </coordinates>
+    <panel_attributes>Bibliotecario
+--
+-registroCRB: String
+-valorCRB: float
+-especializacoes: &lt;String&gt;
+--
++setRegistroCRB(registroCRB: String): bool
++getRegistroSRB(): String
++setValorCRB(valorCRB: float): bool
++getValorCRB(): float
++getEspecializacoes(): List&lt;String&gt;
++addEspecializacao(especializacao: String): bool
++removeEspecializacao(especializacao: String): bool
++toString(): String</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>2060</x>
+      <y>750</y>
+      <w>140</w>
+      <h>90</h>
+    </coordinates>
+    <panel_attributes>lt=&lt;&lt;-</panel_attributes>
+    <additional_attributes>120.0;10.0;10.0;70.0</additional_attributes>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>2260</x>
+      <y>750</y>
+      <w>30</w>
+      <h>210</h>
+    </coordinates>
+    <panel_attributes>lt=&lt;&lt;-</panel_attributes>
+    <additional_attributes>10.0;10.0;10.0;190.0</additional_attributes>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>2260</x>
+      <y>410</y>
+      <w>30</w>
+      <h>110</h>
+    </coordinates>
+    <panel_attributes>lt=&lt;&lt;-</panel_attributes>
+    <additional_attributes>10.0;10.0;10.0;90.0</additional_attributes>
+  </element>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>2430</x>
+      <y>820</y>
+      <w>130</w>
+      <h>60</h>
+    </coordinates>
+    <panel_attributes>Administrador
+--
+--
++toString(): String</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>2350</x>
+      <y>750</y>
+      <w>160</w>
+      <h>90</h>
+    </coordinates>
+    <panel_attributes>lt=&lt;&lt;-</panel_attributes>
+    <additional_attributes>10.0;10.0;140.0;70.0</additional_attributes>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>280</x>
+      <y>830</y>
+      <w>230</w>
+      <h>50</h>
+    </coordinates>
+    <panel_attributes>lt=-
+m1=1
+m2=0..n
+possui &gt;</panel_attributes>
+    <additional_attributes>10.0;20.0;210.0;20.0</additional_attributes>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>1740</x>
+      <y>840</y>
+      <w>180</w>
+      <h>50</h>
+    </coordinates>
+    <panel_attributes>lt=-
+m1=0..n
+m2=0..1
+teaches to &gt;</panel_attributes>
+    <additional_attributes>10.0;20.0;160.0;20.0</additional_attributes>
+  </element>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>890</x>
+      <y>790</y>
+      <w>290</w>
+      <h>80</h>
+    </coordinates>
+    <panel_attributes>itemEmprestimo
+--
+-id: int
+-id_exemplar: int
+--
+</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>700</x>
+      <y>830</y>
+      <w>210</w>
+      <h>50</h>
+    </coordinates>
+    <panel_attributes>lt=-
+m1=0..n
+m2=0..1
+está em &gt;</panel_attributes>
+    <additional_attributes>10.0;20.0;190.0;20.0</additional_attributes>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>1170</x>
+      <y>820</y>
+      <w>240</w>
+      <h>50</h>
+    </coordinates>
+    <panel_attributes>lt=-
+m1=0..1
+m2=0..n
+está em &gt;</panel_attributes>
+    <additional_attributes>10.0;20.0;220.0;20.0</additional_attributes>
+  </element>
+</diagram>
