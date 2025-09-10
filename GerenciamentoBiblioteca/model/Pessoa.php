@@ -1,6 +1,6 @@
 <?php 
     class Pessoa{
-        private int $id;
+        private ?int $id = null;
         private string $nome;
         private string $RG;
         private string $CPF;
@@ -20,8 +20,12 @@
             $this->telefone = $telefone;
         }
 
-        public function getId(){
+        public function getId(): ?int{
             return $this-> id;
+        }
+
+        public function setId(int $id){
+            $this->id = $id;
         }
 
         public function setNome(string $nome){

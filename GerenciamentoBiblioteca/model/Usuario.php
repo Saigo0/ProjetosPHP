@@ -1,22 +1,29 @@
 <?php 
+    require_once "Pessoa.php";
     class Usuario extends Pessoa{
+
+        private int $id_pessoa;
         private string $login;
+
+
         private string $nivelAcesso;
         private string $senha;
         private DateTime $dataCadastro;
 
-        public function __construct(string $nome, string $RG, string $CPF, DateTime $dataNascimento, string $email, string $endereco, string $telefone, string $login, string $nivelAcesso, string $senha, DateTime $dataCadastro)
-        {   
-            parent::__construct($nome,  $RG,  $CPF, $dataNascimento,  $email,  $endereco,  $telefone);
-            $this->login = $login;
-            $this->nivelAcesso = $nivelAcesso;
-            $this->senha=$senha;
-            $this->dataCadastro = $dataCadastro;
+        public function __construct()
+        {
+            
         }
+        
 
-        public function setLogin(int $login){
+        public function setLogin(string $login){
             $this->login = $login;
             return true;
+        }
+
+        public function getIdPessoa(): int
+        {
+            return $this->id_pessoa;
         }
 
         public function getLogin(){
@@ -49,6 +56,11 @@
 
         public function __toString(){
             return parent::__toString(). "/nLogin: ".$this->login."/nNível de acesso: ".$this->nivelAcesso."/nSenha: ".$this->senha."/nData de cadastro: ".$this->dataCadastro;
+        }
+
+        public function setIdPessoa(int $id_pessoa)
+        {
+            $this->id_pessoa = $id_pessoa;
         }
 
 
