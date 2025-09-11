@@ -1,8 +1,8 @@
 <?php 
     class Emprestimo{
         private int $id;
-        private int $exemplar_id;
-        private int $leitor_id;
+        private int $id_item_emprestimo;
+        private int $id_leitor;
         private DateTime $dataEmprestimo;
         private DateTime $dataDevolucao;
         private string $status;
@@ -20,13 +20,12 @@
             return $this->id;
         }
 
-        public function getExemplarId(){
-            return $this->exemplar_id;
-        
+        public function getIdItemEmprestimo(){
+            return $this->id_item_emprestimo;
         }
 
-        public function getLeitorId(){
-            return $this->leitor_id;
+        public function getIdLeitor(){
+            return $this->id_leitor;
         }
 
         public function setDataEmprestimo(DateTime $dataEmprestimo){
@@ -63,7 +62,7 @@
 
         public function __toString()
         {
-            return "Id: ".$this->id."/nId do exemplar: ".$this->exemplar_id."/nId do leitor: ".$this->leitor_id."/nData do empréstimo: ".$this->dataEmprestimo."/nData da devolução: ".$this->dataDevolucao."/nStatus: ".$this->dataEmprestimo."/nDescrição: ".$this->descricao;
+            return "Id: ".$this->id."/nId do item de empréstimo: ".$this->id_item_emprestimo."/nId do leitor: ".$this->id_leitor."/nData do empréstimo: ".$this->dataEmprestimo."/nData da devolução: ".$this->dataDevolucao."/nStatus: ".$this->dataEmprestimo."/nDescrição: ".$this->descricao;
         }
 
     }

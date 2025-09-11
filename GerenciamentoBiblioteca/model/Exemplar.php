@@ -11,6 +11,14 @@
             $this->status = $status;
         }
 
+        public function getId(){
+            return $this->id;
+        }
+
+        public function getLivroId(){
+            return $this->livro_id;
+        }
+
         public function getCodigoExemplar(){
             return $this->codigoExemplar;
         }

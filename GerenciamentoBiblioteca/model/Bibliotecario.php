@@ -1,5 +1,6 @@
 <?php 
     class Bibliotecario extends Usuario{
+        private int $id_usuario;
         private string $registroCRB;
         private float $valorCRB;
 
@@ -8,6 +9,14 @@
             parent::__construct($nome, $RG, $CPF, $dataNascimento, $email, $endereco, $telefone, $login, $nivelAcesso, $senha, $dataCadastro);
             $this->registroCRB = $registroCRB;
             $this->valorCRB = $valorCRB;
+        }
+
+        public function setIdUsuario(int $id_usuario){
+            $this->id_usuario = $id_usuario;
+        }
+
+        public function getIdUsuario(){
+            return $this->id_usuario;
         }
 
         public function setRegistroCRB(string $registroCRB){

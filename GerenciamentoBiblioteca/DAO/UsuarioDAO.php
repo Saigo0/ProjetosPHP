@@ -36,6 +36,8 @@
                 'senha' => $usuario->getSenha(),
                 'dataCadastro' => $usuario->getDataCadastro()->format('Y-m-d')
             ]);
+
+            return $this->pdo->lastInsertId();
         }
 
         public function listAll(){
@@ -90,6 +92,8 @@
             $stmt = $this->pdo->prepare($sql);
             return $stmt->execute(['id' => $usuario->getId()]);
         }
+
+    
 
 
     }

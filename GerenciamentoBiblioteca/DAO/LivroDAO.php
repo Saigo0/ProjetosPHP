@@ -16,7 +16,8 @@
                 'titulo' => $livro->getTitulo(),
                 'autor' => $livro->getAutor(),
                 'editora' => $livro->getEditora(),
-                'anoEdicao' => $livro->getAnoEdicao()
+                'anoEdicao' => $livro->getAnoEdicao(),
+                'localEdicao' =>$livro->getLocalEdicao()
             ]);
         }
 
@@ -38,5 +39,25 @@
         }
 
         public function update(Livro $livro){
+            $sql = "UPDATE livro SET 
+                ISBN = :ISBN,
+                titulo = :titulo,
+                autor = :autor,
+                editora = :editora,
+                anoEdicao = :anoEdicao,
+                numPaginas = :numPaginas,
+                localEdicao = :localEdicao WHERE id = :id";
+
+            $stmt = $this->pdo->prepare($sql);
+            $stmt->execute([
+                'ISBN' => $livro->getISBN(),
+                'titulo' => $livro->getTitulo(),
+                'autor' => $livro->getAutor(),
+                'editora' => $livro->getEditora(),
+                'anoEdicao' => $livro->getAnoEdicao(),
+                'numPaginas' => $livro->getNumPaginas(),
+                'localEdicao' => $livro->getLocalEdicao(),
+                'id' => $livro->getId()
+            ]);
         }
     }
