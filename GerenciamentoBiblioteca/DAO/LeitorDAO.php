@@ -27,8 +27,6 @@
         }
 
         public function update(Leitor $leitor){
-            $this->pdo->beginTransaction();
-
             $this->usuarioDAO->update($leitor);
 
 
