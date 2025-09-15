@@ -120,7 +120,7 @@
 +getRG(): String
 +setCPF(CPF: String): bool
 +getCPF(): String
-+setDataNassimento(dataNascimento: DateTime): bool
++setDataNascimento(dataNascimento: DateTime): bool
 +getDataNascimento(): DateTime
 +setEmail(email: String): bool
 +getEmail(): String
