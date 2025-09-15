@@ -9,15 +9,13 @@
         private int $numPaginas;
         private string $localEdicao;
 
-        public function __construct(string $ISBN, string $titulo, string $autor, string $editora, string $anoEdicao, string $numPaginas, string $localEdicao)
+        public function __construct()
         {
-            $this->ISBN = $ISBN;
-            $this->titulo = $titulo;
-            $this->autor = $autor;
-            $this->editora = $editora;
-            $this->anoEdicao = $anoEdicao;
-            $this->numPaginas = $numPaginas;
-            $this->localEdicao = $localEdicao; 
+        
+        }
+
+        public function setID(int $id){
+            $this->id = $id;
         }
 
         public function getId(){
@@ -26,6 +24,10 @@
 
         public function getISBN(){
             return $this->ISBN;
+        }
+
+        public function setISBN(int $ISBN){
+            $this->ISBN = $ISBN;
         }
 
         public function setTitulo(string $titulo){
@@ -60,7 +62,7 @@
             return $this->anoEdicao;
         }
 
-        public function setNumPginas(int $numPaginas){
+        public function setNumPaginas(int $numPaginas){
             $this->numPaginas = $numPaginas;
         }
 

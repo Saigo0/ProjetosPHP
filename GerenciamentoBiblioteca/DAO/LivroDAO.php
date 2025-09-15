@@ -38,6 +38,13 @@
             ]);
         }
 
+        public function findByID(int $id){
+            $sql = "SELECT * FROM livro WHERE id = :id";
+            $stmt = $this->pdo->prepare($sql);
+            $livro = $stmt->execute(['id' => $id]);
+            return $livro;
+        }
+
         public function update(Livro $livro){
             $sql = "UPDATE livro SET 
                 ISBN = :ISBN,

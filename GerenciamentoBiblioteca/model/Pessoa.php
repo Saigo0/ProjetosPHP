@@ -37,7 +37,11 @@
         }
 
         public function setRG(string $RG){
-            $this->RG = $RG;
+            if(strlen($RG) < 12){
+                $this->RG = $RG;
+            } else{
+                throw new InvalidArgumentException("RG inválido.");
+            }
         }
 
         public function getRG(){
@@ -45,7 +49,11 @@
         }
 
         public function setCPF(string $CPF){
-            $this->CPF = $CPF;
+            if(strlen($CPF) > 14 || strlen($CPF) < 11){
+                throw new InvalidArgumentException("CPF inválido");
+            } else{
+                $this->CPF = $CPF;
+            }            
         }
 
         public function getCPF(){

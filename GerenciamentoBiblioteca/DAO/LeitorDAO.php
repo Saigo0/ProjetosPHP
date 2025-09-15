@@ -49,6 +49,13 @@
             return $leitores;
         }
 
+        public function findByID(int $id){
+            $sql = "SELECT * FROM leitor WHERE id = :id";
+            $stmt = $this->pdo->prepare($sql);
+            $leitor = $stmt->execute(['id' => $id]);
+            return $leitor;
+        }
+
         public function delete(Leitor $leitor){
             $sql = "DELETE FROM leitor WHERE id = :id";
             $stmt = $this->pdo->prepare($sql);
