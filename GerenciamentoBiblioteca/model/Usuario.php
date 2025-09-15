@@ -39,7 +39,12 @@
         }
 
         public function setSenha(string $senha){
-            $this->senha = $senha;
+            if(strlen($senha) < 8){
+                throw new InvalidArgumentException("A senha deve ter ao menos 8 caracteres");
+            } else{
+                $this->senha = password_hash($senha, PASSWORD_DEFAULT);
+            }
+
         }
 
         public function getSenha(){

@@ -56,10 +56,16 @@
             return $leitor;
         }
 
+        public function findByLogin(string $login){
+
+        }
+
         public function delete(Leitor $leitor){
             $sql = "DELETE FROM leitor WHERE id = :id";
             $stmt = $this->pdo->prepare($sql);
             $stmt->execute(['id' => $leitor->getId()]);
         }
+
+
     }
 ?>

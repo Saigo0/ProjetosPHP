@@ -48,6 +48,12 @@
             return $emprestimos;
         }
 
+        public function findByID(int $id){
+            $sql = "SELECT * FROM emprestimo WHERE id = :id";
+            $stmt = $this->pdo->prepare($sql);
+            return $stmt->execute(['id' => $id]);
+        }
+
         public function delete(Emprestimo $emprestimo){
             $sql = "DELETE FROM emprestimo WHERE id = :id";
             $stmt = $this->pdo->prepare($sql);

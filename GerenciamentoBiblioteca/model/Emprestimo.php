@@ -8,12 +8,14 @@
         private string $status;
         private string $descricao;
 
-        public function __construct(DateTime $dataEmprestimo, DateTime $dataDevolucao, string $status, string $descricao)
+        public function __construct()
         {
-            $this->dataEmprestimo = $dataEmprestimo;
-            $this->dataDevolucao = $dataDevolucao;
-            $this->status = $status;
-            $this->descricao = $descricao;
+            $this->dataEmprestimo = new DateTime();
+
+        }
+
+        public function setId(int $id){
+            $this->id = $id;
         }
 
         public function getId(){
@@ -22,6 +24,14 @@
 
         public function getIdItemEmprestimo(){
             return $this->id_item_emprestimo;
+        }
+
+        public function setIdItemEmprestimo(int $id_item_emprestimo){
+            $this->id_item_emprestimo = $id_item_emprestimo;
+        }
+
+        public function setIdLeitor(int $id_leitor){
+            $this->id_leitor = $id_leitor;
         }
 
         public function getIdLeitor(){
