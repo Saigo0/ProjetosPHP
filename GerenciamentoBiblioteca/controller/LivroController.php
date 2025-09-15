@@ -6,12 +6,12 @@
 
         public function criarLivro(){
             $livro = new Livro();
-            $livro->setTitulo($POST['titulo']);
-            $livro->setISBN($POST['ISBN']);
-            $livro->setAutor($POST['autor']);
-            $livro->setEditora($POST['editora']);
-            $livro->setAnoEdicao($POST['anoEdicao']);
-            $livro->setNumPaginas($POST['numPaginas']);
+            $livro->setTitulo($_POST['titulo']);
+            $livro->setISBN($_POST['ISBN']);
+            $livro->setAutor($_POST['autor']);
+            $livro->setEditora($_POST['editora']);
+            $livro->setAnoEdicao($_POST['anoEdicao']);
+            $livro->setNumPaginas($_POST['numPaginas']);
 
             $livroDAO = new LivroDAO(Conexao::getPDO());
             $livroDAO->create($livro);
@@ -19,12 +19,12 @@
 
         public function atualizarLivro(){
             $livro = new Livro();
-            $livro->setTitulo($POST['titulo']);
-            $livro->setISBN($POST['ISBN']);
-            $livro->setAutor($POST['autor']);
-            $livro->setEditora($POST['editora']);
-            $livro->setAnoEdicao($POST['anoEdicao']);
-            $livro->setNumPaginas($POST['numPaginas']);
+            $livro->setTitulo($_POST['titulo']);
+            $livro->setISBN($_POST['ISBN']);
+            $livro->setAutor($_POST['autor']);
+            $livro->setEditora($_POST['editora']);
+            $livro->setAnoEdicao($_POST['anoEdicao']);
+            $livro->setNumPaginas($_POST['numPaginas']);
 
             $livroDAO = new LivroDAO(Conexao::getPDO());
             $livroDAO->update($livro);
@@ -41,7 +41,7 @@
             
             $livroDAO = new LivroDAO(Conexao::getPDO());
 
-            $livro->setID($livroDAO->findByID($POST['id']));
+            $livro->setID($livroDAO->findByID($_POST['id']));
             
             $livroDAO->delete($livro);
         }

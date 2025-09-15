@@ -37,6 +37,12 @@
             $stmt->execute(['id_usuario' => $administrador->getIdUsuario()]);
         }
 
+        public function findByID(int $id){
+            $sql = "SELECT * FROM administrador WHERE id = :id";
+            $stmt = $this->pdo->prepare($sql);
+            return $stmt->execute(['id' => $id]);
+        }
+
         public function delete(Administrador $administrador){
             $sql = "DELETE FROM administrador WHERE id = :id";
             $stmt = $this->pdo->prepare($sql);

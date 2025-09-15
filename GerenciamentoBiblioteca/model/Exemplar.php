@@ -5,10 +5,13 @@
         private int $livro_id;
         private string $status;
 
-        public function __construct(string $codigoExemplar, string $status)
+        public function __construct()
         {
-            $this->codigoExemplar = $codigoExemplar;
-            $this->status = $status;
+        
+        }
+
+        public function setID(int $id){
+            $this->id = $id;
         }
 
         public function getId(){
@@ -19,11 +22,15 @@
             return $this->livro_id;
         }
 
+        public function setCodigoExemplar(string $codigoExemplar){
+            $this->codigoExemplar = $codigoExemplar;
+        }
+
         public function getCodigoExemplar(){
             return $this->codigoExemplar;
         }
 
-        public function setSatus(string $status){
+        public function setStatus(string $status){
             $this->status = $status;
         }
 

@@ -4,11 +4,9 @@
         private string $registroCRB;
         private float $valorCRB;
 
-        public function __construct(string $registroCRB, string $valorCRB, string $nome, string $RG, string $CPF, DateTime $dataNascimento, string $email, string $endereco, string $telefone, string $login, string $nivelAcesso, string $senha, DateTime $dataCadastro)
+        public function __construct()
         {
-            parent::__construct($nome, $RG, $CPF, $dataNascimento, $email, $endereco, $telefone, $login, $nivelAcesso, $senha, $dataCadastro);
-            $this->registroCRB = $registroCRB;
-            $this->valorCRB = $valorCRB;
+        
         }
 
         public function setIdUsuario(int $id_usuario){

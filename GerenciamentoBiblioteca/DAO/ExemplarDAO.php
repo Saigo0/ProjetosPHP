@@ -41,6 +41,15 @@
                 'status' => $exemplar->getStatus()
             ]);
         }
+
+        public function findByID(int $id){
+            $sql = "SELECT * FROM exemplar WHERE id = :id";
+            $stmt = $this->pdo->prepare($sql);
+            $exemplar = $stmt->execute([
+                'id' => $id
+            ]);
+            return $exemplar;
+        }
         
         public function delete(Exemplar $exemplar){
             $sql = "DELETE FROM exemplar WHERE id = :id";

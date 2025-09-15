@@ -51,6 +51,12 @@
             return $bibliotecarios;
         }
 
+        public function findByID(int $id){
+            $sql = "SELECT * FROM WHERE id = :id";
+            $stmt = $this->pdo->prepare($sql);
+            return $stmt->execute(['id' => $id]);
+        }
+
         public function delete(Bibliotecario $bibliotecario){
             $sql = "DELETE FROM bilbiotecario WHERE id = :id";
             $stmt = $this->pdo->prepare($sql);
