@@ -21,8 +21,10 @@
 
         public function listarExemplares(){
             $exemplarDAO = new ExemplarDAO(Conexao::getPDO());
-            $exemplares = $exemplarDAO->listAll();
-            return $exemplares;
+            $arrayAsso = $exemplarDAO->listAll();
+            foreach($arrayAsso as $registroExemplar){
+                
+            }
         }
 
         public function deletarExemplar(){
