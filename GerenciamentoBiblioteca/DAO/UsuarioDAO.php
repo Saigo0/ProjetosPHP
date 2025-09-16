@@ -87,6 +87,25 @@
             ]);
         }
 
+        public function findByLogin(string $login){
+            $sql = "SELECT * FROM usuario WHERE login = :login";
+            $stmt = $this->pdo->prepare($sql);
+            $stmt->execute(['login' => $login]);
+            $arrayAssociativo = $stmt->fetch(PDO::FETCH_ASSOC);
+            if(!$arrayAssociativo){
+                return null;
+            }
+            
+            $usuario = new Usuario();
+            $usuario->setId($arrayAssociativo['id']);
+            $usuario->setIdPessoa($arrayAssociativo['id_pessoa']);
+            $usuario->setNivelAcesso($arrayAssociativo['nivelAcesso']);
+            $usuario->setSenha($arrayAssociativo['senha']);
+            $usuario->setDataCadastro($arrayAssociativo['dataCadastro']);
+
+            return $usuario;
+        }
+
         public function delete(Usuario $usuario): bool {
             $sql = "DELETE FROM usuario WHERE id = :id";
             $stmt = $this->pdo->prepare($sql);

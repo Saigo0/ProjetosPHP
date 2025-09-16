@@ -9,6 +9,8 @@
             $leitor->setEmail($_POST['email']);
             $leitor->setEndereco($_POST['endereco']);
             $leitor->setTelefone($_POST['telefone']);
+            $leitor->setLogin($_POST['login']);
+            $leitor->setSenha($_POST['senha']);
 
             $leitorDAO = new LeitorDAO(Conexao::getPDO());
             $leitorDAO->create($leitor);
@@ -24,6 +26,8 @@
             $leitor->setEmail($_POST['email']);
             $leitor->setEndereco($_POST['endereco']);
             $leitor->setTelefone($_POST['telefone']);
+            $leitor->setLogin($_POST['login']);
+            $leitor->setSenha($_POST['senha']);
 
             $leitorDAO = new LeitorDAO(Conexao::getPDO());
             $leitorDAO->update($leitor);
@@ -31,8 +35,10 @@
 
         public function listarLeitores(){
             $leitorDAO = new LeitorDAO(Conexao::getPDO());
-            $leitores = $leitorDAO->listAll();
-            return $leitores;
+            $arrayAsso = $leitorDAO->listAll();
+            foreach($arrayAsso as $registroLeitor){
+                $leitor = new Leitor();
+            }
         }
 
         public function deletarLeitor(){

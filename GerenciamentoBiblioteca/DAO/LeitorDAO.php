@@ -44,20 +44,16 @@
             $sql = "SELECT * FROM leitor";
             $stmt = $this->pdo->query($sql);
 
-            $leitores = $stmt->execute([PDO::FETCH_ASSOC]);
+            $leitores = $stmt->fetchAll(PDO::FETCH_ASSOC);
 
             return $leitores;
         }
-
+        
         public function findByID(int $id){
             $sql = "SELECT * FROM leitor WHERE id = :id";
             $stmt = $this->pdo->prepare($sql);
             $leitor = $stmt->execute(['id' => $id]);
             return $leitor;
-        }
-
-        public function findByLogin(string $login){
-
         }
 
         public function delete(Leitor $leitor){

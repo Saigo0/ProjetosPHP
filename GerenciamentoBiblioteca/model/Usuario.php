@@ -12,7 +12,7 @@
 
         public function __construct()
         {
-            
+            $this->dataCadastro = new DateTime();
         }
         
 
