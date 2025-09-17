@@ -42,6 +42,23 @@
             ]);
         }
 
+        public function findByCodigoExemplar(string $codigoExemplar){
+            $sql = "SELECT * FROM exemplar WHERE codigoExemplar = :codigoExemplar";
+            $stmt = $this->pdo->prepare($sql);
+            $stmt->execute(['codigoExemplar' => $codigoExemplar]);
+            $arrayAsso = $stmt->fetch();
+            $exemplares = [];
+            foreach($arrayAsso as $registroExemplar){
+                $exemplar = new Exemplar();
+                $exemplar->setID($_POST['id']);
+                $exemplar->setCodigoExemplar($_POST['codigoExemplar']);
+                $exemplar->setLivroId($_POST['id_livro']);
+                $exemplar->setStatus($_POST['status']);
+                $exemplares [] = $exemplar; 
+            }
+            return $exemplares;
+        }
+
         public function findByID(int $id){
             $sql = "SELECT * FROM exemplar WHERE id = :id";
             $stmt = $this->pdo->prepare($sql);
