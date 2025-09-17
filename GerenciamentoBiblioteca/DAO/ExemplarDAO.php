@@ -50,10 +50,10 @@
             $exemplares = [];
             foreach($arrayAsso as $registroExemplar){
                 $exemplar = new Exemplar();
-                $exemplar->setID($_POST['id']);
-                $exemplar->setCodigoExemplar($_POST['codigoExemplar']);
-                $exemplar->setLivroId($_POST['id_livro']);
-                $exemplar->setStatus($_POST['status']);
+                $exemplar->setID($registroExemplar['id']);
+                $exemplar->setCodigoExemplar($registroExemplar['codigoExemplar']);
+                $exemplar->setLivroId($registroExemplar['id_livro']);
+                $exemplar->setStatus($registroExemplar['status']);
                 $exemplares [] = $exemplar; 
             }
             return $exemplares;
