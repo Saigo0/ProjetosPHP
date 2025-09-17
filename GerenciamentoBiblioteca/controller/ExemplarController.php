@@ -15,16 +15,22 @@
             $exemplarDAO = new ExemplarDAO(Conexao::getPDO());
             $exemplar->setCodigoExemplar($_POST['codExemplar']);
             $exemplar->setStatus($_POST['statusExemplar']);
-
             $exemplarDAO->update($exemplar);
         }
 
         public function listarExemplares(){
             $exemplarDAO = new ExemplarDAO(Conexao::getPDO());
             $arrayAsso = $exemplarDAO->listAll();
+            $exemplares = [];
             foreach($arrayAsso as $registroExemplar){
-                
+                $exemplar = new Exemplar();
+                $exemplar->setID($_POST['id']);
+                $exemplar->setCodigoExemplar($_POST['codigoExemplar']);
+                $exemplar->setStatus($_POST['status']);
+                $exemplar->setLivroId($_POST['id_livro']);
+                $exemplares[] = $exemplar;
             }
+            return $exemplares;
         }
 
         public function deletarExemplar(){

@@ -18,6 +18,10 @@
             return $this->id;
         }
 
+        public function setLivroId(int $livro_id){
+            $this->livro_id = $livro_id;
+        }
+
         public function getLivroId(){
             return $this->livro_id;
         }
