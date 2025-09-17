@@ -43,8 +43,8 @@
         public function listAll(){
             $sql = "SELECT * FROM emprestimo";
             $stmt = $this->pdo->query($sql);
-            $emprestimos = $stmt->execute([PDO::FETCH_ASSOC]);
-
+            $stmt->execute([PDO::FETCH_ASSOC]);
+            $emprestimos = $stmt->fetchAll();
             return $emprestimos;
         }
 
