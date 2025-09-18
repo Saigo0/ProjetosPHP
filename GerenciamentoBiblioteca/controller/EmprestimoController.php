@@ -36,7 +36,6 @@
                 $emprestimo->setDataDevolucao($registroEmprestimo['dataDevolucao']);
                 $emprestimo->setStatus($registroEmprestimo['status']);
                 $emprestimo->setDescricao($registroEmprestimo['descricao']);
-
                 $emprestimos [] = $emprestimo;
             }
 
