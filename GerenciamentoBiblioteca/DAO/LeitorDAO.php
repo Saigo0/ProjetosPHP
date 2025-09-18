@@ -52,7 +52,14 @@
         public function findByID(int $id){
             $sql = "SELECT * FROM leitor WHERE id = :id";
             $stmt = $this->pdo->prepare($sql);
-            $leitor = $stmt->execute(['id' => $id]);
+            $stmt->execute(['id' => $id]);
+            $arrayAsso = $stmt->fetch(PDO::FETCH_ASSOC);
+            foreach($arrayAsso as  $registroLeitor){
+                $leitor = new Leitor();
+                $leitor->setId($registroLeitor['id']);
+                $leitor->setIdUsuario($registroLeitor['id_usuario']);
+                $leitor->setMultasPendentes($registroLeitor['multasPendentes']);
+            }
             return $leitor;
         }
 

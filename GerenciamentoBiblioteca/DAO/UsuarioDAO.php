@@ -87,6 +87,16 @@
             ]);
         }
 
+        public function findByID(int $id){
+            $sql = "SELECT * FROM usuario WHERE id = :id";
+            $stmt = $this->pdo->prepare($sql);
+            $stmt->execute(['id' => $id]);
+            $arrayAsso = $stmt->fetch(PDO::FETCH_ASSOC);
+            foreach($arrayAsso as $registroUsuario){
+                $usuario->set
+            } 
+        }
+
         public function findByLogin(string $login){
             $sql = "SELECT * FROM usuario WHERE login = :login";
             $stmt = $this->pdo->prepare($sql);

@@ -35,10 +35,19 @@
 
         public function listarLeitores(){
             $leitorDAO = new LeitorDAO(Conexao::getPDO());
-            $arrayAsso = $leitorDAO->listAll();
-            foreach($arrayAsso as $registroLeitor){
+            $pessoaDAO = new PessoaDAO(Conexao::getPDO());
+            $usuarioDAO = new UsuarioDAO(Conexao::getPDO());
+            $leitores =[];
+            $arrayAssoLeitor = $leitorDAO->listAll();
+
+            foreach($arrayAssoLeitor as $registroLeitor){
                 $leitor = new Leitor();
+                $leitor->setId($registroLeitor['id']);
+                $leitor->setIdUsuario($usuarioDAO->findByID($registroLeitor['id_usuario']));
+                $leitor->setIdPessoa($usuarioDAO->findByID($registroLeitor['id_pessoa']));
+                $leitores []= $leitor;
             }
+            return $leitores;
         }
 
         public function deletarLeitor(){
