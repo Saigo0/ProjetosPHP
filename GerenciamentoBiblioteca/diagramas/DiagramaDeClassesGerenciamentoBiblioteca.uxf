@@ -5,7 +5,7 @@
     <id>UMLClass</id>
     <coordinates>
       <x>0</x>
-      <y>660</y>
+      <y>830</y>
       <w>290</w>
       <h>410</h>
     </coordinates>
@@ -43,7 +43,7 @@
     <id>UMLClass</id>
     <coordinates>
       <x>490</x>
-      <y>790</y>
+      <y>960</y>
       <w>220</w>
       <h>180</h>
     </coordinates>
@@ -65,15 +65,14 @@
     <id>UMLClass</id>
     <coordinates>
       <x>1390</x>
-      <y>630</y>
+      <y>800</y>
       <w>360</w>
       <h>380</h>
     </coordinates>
     <panel_attributes>Emprestimo
 --
 -id: int
--item_emprestimo_id: int
--leitor_id: int
+-leitor: Leitor
 -dataEmprestimo: DateTime
 -dataDevolucao: DateTime
 -status: String
@@ -99,7 +98,7 @@
     <id>UMLClass</id>
     <coordinates>
       <x>2100</x>
-      <y>30</y>
+      <y>200</y>
       <w>360</w>
       <h>420</h>
     </coordinates>
@@ -135,7 +134,7 @@
     <id>UMLClass</id>
     <coordinates>
       <x>2120</x>
-      <y>530</y>
+      <y>700</y>
       <w>320</w>
       <h>270</h>
     </coordinates>
@@ -162,7 +161,7 @@
     <id>UMLClass</id>
     <coordinates>
       <x>1900</x>
-      <y>850</y>
+      <y>1020</y>
       <w>340</w>
       <h>120</h>
     </coordinates>
@@ -182,7 +181,7 @@
     <id>UMLClass</id>
     <coordinates>
       <x>2090</x>
-      <y>1000</y>
+      <y>1170</y>
       <w>340</w>
       <h>170</h>
     </coordinates>
@@ -203,7 +202,7 @@
     <id>Relation</id>
     <coordinates>
       <x>2060</x>
-      <y>790</y>
+      <y>960</y>
       <w>140</w>
       <h>80</h>
     </coordinates>
@@ -214,7 +213,7 @@
     <id>Relation</id>
     <coordinates>
       <x>2260</x>
-      <y>790</y>
+      <y>960</y>
       <w>30</w>
       <h>230</h>
     </coordinates>
@@ -225,7 +224,7 @@
     <id>Relation</id>
     <coordinates>
       <x>2260</x>
-      <y>440</y>
+      <y>610</y>
       <w>30</w>
       <h>110</h>
     </coordinates>
@@ -236,7 +235,7 @@
     <id>UMLClass</id>
     <coordinates>
       <x>2370</x>
-      <y>850</y>
+      <y>1020</y>
       <w>130</w>
       <h>60</h>
     </coordinates>
@@ -250,7 +249,7 @@
     <id>Relation</id>
     <coordinates>
       <x>2350</x>
-      <y>790</y>
+      <y>960</y>
       <w>100</w>
       <h>80</h>
     </coordinates>
@@ -261,7 +260,7 @@
     <id>Relation</id>
     <coordinates>
       <x>280</x>
-      <y>860</y>
+      <y>1030</y>
       <w>230</w>
       <h>50</h>
     </coordinates>
@@ -275,7 +274,7 @@ possui &gt;</panel_attributes>
     <id>Relation</id>
     <coordinates>
       <x>1740</x>
-      <y>870</y>
+      <y>1040</y>
       <w>180</w>
       <h>50</h>
     </coordinates>
@@ -289,14 +288,15 @@ m2=0..1
     <id>UMLClass</id>
     <coordinates>
       <x>890</x>
-      <y>820</y>
+      <y>990</y>
       <w>290</w>
-      <h>80</h>
+      <h>90</h>
     </coordinates>
     <panel_attributes>itemEmprestimo
 --
 -id: int
 -id_exemplar: int
+-id_emprestimo: int
 --
 </panel_attributes>
     <additional_attributes/>
@@ -305,7 +305,7 @@ m2=0..1
     <id>Relation</id>
     <coordinates>
       <x>700</x>
-      <y>860</y>
+      <y>1030</y>
       <w>210</w>
       <h>50</h>
     </coordinates>
@@ -319,7 +319,7 @@ está em &gt;</panel_attributes>
     <id>Relation</id>
     <coordinates>
       <x>1170</x>
-      <y>850</y>
+      <y>1020</y>
       <w>240</w>
       <h>50</h>
     </coordinates>
