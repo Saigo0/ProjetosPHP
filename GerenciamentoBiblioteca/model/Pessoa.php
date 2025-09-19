@@ -9,15 +9,9 @@
         private string $endereco;
         private string $telefone;
         
-        public function __construct(string $nome, string $RG, string $CPF, DateTime $dataNascimento, string $email, string $endereco, string $telefone)
+        public function __construct()
         {
-            $this->nome = $nome;
-            $this->RG = $RG;
-            $this->CPF = $CPF;
-            $this->dataNascimento = $dataNascimento;
-            $this->email = $email;
-            $this->endereco = $endereco;
-            $this->telefone = $telefone;
+            
         }
 
         public function getId(): ?int{

@@ -8,13 +8,13 @@
         }
 
         public function create(Pessoa $pessoa){
-            $sql = "INSERT INTO pessoa (nome, RG, CPF, dataNascimento, email, endereco, telefone) VALUES (:nome, :RG, :CPF, :dataNascimento, :email, : endereco, :telefone)";
+            $sql = "INSERT INTO pessoa (nome, RG, CPF, dataNascimento, email, endereco, telefone) VALUES (:nome, :RG, :CPF, :dataNascimento, :email, :endereco, :telefone)";
             $stmt = $this->pdo->prepare($sql);
             $stmt->execute([
                 'nome' => $pessoa->getNome(),
                 'RG' => $pessoa->getRG(),
                 'CPF' => $pessoa->getCPF(),
-                'dataNascimento' => $pessoa->getDataNascimento(),
+                'dataNascimento' => $pessoa->getDataNascimento()->format('Y-m-d'),
                 'email' => $pessoa->getEmail(),
                 'endereco' => $pessoa->getEndereco(),
                 'telefone' => $pessoa->getTelefone()
@@ -37,7 +37,7 @@
                 'nome' => $pessoa->getNome(),
                 'RG' => $pessoa->getRG(),
                 'CPF' => $pessoa->getCPF(),
-                'dataNascimento' => $pessoa->getDataNascimento(),
+                'dataNascimento' => $pessoa->getDataNascimento()->format('Y-m-d'),
                 'email' => $pessoa->getEmail(),
                 'endereco' => $pessoa->getEndereco(),
                 'telefone' => $pessoa->getTelefone()
@@ -47,7 +47,21 @@
         public function listAll(){
             $sql = "SELECT * FROM pessoa";
             $stmt = $this->pdo->prepare($sql);
-            $pessoas = $stmt->fetchAll(PDO::FETCH_ASSOC);
+            $stmt->execute();
+            $arrayAsso = $stmt->fetchAll(PDO::FETCH_ASSOC);
+            $pessoas = [];
+            foreach($arrayAsso as $registroPessoa){
+                $pessoa = new Pessoa();
+                $pessoa->setId($registroPessoa['id']);
+                $pessoa->setNome($registroPessoa['nome']);
+                $pessoa->setRG($registroPessoa['RG']);
+                $pessoa->setCPF($registroPessoa['CPF']);
+                $pessoa->setDataNascimento(new DateTime($registroPessoa['dataNascimento']));
+                $pessoa->setEmail($registroPessoa['email']);
+                $pessoa->setEndereco($registroPessoa['endereco']);
+                $pessoa->setTelefone($registroPessoa['telefone']);
+                $pessoas [] = $pessoa; 
+            }
             return $pessoas;
         }
 

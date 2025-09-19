@@ -44,8 +44,12 @@
             $sql = "SELECT * FROM usuario";
             $stmt = $this->pdo->query($sql);
 
-            $usuarios = $stmt->fetchAll(PDO::FETCH_ASSOC);
-
+            $arrayAsso = $stmt->fetchAll(PDO::FETCH_ASSOC);
+            $usuarios = [];
+            foreach($arrayAsso as $registroUsuario){
+                $usuario = new Usuario();
+                $usuario->setId($registroUsuario['id']);
+            }
             return $usuarios;
         }
 

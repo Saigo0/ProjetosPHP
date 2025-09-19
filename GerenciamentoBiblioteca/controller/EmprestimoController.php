@@ -46,9 +46,7 @@
         }
 
         public function realizarEmprestimo(Leitor $leitor, array $exemplares){
-            foreach($exemplares as $exemplar){
-                if()
-            }
+            
         }
 
         public function devolverEmprestimo(){
