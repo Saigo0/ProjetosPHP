@@ -1,6 +1,7 @@
 <?php 
     class EmprestimoDAO{
         private PDO $pdo;
+        
 
         public function __construct($pdo)
         {
@@ -12,7 +13,7 @@
             $stmt = $this->pdo->prepare($sql);
             $stmt->execute([
                 'id_item_emprestimo' => $emprestimo->getIdItemEmprestimo(),
-                'id_leitor' => $emprestimo->getIdLeitor(),
+                'id_leitor' => $emprestimo->getLeitor()->getId(),
                 'dataEmprestimo' => $emprestimo->getDataEmprestimo(),
                 'dataDevolucao' => $emprestimo->getDataDevolucao(),
                 'status' => $emprestimo->getStatus(),
@@ -52,6 +53,26 @@
             $sql = "SELECT * FROM emprestimo WHERE id = :id";
             $stmt = $this->pdo->prepare($sql);
             return $stmt->execute(['id' => $id]);
+        }
+
+        public function findByDate(DateTime $data){
+            $sql = "SELECT * FROM emprestimo WHERE dataEmprestimo = :data";
+            $stmt = $this->pdo->prepare($sql);
+            $stmt->execute(['data' => $data->format('Y-m-d')]);
+            $arrayAsso = $stmt->fetchAll(PDO::FETCH_ASSOC);
+            $emprestimos = [];
+            foreach($arrayAsso as $registroEmprestimo){
+                $emprestimo = new Emprestimo();
+                $leitorDAO = new LeitorDAO(Conexao::getPDO());
+                $emprestimo->setId($registroEmprestimo['id']);
+                $emprestimo->setLeitor($leitorDAO->findByID($registroEmprestimo['id_leitor']));
+                $emprestimo->setDataEmprestimo(new DateTime($registroEmprestimo['dataEmprestimo']));
+                $emprestimo->setDataDevolucao(new DateTime($registroEmprestimo['dataDevolucao']));
+                $emprestimo->setStatus($registroEmprestimo['status']);
+                $emprestimo->setDescricao($registroEmprestimo['descricao']);
+                $emprestimos += $emprestimo;
+            }
+            return $emprestimos;
         }
 
         public function delete(Emprestimo $emprestimo){

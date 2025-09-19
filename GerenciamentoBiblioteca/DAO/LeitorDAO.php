@@ -63,6 +63,25 @@
             return $leitor;
         }
 
+        public function findByName(string $nome){
+            $sql = "SELECT l.* FROM leitor l
+                    JOIN usuario u on l.id_usuario = u.id
+                    JOIN pessoa p ON u.id_pessoa = p.id
+                    WHERE p.nome = :nome";
+            $stmt = $this->pdo->prepare($sql);
+            $stmt->execute(['nome' => $nome]);
+            $arrayAsso = $stmt->fetchAll(PDO::FETCH_ASSOC);
+            $leitores = [];
+            foreach($arrayAsso as $registroLeitor){
+                $leitor = new Leitor();
+                $leitor->setId($registroLeitor['id']);
+                $leitor->setIdUsuario($registroLeitor['id_usuario']);
+                $leitor->setMultasPendentes($registroLeitor['multasPendentes']);
+                $leitores += $leitor;
+            }
+            return $leitores;
+        }
+
         public function delete(Leitor $leitor){
             $sql = "DELETE FROM leitor WHERE id = :id";
             $stmt = $this->pdo->prepare($sql);

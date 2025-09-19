@@ -3,6 +3,7 @@
 
         private int $id_usuario;
         private bool $multasPendentes;
+        private array $emprestimos = [];
         
         public function __construct()
         {
@@ -11,6 +12,18 @@
 
         public function setIdUsuario(int $id_usuario){
             $this->id_usuario = $id_usuario;
+        }
+
+        public function addEmprestimo(Emprestimo $emprestimo){
+            $this->emprestimos += $emprestimo;
+        }
+
+        public function removeEmprestimo(int $index){
+            unset($emprestimos[$index]);
+        }
+
+        public function getEmprestimos(){
+            return $this->emprestimos;
         }
 
         public function getIdUsuario(){

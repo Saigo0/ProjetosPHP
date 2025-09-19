@@ -92,9 +92,17 @@
             $stmt = $this->pdo->prepare($sql);
             $stmt->execute(['id' => $id]);
             $arrayAsso = $stmt->fetch(PDO::FETCH_ASSOC);
+            $usuarios = [];
             foreach($arrayAsso as $registroUsuario){
-                $usuario->set
+                $usuario = new Usuario();
+                $usuario->setId($registroUsuario['id']);
+                $usuario->setIdPessoa($registroUsuario['id_pessoa']);
+                $usuario->setLogin($registroUsuario['login']);
+                $usuario->setSenha($registroUsuario['senha']);
+                $usuario->setDataCadastro($registroUsuario['dataCadastro']);
+                $usuarios [] = $usuario;
             } 
+            return $usuarios;
         }
 
         public function findByLogin(string $login){

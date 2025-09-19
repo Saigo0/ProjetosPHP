@@ -3,8 +3,9 @@
         public function criarEmprestimo() {
             $emprestimo = new Emprestimo();
             $emprestimoDAO = new EmprestimoDAO(Conexao::getPDO());
+            $leitorDAO = new LeitorDAO(Conexao::getPDO());
             $emprestimo->setIdItemEmprestimo($_POST['id_item_emprestimo']);
-            $emprestimo->setIdLeitor($_POST['id_leitor']);
+            $emprestimo->setLeitor($leitorDAO->findByID($_POST['id_leitor']));
             $emprestimo->setDataDevolucao($_POST['dataDevolucao']);
             $emprestimo->setStatus($_POST['status']);
             $emprestimo->setDescricao($_POST['descricao']);
@@ -14,8 +15,9 @@
         public function atualizarEmprestimo(){
             $emprestimo = new Emprestimo();
             $emprestimoDAO = new EmprestimoDAO(Conexao::getPDO());
+            $leitorDAO = new LeitorDAO(Conexao::getPDO());
             $emprestimo->setIdItemEmprestimo($_POST['id_item_emprestimo']);
-            $emprestimo->setIdLeitor($_POST['id_leitor']);
+            $emprestimo->setLeitor($leitorDAO->findByID($_POST['id_leitor']));
             $emprestimo->setDataDevolucao($_POST['dataDevolucao']);
             $emprestimo->setStatus($_POST['stauts']);
             $emprestimo->setDescricao($_POST['descricao']);
@@ -24,6 +26,7 @@
 
         public function listarEmprestimos(){
             $emprestimoDAO = new EmprestimoDAO(Conexao::getPDO());
+            $leitorDAO = new LeitorDAO(Conexao::getPDO());
             $arrayAsso = $emprestimoDAO->listAll();
 
             $emprestimos = [];
@@ -31,7 +34,7 @@
                 $emprestimo = new Emprestimo();
                 $emprestimo->setId($registroEmprestimo['id']);
                 $emprestimo->setIdItemEmprestimo($registroEmprestimo['id_item_emprestimo']);
-                $emprestimo->setIdLeitor($registroEmprestimo['id_leitor']);
+                $emprestimo->setLeitor($leitorDAO->findByID($registroEmprestimo['id_leitor']));
                 $emprestimo->setDataEmprestimo($registroEmprestimo['dataEmprestimo']);
                 $emprestimo->setDataDevolucao($registroEmprestimo['dataDevolucao']);
                 $emprestimo->setStatus($registroEmprestimo['status']);
@@ -42,12 +45,15 @@
             return $emprestimos;
         }
 
-        public function realizarEmprestimo(){
-            $leitor = new Leitor();
-            $leitor->setId($_POST['id']);
-            if(!$leitor->getMultasPendentes()){
-                $this->criarEmprestimo();
+        public function realizarEmprestimo(Leitor $leitor, array $exemplares){
+            foreach($exemplares as $exemplar){
+                if()
             }
+        }
+
+        public function devolverEmprestimo(){
+            
+
         }
 
         public function deletarEmprestimo(){

@@ -59,6 +59,7 @@
             return $exemplares;
         }
 
+
         public function findByID(int $id){
             $sql = "SELECT * FROM exemplar WHERE id = :id";
             $stmt = $this->pdo->prepare($sql);

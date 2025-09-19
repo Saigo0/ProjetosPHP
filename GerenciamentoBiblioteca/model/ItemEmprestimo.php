@@ -1,8 +1,9 @@
 <?php 
     class ItemEmprestimo{
         private int $id;
+        private int $id_emprestimo;
         private Exemplar $exemplar;
-        private DateTime $dataDevolucaoEfetiva = null;
+       
 
         public function __construct(Exemplar $exemplar)
         {
@@ -12,5 +13,15 @@
         public function getExemplar(){
             return $this->exemplar;
         }
+
+        public function getId(){
+            return $this->id;
+        }
+
+        public function getIdEmprestimo(){
+            return $this->id_emprestimo;
+        }
+
+
 
     }

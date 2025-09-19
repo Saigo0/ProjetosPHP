@@ -2,7 +2,7 @@
     class Emprestimo{
         private int $id;
         private int $id_item_emprestimo;
-        private int $id_leitor;
+        private Leitor $leitor;
         private DateTime $dataEmprestimo;
         private DateTime $dataDevolucao;
         private string $status;
@@ -30,12 +30,12 @@
             $this->id_item_emprestimo = $id_item_emprestimo;
         }
 
-        public function setIdLeitor(int $id_leitor){
-            $this->id_leitor = $id_leitor;
+        public function setLeitor(Leitor $leitor){
+            $this->leitor = $leitor;
         }
 
-        public function getIdLeitor(){
-            return $this->id_leitor;
+        public function getLeitor(){
+            return $this->leitor;
         }
 
         public function setDataEmprestimo(DateTime $dataEmprestimo){
@@ -72,7 +72,7 @@
 
         public function __toString()
         {
-            return "Id: ".$this->id."/nId do item de empréstimo: ".$this->id_item_emprestimo."/nId do leitor: ".$this->id_leitor."/nData do empréstimo: ".$this->dataEmprestimo."/nData da devolução: ".$this->dataDevolucao."/nStatus: ".$this->dataEmprestimo."/nDescrição: ".$this->descricao;
+            return "Id: ".$this->id."/nId do item de empréstimo: ".$this->id_item_emprestimo."/nLeitor: ".$this->leitor."/nData do empréstimo: ".$this->dataEmprestimo."/nData da devolução: ".$this->dataDevolucao."/nStatus: ".$this->dataEmprestimo."/nDescrição: ".$this->descricao;
         }
 
     }
