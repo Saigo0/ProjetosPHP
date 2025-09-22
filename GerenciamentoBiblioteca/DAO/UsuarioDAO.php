@@ -23,7 +23,7 @@
                 'telefone' => $usuario->getTelefone()
             ]);
 
-            $idPessoa = $this->pdo->lastInsertId();
+            $idPessoa = (int)$this->pdo->lastInsertId();
             $usuario->setIdPessoa($idPessoa);
             
             $sqlUsuario = "INSERT INTO usuario (id_pessoa, login, nivelAcesso, senha, dataCadastro) VALUES (:id_pessoa, :login, :nivelAcesso, :senha, :dataCadastro)";
@@ -41,7 +41,10 @@
         }
 
         public function listAll(){
-            $sql = "SELECT * FROM usuario";
+            $pessoaDAO = new PessoaDAO(Conexao::getPDO());
+
+            $sql = "SELECT u.* FROM usuario u
+                    JOIN pessoa p on p.id = u.id_pessoa";
             $stmt = $this->pdo->query($sql);
 
             $arrayAsso = $stmt->fetchAll(PDO::FETCH_ASSOC);
@@ -49,6 +52,19 @@
             foreach($arrayAsso as $registroUsuario){
                 $usuario = new Usuario();
                 $usuario->setId($registroUsuario['id']);
+                $usuario->setNome($pessoaDAO->findByID($registroUsuario['id_pessoa'])->getNome());
+                $usuario->setRG($pessoaDAO->findByID($registroUsuario['id_pessoa'])->getRG());
+                $usuario->setCPF($pessoaDAO->findByID($registroUsuario['id_pessoa'])->getCPF());
+                $usuario->setDataNascimento($pessoaDAO->findByID($registroUsuario['id_pessoa'])->getDataNascimento());
+                $usuario->setEmail($pessoaDAO->findByID($registroUsuario['id_pessoa'])->getEmail());
+                $usuario->setEndereco($pessoaDAO->findByID($registroUsuario['id_pessoa'])->getEndereco());
+                $usuario->setTelefone($pessoaDAO->findByID($registroUsuario['id_pessoa'])->getTelefone());
+                $usuario->setIdPessoa($registroUsuario['id_pessoa']);
+                $usuario->setLogin($registroUsuario['login']);
+                $usuario->setNivelAcesso($registroUsuario['nivelAcesso']);
+                $usuario->setSenha($registroUsuario['senha']);
+                $usuario->setDataCadastro(new DateTime($registroUsuario['dataCadastro']));
+                $usuarios [] = $usuario;
             }
             return $usuarios;
         }
@@ -95,18 +111,17 @@
             $sql = "SELECT * FROM usuario WHERE id = :id";
             $stmt = $this->pdo->prepare($sql);
             $stmt->execute(['id' => $id]);
-            $arrayAsso = $stmt->fetch(PDO::FETCH_ASSOC);
-            $usuarios = [];
-            foreach($arrayAsso as $registroUsuario){
-                $usuario = new Usuario();
-                $usuario->setId($registroUsuario['id']);
-                $usuario->setIdPessoa($registroUsuario['id_pessoa']);
-                $usuario->setLogin($registroUsuario['login']);
-                $usuario->setSenha($registroUsuario['senha']);
-                $usuario->setDataCadastro($registroUsuario['dataCadastro']);
-                $usuarios [] = $usuario;
-            } 
-            return $usuarios;
+            $registroUsuario = $stmt->fetch(PDO::FETCH_ASSOC);
+
+            $usuario = new Usuario();
+            $usuario->setId($registroUsuario['id']);
+            $usuario->setIdPessoa($registroUsuario['id_pessoa']);
+            $usuario->setLogin($registroUsuario['login']);
+            $usuario->setNivelAcesso($registroUsuario['nivelAcesso']);
+            $usuario->setSenha($registroUsuario['senha']);
+            $usuario->setDataCadastro(new DateTime($registroUsuario['dataCadastro']));
+
+            return $usuario;
         }
 
         public function findByLogin(string $login){

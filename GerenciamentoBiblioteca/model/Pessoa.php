@@ -1,6 +1,6 @@
 <?php 
     class Pessoa{
-        private ?int $id = null;
+        private int $id;
         private string $nome;
         private string $RG;
         private string $CPF;
@@ -14,7 +14,7 @@
             
         }
 
-        public function getId(): ?int{
+        public function getId(){
             return $this-> id;
         }
 

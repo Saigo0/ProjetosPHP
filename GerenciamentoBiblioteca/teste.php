@@ -38,36 +38,30 @@
         $pdo = new PDO("mysql:host=localhost;dbname=gerenciamentobiblioteca", "root", "");
 
         
-        $usuario = new Usuario();
-        $usuarioDAO = new UsuarioDAO(Conexao::getPDO());
-        
-        
-        $usuario->setNome("Alberto");
-        $usuario->setRG("89089098098");
-        $usuario->setCPF("08744984132");
-        $usuario->setDataNascimento(new DateTime("2004-08-20"));
-        $usuario->setEmail("email@email.com");
-        $usuario->setEndereco("R. Dr.Getulio Vargas");
-        $usuario->setTelefone("61978906274");
-        $usuario->setLogin("alb902");
-        $usuario->setNivelAcesso("Leitor");
-        $usuario->setSenha("albto1901@");
-        $usuarioDAO->create($usuario);
-        
-        
-        $usuarios = $usuarioDAO->listAll();
-        foreach($usuarios as $usuario){
-            /*$usuarioDAO->delete($usuario);*/
-            echo "<br>ID: " . $usuario->getId() . "<br>ID da pessoa: " . $usuario->getIdPessoa() . "<br>Nome: " . $usuario->getNome() . "<br>RG: " . $usuario->getRG() . "<br>CPF: " . $usuario->getCPF() . "<br>Data de nascimento: " . $usuario->getDataNascimento()->format('d/m/Y') . "<br>Email: " . $usuario->getEmail() . "<br>Endereço: " . $usuario->getEndereco() . "<br>Telefone: " . $usuario->getTelefone() . "<br>Login: ". $usuario->getLogin() . "<br>Nivel de acesso: " . $usuario->getNivelAcesso() . "<br>Senha: " . $usuario->getSenha() . "<br>Data de Cadastro: " . $usuario->getDataCadastro() .  "<br><br>";
+        $leitor = new Leitor();
+        $leitorDAO = new LeitorDAO(Conexao::getPDO());
+        $leitor->setNome("André");
+        $leitor->setRG("89089098098");
+        $leitor->setCPF("08744984132");
+        $leitor->setDataNascimento(new DateTime("2004-07-27"));
+        $leitor->setEmail("email@email.com");
+        $leitor->setEndereco("R. Dr.Getulio Vargas");
+        $leitor->setTelefone("61978906274");
+        $leitor->setLogin("jose902");
+        $leitor->setNivelAcesso("Leitor");
+        $leitor->setSenha("jose1901@");
+        $leitor->setMultasPendentes(true);
+
+        $leitor = $leitorDAO->findByID(9);
+        $leitorDAO->delete($leitor);
+        $leitores = $leitorDAO->listAll();
+        foreach($leitores as $leitor){
+            echo "<br>ID: " . $leitor->getId() . "<br>ID da pessoa: " . $leitor->getIdPessoa() . "<br>ID do usuário: ". $leitor->getIdUsuario() ."<br>Nome: " . $leitor->getNome() . "<br>RG: " . $leitor->getRG() . "<br>CPF: " . $leitor->getCPF() . "<br>Data de nascimento: " . $leitor->getDataNascimento()->format('d/m/Y') . "<br>Email: " . $leitor->getEmail() . "<br>Endereço: " . $leitor->getEndereco() . "<br>Telefone: " . $leitor->getTelefone() . "<br>Login: ". $leitor->getLogin() . "<br>Nivel de acesso: " . $leitor->getNivelAcesso() . "<br>Senha: " . $leitor->getSenha() . "<br>Data de Cadastro: " . $leitor->getDataCadastro()->format('d/m/Y') . "<br>Multas pendentes: ". $leitor->getMultasPendentes() ."<br><br>";
         }
     ?>
 
     <main>
-        <form action="" method = "post">
-            <label for="Inserir nome"></label>
-            <input type="text" name="nome" id="nome">
-            <input type="button" name="Enviar" id="enviar">
-        </form>
+        
     </main>
 </body>
 </html>

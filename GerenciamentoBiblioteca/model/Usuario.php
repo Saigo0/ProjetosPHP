@@ -2,7 +2,7 @@
     require_once "Pessoa.php";
     class Usuario extends Pessoa{
 
-        private int $id_pessoa;
+        private ?int $id_pessoa = null;
         private string $login;
 
 
@@ -21,7 +21,7 @@
             return true;
         }
 
-        public function getIdPessoa(): int
+        public function getIdPessoa(): ?int
         {
             return $this->id_pessoa;
         }

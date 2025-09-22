@@ -7,7 +7,7 @@
         
         public function __construct()
         {
-            
+            $this->setDataCadastro(new DateTime());
         }
 
         public function setIdUsuario(int $id_usuario){

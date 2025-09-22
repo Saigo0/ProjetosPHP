@@ -69,8 +69,19 @@
             $sql = "SELECT * FROM pessoa WHERE id = :id";
             $stmt = $this->pdo->prepare($sql);
             $stmt->execute(['id' => $id]);
-            $arrayAsso = $stmt->fetch(PDO::FETCH_ASSOC);
-            return $arrayAsso;
+            $arrayAsso = $stmt->fetchAll(PDO::FETCH_ASSOC);
+            $pessoa = new Pessoa();
+            foreach($arrayAsso as $registroPessoa){
+                $pessoa->setId($registroPessoa['id']);
+                $pessoa->setNome($registroPessoa['nome']);
+                $pessoa->setRG($registroPessoa['RG']);
+                $pessoa->setCPF($registroPessoa['CPF']);
+                $pessoa->setDataNascimento(new DateTime($registroPessoa['dataNascimento']));
+                $pessoa->setEmail($registroPessoa['email']);
+                $pessoa->setEndereco($registroPessoa['endereco']);
+                $pessoa->setTelefone($registroPessoa['telefone']);
+            }
+            return $pessoa;
         }
 
         public function delete(Pessoa $pessoa){
