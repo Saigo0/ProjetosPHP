@@ -108,7 +108,9 @@
         }
 
         public function findByID(int $id){
-            $sql = "SELECT * FROM usuario WHERE id = :id";
+            $sql = "SELECT u.id, u.id_pessoa, u.login, u.senha, u.nivelAcesso, u.dataCadastro, p.nome, p.RG, p.CPF, p.dataNascimento, p.email, p.endereco, p.telefone from usuario u
+            JOIN pessoa p on p.id = u.id_pessoa
+            WHERE u.id = :id";
             $stmt = $this->pdo->prepare($sql);
             $stmt->execute(['id' => $id]);
             $registroUsuario = $stmt->fetch(PDO::FETCH_ASSOC);
@@ -116,9 +118,16 @@
             $usuario = new Usuario();
             $usuario->setId($registroUsuario['id']);
             $usuario->setIdPessoa($registroUsuario['id_pessoa']);
+            $usuario->setNome($registroUsuario['nome']);
+            $usuario->setRG($registroUsuario['RG']);
+            $usuario->setCPF($registroUsuario['CPF']);
+            $usuario->setDataNascimento(new DateTime($registroUsuario['dataNascimento']));
+            $usuario->setEmail($registroUsuario['email']);
+            $usuario->setEndereco($registroUsuario['endereco']);
+            $usuario->setTelefone($registroUsuario['telefone']);
             $usuario->setLogin($registroUsuario['login']);
             $usuario->setNivelAcesso($registroUsuario['nivelAcesso']);
-            $usuario->setSenha($registroUsuario['senha']);
+            $usuario->setSenhaHash($registroUsuario['senha']);
             $usuario->setDataCadastro(new DateTime($registroUsuario['dataCadastro']));
 
             return $usuario;
@@ -133,18 +142,25 @@
                 return null;
             }
             
-            $usuario = new Usuario();
-            $usuario->setId($arrayAssociativo['id']);
-            $usuario->setIdPessoa($arrayAssociativo['id_pessoa']);
-            $usuario->setNivelAcesso($arrayAssociativo['nivelAcesso']);
-            $usuario->setSenha($arrayAssociativo['senha']);
-            $usuario->setDataCadastro($arrayAssociativo['dataCadastro']);
+            
+                $usuario = new Usuario();
+                $usuario->setId($arrayAssociativo['id']);
+                $usuario->setIdPessoa($arrayAssociativo['id_pessoa']);
+                $usuario->setNivelAcesso($arrayAssociativo['nivelAcesso']);
+                $usuario->setLogin($arrayAssociativo['login']);
+                $usuario->setSenhaHash($arrayAssociativo['senha']);
+                $usuario->setDataCadastro(new DateTime($arrayAssociativo['dataCadastro']));
+                $usuarios [] = $usuario;
+            
+    
 
             return $usuario;
         }
 
         public function delete(Usuario $usuario): bool {
-            $sql = "DELETE FROM usuario WHERE id = :id";
+            $sql = "DELETE p FROM pessoa p
+                    JOIN usuario u on u.id_pessoa = p.id
+                    WHERE u.id = :id";
             $stmt = $this->pdo->prepare($sql);
             return $stmt->execute(['id' => $usuario->getId()]);
         }

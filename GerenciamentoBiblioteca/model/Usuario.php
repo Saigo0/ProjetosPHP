@@ -38,6 +38,10 @@
             return $this->nivelAcesso;
         }
 
+        public function setSenhaHash(string $hash){
+            $this->senha = $hash;
+        }
+
         public function setSenha(string $senha){
             if(strlen($senha) < 8){
                 throw new InvalidArgumentException("A senha deve ter ao menos 8 caracteres");

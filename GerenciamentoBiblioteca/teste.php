@@ -34,29 +34,38 @@
         require_once "controller/LivroController.php";
         require_once "controller/EmprestimoController.php";
 
+        require_once "service/AuthService.php";
+
 
         $pdo = new PDO("mysql:host=localhost;dbname=gerenciamentobiblioteca", "root", "");
 
-        
-        $leitor = new Leitor();
         $leitorDAO = new LeitorDAO(Conexao::getPDO());
+        $leitor = new Leitor();
+
+
+        
+        $autenticador = new AuthService();
+        $usuarioDAO = new UsuarioDAO(Conexao::getPDO());
         $leitor->setNome("André");
         $leitor->setRG("89089098098");
         $leitor->setCPF("08744984132");
         $leitor->setDataNascimento(new DateTime("2004-07-27"));
         $leitor->setEmail("email@email.com");
-        $leitor->setEndereco("R. Dr.Getulio Vargas");
+        $leitor->setEndereco("R. Dr. Getulio Vargas");
         $leitor->setTelefone("61978906274");
         $leitor->setLogin("jose902");
-        $leitor->setNivelAcesso("Leitor");
+        $leitor->setNivelAcesso("leitor");
         $leitor->setSenha("jose1901@");
-        $leitor->setMultasPendentes(true);
+        $leitor->setMultasPendentes(false);
 
-        $leitor = $leitorDAO->findByID(9);
-        $leitorDAO->delete($leitor);
-        $leitores = $leitorDAO->listAll();
-        foreach($leitores as $leitor){
-            echo "<br>ID: " . $leitor->getId() . "<br>ID da pessoa: " . $leitor->getIdPessoa() . "<br>ID do usuário: ". $leitor->getIdUsuario() ."<br>Nome: " . $leitor->getNome() . "<br>RG: " . $leitor->getRG() . "<br>CPF: " . $leitor->getCPF() . "<br>Data de nascimento: " . $leitor->getDataNascimento()->format('d/m/Y') . "<br>Email: " . $leitor->getEmail() . "<br>Endereço: " . $leitor->getEndereco() . "<br>Telefone: " . $leitor->getTelefone() . "<br>Login: ". $leitor->getLogin() . "<br>Nivel de acesso: " . $leitor->getNivelAcesso() . "<br>Senha: " . $leitor->getSenha() . "<br>Data de Cadastro: " . $leitor->getDataCadastro()->format('d/m/Y') . "<br>Multas pendentes: ". $leitor->getMultasPendentes() ."<br><br>";
+        $leitorDAO->create($leitor);
+        $leitorTeste = $leitorDAO->findByIdUsuario(96);
+        $authUser = $autenticador->autenticar($usuarioDAO->findByID(96)->getLogin(), "jose1901@");
+        $usuarios = $usuarioDAO->listAll();
+        var_dump($authUser);
+        echo $authUser->getNome();
+        foreach($usuarios as $usuarioleitor){
+            echo "<br>ID: " . $usuarioleitor->getId() . "<br>ID da pessoa: " . $usuarioleitor->getIdPessoa() ."<br>Nome: " . $usuarioleitor->getNome() . "<br>RG: " . $usuarioleitor->getRG() . "<br>CPF: " . $usuarioleitor->getCPF() . "<br>Data de nascimento: " . $usuarioleitor->getDataNascimento()->format('d/m/Y') . "<br>Email: " . $usuarioleitor->getEmail() . "<br>Endereço: " . $usuarioleitor->getEndereco() . "<br>Telefone: " . $usuarioleitor->getTelefone() . "<br>Login: ". $usuarioleitor->getLogin() . "<br>Nivel de acesso: " . $usuarioleitor->getNivelAcesso() . "<br>Senha: " . $usuarioleitor->getSenha() . "<br>Data de Cadastro: " . $usuarioleitor->getDataCadastro()->format('d/m/Y') ."<br><br>";
         }
     ?>
 

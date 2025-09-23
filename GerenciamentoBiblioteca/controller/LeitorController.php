@@ -43,8 +43,8 @@
             foreach($arrayAssoLeitor as $registroLeitor){
                 $leitor = new Leitor();
                 $leitor->setId($registroLeitor['id']);
-                $leitor->setIdUsuario($usuarioDAO->findByID($registroLeitor['id_usuario']));
-                $leitor->setIdPessoa($usuarioDAO->findByID($registroLeitor['id_pessoa']));
+                $leitor->setIdUsuario($usuarioDAO->findByID($registroLeitor['id_usuario'])->getId());
+                $leitor->setIdPessoa($usuarioDAO->findByID($registroLeitor['id_pessoa'])->getId());
                 $leitores []= $leitor;
             }
             return $leitores;
@@ -53,7 +53,7 @@
         public function deletarLeitor(){
             $leitor = new Leitor();
             $leitorDAO = new LeitorDAO(Conexao::getPDO());
-            $leitor->setId($leitorDAO->findById($_POST['id']));
+            $leitor->setId($leitorDAO->findById($_POST['id'])->getId());
             $leitorDAO->delete($leitor);
         }
     }

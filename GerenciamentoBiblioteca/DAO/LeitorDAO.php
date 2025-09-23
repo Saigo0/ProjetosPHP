@@ -161,6 +161,38 @@
             return $leitor;
         }
 
+        public function findByIdUsuario(int $id){
+
+            $sql = "SELECT l.*, u.id_pessoa, u.login, u.senha, u.nivelAcesso, u.dataCadastro, p.nome, p.RG, p.CPF, p.dataNascimento, p.email, p.endereco, p.telefone from leitor l
+            JOIN usuario u on u.id = l.id_usuario
+            JOIN pessoa p on p.id = u.id_pessoa
+            WHERE u.id = :id";
+
+            $stmt = $this->pdo->prepare($sql);
+            $stmt->execute(['id' => $id]);
+            $registroLeitor = $stmt->fetch(PDO::FETCH_ASSOC);
+
+            $leitor = new Leitor();
+            
+            $leitor->setId($registroLeitor['id']);
+            $leitor->setIdPessoa($registroLeitor['id_pessoa']);
+            $leitor->setIdUsuario($registroLeitor['id_usuario']);
+            $leitor->setNome($registroLeitor['nome']);
+            $leitor->setRG($registroLeitor['RG']);
+            $leitor->setCPF($registroLeitor['CPF']);
+            $leitor->setDataNascimento(new DateTime($registroLeitor['dataNascimento']));
+            $leitor->setEmail($registroLeitor['email']);
+            $leitor->setEndereco($registroLeitor['endereco']);
+            $leitor->setTelefone($registroLeitor['telefone']);
+            $leitor->setLogin($registroLeitor['login']);
+            $leitor->setSenha($registroLeitor['senha']);
+            $leitor->setDataCadastro(new DateTime($registroLeitor['dataCadastro']));
+            $leitor->setNivelAcesso($registroLeitor['nivelAcesso']);
+            $leitor->setMultasPendentes((bool) $registroLeitor['multasPendentes']);
+            
+            return $leitor;
+        }
+
         public function findByName(string $nome){
             $sql = "SELECT l.* FROM leitor l
                     JOIN usuario u on l.id_usuario = u.id
@@ -186,7 +218,7 @@
                     JOIN leitor l on l.id_usuario = u.id
                     WHERE l.id = :id";
             $stmt = $this->pdo->prepare($sql);
-            $stmt->execute(['id' => $leitor->getIdUsuario()]);
+            $stmt->execute(['id' => $leitor->getId()]);
         }
 
 

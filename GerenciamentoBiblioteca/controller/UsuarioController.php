@@ -25,36 +25,7 @@
 
         public function listarUsuarios(){
             $usuarioDao = new UsuarioDAO(Conexao::getPDO());
-            $arrayAsso = $usuarioDao->listAll();
-            $usuarios = [];
-            foreach($arrayAsso as $registroUsuario){
-                switch($registroUsuario['nivelAcesso']){
-                    case mb_strtoupper('LEITOR'):
-                        $usuario = new Leitor();
-                        break;
-
-                    case mb_strtoupper('BIBLIOTECARIO'):
-                        $usuario = new Bibliotecario();
-                        break;
-                    
-                    case mb_strtoupper('ADMINISTRADOR'):
-                        $usuario = new Administrador();
-                        break;
-                    
-                    default:
-                        throw new RuntimeException("Tipo de usuário não identificado: $registroUsuario");
-                }
-
-                $usuario->setId($arrayAsso['id']);
-                $usuario->setIdPessoa($arrayAsso['id_pessoa']);
-                $usuario->setLogin($arrayAsso['login']);
-                $usuario->setNivelAcesso($arrayAsso['nivelAcesso']);
-                $usuario->setSenha($arrayAsso['senha']);
-                $usuario->setDataCadastro($arrayAsso['dataCadastro']);
-
-                $usuarios[] = $usuario;
-            }
-
+            $usuarios = $usuarioDao->listAll();
             return $usuarios; 
         }
 

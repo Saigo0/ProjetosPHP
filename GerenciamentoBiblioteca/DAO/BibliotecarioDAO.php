@@ -57,6 +57,37 @@
             return $stmt->execute(['id' => $id]);
         }
 
+        public function findByIdUsuario(int $id){
+            $sql = "SELECT b.*, u.id_pessoa, u.login, u.senha, u.nivelAcesso, u.dataCadastro, p.nome, p.RG, p.CPF, p.dataNascimento, p.email, p.endereco, p.telefone from bibliotecario b
+            JOIN usuario u on u.id = b.id_usuario
+            JOIN pessoa p on p.id = u.id_pessoa
+            WHERE u.id = :id";
+
+            $stmt = $this->pdo->prepare($sql);
+            $stmt->execute(['id' => $id]);
+            $registrobiBliotecario = $stmt->fetch(PDO::FETCH_ASSOC);
+
+            $bibliotecario = new Bibliotecario();
+            $bibliotecario->setId($registrobiBliotecario['id']);
+            $bibliotecario->setIdPessoa($registrobiBliotecario['id_pessoa']);
+            $bibliotecario->setIdUsuario($registrobiBliotecario['id_usuario']);
+            $bibliotecario->setNome($registrobiBliotecario['nome']);
+            $bibliotecario->setRG($registrobiBliotecario['RG']);
+            $bibliotecario->setCPF($registrobiBliotecario['CPF']);
+            $bibliotecario->setDataNascimento(new DateTime($registrobiBliotecario['dataNascimento']));
+            $bibliotecario->setEmail($registrobiBliotecario['email']);
+            $bibliotecario->setEndereco($registrobiBliotecario['endereco']);
+            $bibliotecario->setTelefone($registrobiBliotecario['telefone']);
+            $bibliotecario->setLogin($registrobiBliotecario['login']);
+            $bibliotecario->setSenha($registrobiBliotecario['senha']);
+            $bibliotecario->setDataCadastro(new DateTime($registrobiBliotecario['dataCadastro']));
+            $bibliotecario->setNivelAcesso($registrobiBliotecario['nivelAcesso']);
+            $bibliotecario->setRegistroCRB($registrobiBliotecario['registroCRB']);
+            $bibliotecario->setValorCRB($registrobiBliotecario['valorCRB']);
+            
+            return $bibliotecario;
+        }
+
         public function delete(Bibliotecario $bibliotecario){
             $sql = "DELETE FROM bilbiotecario WHERE id = :id";
             $stmt = $this->pdo->prepare($sql);
