@@ -9,19 +9,31 @@
 
         public function create(Exemplar $exemplar){
             $sql = "INSERT INTO exemplar
-                (codigoExemplar, livro_id, status) VALUES (:codigoExemplar, :livro_id, :status)";
+                (codigoExemplar, id_livro, status) VALUES (:codigoExemplar, :id_livro, :status)";
             $stmt = $this->pdo->prepare($sql);
             $stmt->execute([
                 'codigoExemplar' => $exemplar->getCodigoExemplar(),
-                'livro_id' => $exemplar->getLivroId(),
+                'id_livro' => $exemplar->getLivroId(),
                 'status' => $exemplar->getStatus()
             ]);    
         }
 
         public function listAll(){
-            $sql = "SELECT * FROM livro";
+            $sql = "SELECT * FROM exemplar";
             $stmt = $this->pdo->query($sql);
-            $exemplares = $stmt->fetchAll(PDO::FETCH_ASSOC);
+            $arrayAsso = $stmt->fetchAll(PDO::FETCH_ASSOC);
+
+            $exemplares = [];
+
+            foreach($arrayAsso as $registroExemplar){
+                $exemplar = new Exemplar();
+                $exemplar->setID($registroExemplar['id']);
+                $exemplar->setCodigoExemplar($registroExemplar['codigoExemplar']);
+                $exemplar->setLivroId($registroExemplar['id_livro']);
+                $exemplar->setStatus($registroExemplar['status']);
+                $exemplares []= $exemplar;
+            }
+
 
             return $exemplares;
         }

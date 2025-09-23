@@ -39,24 +39,17 @@
 
         $pdo = new PDO("mysql:host=localhost;dbname=gerenciamentobiblioteca", "root", "");
 
-        $livroDAO = new LivroDAO(Conexao::getPDO());
-        $livro = new Livro();
+        $exemplarDAO = new ExemplarDAO(Conexao::getPDO());
+        $exemplar = new Exemplar();
+        $exemplar->setCodigoExemplar("cod1");
+        $exemplar->setLivroId("1");
+        $exemplar->setStatus("Emprestado");
 
-        $livro->setISBN("2139090231");
-        $livro->setTitulo("TituloAleatorio");
-        $livro->setAutor("AutorAleatorio");
-        $livro->setEditora("EditoraAleatoria");
-        $livro->setAnoEdicao(2025);
-        $livro->setNumPaginas(300);
-        $livro->setLocalEdicao("AquiMesmo");
-        $livro1 = $livroDAO->findByID(2);
-        $livro1->setTitulo("NovoTitulo");
-        $livroDAO->delete($livro1);
+        $exemplarDAO->create($exemplar);
 
-        $livros = $livroDAO->listAll();
-
-        foreach($livros as $registroLivro){
-            echo "ID: ". $registroLivro->getId() ."<br>ISBN: ". $registroLivro->getISBN() . "<br>Titulo: " . $registroLivro->getTitulo();
+        $exemplares = $exemplarDAO->listAll();
+        foreach($exemplares as $registroExemplar){
+            echo "ID: ". $registroExemplar->getId() ."<br>Código de exemplar: ". $registroExemplar->getCodigoExemplar() . "<br>ID do livro: " . $registroExemplar->getLivroId(). "<br>Status: " . $registroExemplar->getStatus();
         }
 
     ?>
