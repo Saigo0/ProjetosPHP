@@ -57,7 +57,7 @@
             
             $livroDAO = new LivroDAO(Conexao::getPDO());
 
-            $livro->setID($livroDAO->findByID($_POST['id']));
+            $livro->setID($livroDAO->findByID($_POST['id'])->getId());
             
             $livroDAO->delete($livro);
         }

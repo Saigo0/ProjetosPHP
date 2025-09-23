@@ -17,6 +17,7 @@
                 'autor' => $livro->getAutor(),
                 'editora' => $livro->getEditora(),
                 'anoEdicao' => $livro->getAnoEdicao(),
+                'numPaginas' => $livro->getNumPaginas(),
                 'localEdicao' =>$livro->getLocalEdicao()
             ]);
         }
@@ -25,8 +26,21 @@
             $sql = "SELECT * FROM livro";
             $stmt = $this->pdo->query($sql);
 
-            $livros = $stmt->fetchAll(PDO::FETCH_ASSOC);
+            $arrayAssociativo = $stmt->fetchAll(PDO::FETCH_ASSOC);
+            $livros = [];
 
+            foreach($arrayAssociativo as $registroLivro){
+                $livro = new Livro();
+                $livro->setID($registroLivro['id']);
+                $livro->setISBN($registroLivro['ISBN']);
+                $livro->setTitulo($registroLivro['titulo']);
+                $livro->setAutor($registroLivro['autor']);
+                $livro->setEditora($registroLivro['editora']);
+                $livro->setAnoEdicao($registroLivro['anoEdicao']);
+                $livro->setNumPaginas($registroLivro['numPaginas']);
+                $livro->setLocalEdicao($registroLivro['localEdicao']);
+                $livros[] = $livro;
+            }
             return $livros;
         }
 
@@ -41,7 +55,20 @@
         public function findByID(int $id){
             $sql = "SELECT * FROM livro WHERE id = :id";
             $stmt = $this->pdo->prepare($sql);
-            $livro = $stmt->execute(['id' => $id]);
+            $stmt->execute(['id' => $id]);
+            $registroLivro = $stmt->fetch(PDO::FETCH_ASSOC);
+
+            $livro = new Livro();
+            
+            $livro->setID($registroLivro['id']);
+            $livro->setISBN($registroLivro['ISBN']);
+            $livro->setTitulo($registroLivro['titulo']);
+            $livro->setAutor($registroLivro['autor']);
+            $livro->setEditora($registroLivro['editora']);
+            $livro->setAnoEdicao($registroLivro['anoEdicao']);
+            $livro->setNumPaginas($registroLivro['numPaginas']);
+            $livro->setLocalEdicao($registroLivro['localEdicao']);
+
             return $livro;
         }
 

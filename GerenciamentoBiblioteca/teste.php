@@ -39,34 +39,26 @@
 
         $pdo = new PDO("mysql:host=localhost;dbname=gerenciamentobiblioteca", "root", "");
 
-        $leitorDAO = new LeitorDAO(Conexao::getPDO());
-        $leitor = new Leitor();
+        $livroDAO = new LivroDAO(Conexao::getPDO());
+        $livro = new Livro();
 
+        $livro->setISBN("2139090231");
+        $livro->setTitulo("TituloAleatorio");
+        $livro->setAutor("AutorAleatorio");
+        $livro->setEditora("EditoraAleatoria");
+        $livro->setAnoEdicao(2025);
+        $livro->setNumPaginas(300);
+        $livro->setLocalEdicao("AquiMesmo");
+        $livro1 = $livroDAO->findByID(2);
+        $livro1->setTitulo("NovoTitulo");
+        $livroDAO->delete($livro1);
 
-        
-        $autenticador = new AuthService();
-        $usuarioDAO = new UsuarioDAO(Conexao::getPDO());
-        $leitor->setNome("André");
-        $leitor->setRG("89089098098");
-        $leitor->setCPF("08744984132");
-        $leitor->setDataNascimento(new DateTime("2004-07-27"));
-        $leitor->setEmail("email@email.com");
-        $leitor->setEndereco("R. Dr. Getulio Vargas");
-        $leitor->setTelefone("61978906274");
-        $leitor->setLogin("jose902");
-        $leitor->setNivelAcesso("leitor");
-        $leitor->setSenha("jose1901@");
-        $leitor->setMultasPendentes(false);
+        $livros = $livroDAO->listAll();
 
-        $leitorDAO->create($leitor);
-        $leitorTeste = $leitorDAO->findByIdUsuario(96);
-        $authUser = $autenticador->autenticar($usuarioDAO->findByID(96)->getLogin(), "jose1901@");
-        $usuarios = $usuarioDAO->listAll();
-        var_dump($authUser);
-        echo $authUser->getNome();
-        foreach($usuarios as $usuarioleitor){
-            echo "<br>ID: " . $usuarioleitor->getId() . "<br>ID da pessoa: " . $usuarioleitor->getIdPessoa() ."<br>Nome: " . $usuarioleitor->getNome() . "<br>RG: " . $usuarioleitor->getRG() . "<br>CPF: " . $usuarioleitor->getCPF() . "<br>Data de nascimento: " . $usuarioleitor->getDataNascimento()->format('d/m/Y') . "<br>Email: " . $usuarioleitor->getEmail() . "<br>Endereço: " . $usuarioleitor->getEndereco() . "<br>Telefone: " . $usuarioleitor->getTelefone() . "<br>Login: ". $usuarioleitor->getLogin() . "<br>Nivel de acesso: " . $usuarioleitor->getNivelAcesso() . "<br>Senha: " . $usuarioleitor->getSenha() . "<br>Data de Cadastro: " . $usuarioleitor->getDataCadastro()->format('d/m/Y') ."<br><br>";
+        foreach($livros as $registroLivro){
+            echo "ID: ". $registroLivro->getId() ."<br>ISBN: ". $registroLivro->getISBN() . "<br>Titulo: " . $registroLivro->getTitulo();
         }
+
     ?>
 
     <main>
