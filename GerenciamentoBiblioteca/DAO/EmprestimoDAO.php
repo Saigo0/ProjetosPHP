@@ -9,21 +9,34 @@
         }
 
         public function create(Emprestimo $emprestimo){
-            $sql = "INSERT INTO emprestimo (id_item_emprestimo, id_leitor, dataEmprestimo, dataDevolucao, status, descricao) VALUES (:id_item_emrpestimo, :id_leitor, :dataEmprestimo, :dataDevolucao, :status, :descricao)";
-            $stmt = $this->pdo->prepare($sql);
+            $sqlEmprestimo = "INSERT INTO emprestimo (id_item_emprestimo, id_leitor, dataEmprestimo, dataDevolucao, status, descricao) VALUES (:id_item_emprestimo, :id_leitor, :dataEmprestimo, :dataDevolucao, :status, :descricao)";
+            $stmt = $this->pdo->prepare($sqlEmprestimo);
             $stmt->execute([
                 'id_item_emprestimo' => $emprestimo->getIdItemEmprestimo(),
                 'id_leitor' => $emprestimo->getLeitor()->getId(),
-                'dataEmprestimo' => $emprestimo->getDataEmprestimo(),
-                'dataDevolucao' => $emprestimo->getDataDevolucao(),
+                'dataEmprestimo' => $emprestimo->getDataEmprestimo()->format('Y-m-d'),
+                'dataDevolucao' => $emprestimo->getDataDevolucao()->format('Y-m-d'),
                 'status' => $emprestimo->getStatus(),
                 'descricao' => $emprestimo->getDescricao()
             ]);
+
+            $idEmprestimo = $this->pdo->lastInsertId();
+            
+            $sqlItemEmprestimo = "INSERT INTO itememprestimo (id_exemplar, id_emprestimo) VALUES (:id_exemplar, :id_emprestimo)";
+            $stmt = $this->pdo->prepare($sqlItemEmprestimo);
+                foreach($emprestimo->getItensEmprestimo() as $itemEmprestimo){
+                    $stmt->execute([
+                        'id_exemplar' => $itemEmprestimo->getIdExemplar(),
+                        'id_emprestimo' => $idEmprestimo
+                    ]);
+                }
+                
         }
+
+    
 
         public function update($emprestimo){
             $sql = "UPDATE emprestimo SET
-                id_item_emprestimo = :id_item_emprestimo,
                 id_leitor = :id_leitor,
                 dataEmprestimo = :dataEmprestimo,
                 dataDevolucao = :dataDevolucao,
@@ -39,6 +52,18 @@
                 'status' => $emprestimo->getStatus(),
                 'descricao' => $emprestimo->getDescricao()
             ]);
+
+            $sqlItemEmprestimo = "UPDATE itememprestimo SET
+                id_exemplar = :id_exemplar,
+                id_emprestimo = :id_emprestimo";
+            
+            $stmt = $this->pdo->prepare($sqlItemEmprestimo);
+            foreach($emprestimo->getItensEmprestimo() as $itemEmprestimo){
+                    $stmt->execute([
+                        'id_exemplar' => $itemEmprestimo->getIdExemplar(),
+                        'id_emprestimo' => $itemEmprestimo->getIdEmprestimo()
+                    ]);
+                }
         }
 
         public function listAll(){

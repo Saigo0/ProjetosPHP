@@ -1,7 +1,7 @@
 <?php 
     class Emprestimo{
         private int $id;
-        private int $id_item_emprestimo;
+        private array $itensEmprestimo;
         private Leitor $leitor;
         private DateTime $dataEmprestimo;
         private DateTime $dataDevolucao;
@@ -11,6 +11,7 @@
         public function __construct()
         {
             $this->dataEmprestimo = new DateTime();
+            $this->itensEmprestimo = [];
 
         }
 
@@ -23,11 +24,33 @@
         }
 
         public function getIdItemEmprestimo(){
-            return $this->id_item_emprestimo;
+            
         }
 
-        public function setIdItemEmprestimo(int $id_item_emprestimo){
-            $this->id_item_emprestimo = $id_item_emprestimo;
+        public function setIdItemEmprestimo(){
+
+        }
+
+        public function getItensEmprestimo(){
+            return $this->itensEmprestimo;
+        }
+
+        public function setItensEmprestimo(array $itensEmprestimo){
+            $this->itensEmprestimo = $itensEmprestimo;
+        }
+
+        public function addItemEmprestimo(ItemEmprestimo $itemEmprestimo){
+            $this->itensEmprestimo [] = $itemEmprestimo;
+        }
+
+        public function removeItemEmprestimo(ItemEmprestimo $itemEmprestimo){
+            foreach($this->itensEmprestimo as $key => $item){
+                if($item->getId == $itemEmprestimo->getId()){
+                    unset($this->itensEmprestimo[$key]);
+                    break;
+                }
+            }
+            $this->itensEmprestimo = array_values($this->itensEmprestimo);
         }
 
         public function setLeitor(Leitor $leitor){
@@ -72,7 +95,7 @@
 
         public function __toString()
         {
-            return "Id: ".$this->id."/nId do item de empréstimo: ".$this->id_item_emprestimo."/nLeitor: ".$this->leitor."/nData do empréstimo: ".$this->dataEmprestimo."/nData da devolução: ".$this->dataDevolucao."/nStatus: ".$this->dataEmprestimo."/nDescrição: ".$this->descricao;
+            return "Id: ".$this->id."/nItens do empréstimo: ".$this->itensEmprestimo."/nLeitor: ".$this->leitor."/nData do empréstimo: ".$this->dataEmprestimo."/nData da devolução: ".$this->dataDevolucao."/nStatus: ".$this->dataEmprestimo."/nDescrição: ".$this->descricao;
         }
 
     }

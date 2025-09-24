@@ -79,6 +79,23 @@
             ]);
             return $exemplar;
         }
+
+        public function findByDisponibilidade(string $status){
+            $sql = "SELECT * FROM exemplar WHERE status = :status";
+            $stmt = $this->pdo->prepare($sql);
+            $stmt->execute(['status' => $status]);
+            $arrayAssociativo = $stmt->fetchAll(PDO::FETCH_ASSOC);
+            $exemplares = [];
+            foreach($arrayAssociativo as $registroExemplar){
+                $exemplar = new Exemplar();
+                $exemplar->setID($registroExemplar['id']);
+                $exemplar->setCodigoExemplar($registroExemplar['codigoExemplar']);
+                $exemplar->setLivroId($registroExemplar['id_livro']);
+                $exemplar->setStatus($registroExemplar['status']);
+                $exemplares[] = $exemplar;
+            }
+            return $exemplares;
+        }
         
         public function delete(Exemplar $exemplar){
             $sql = "DELETE FROM exemplar WHERE id = :id";

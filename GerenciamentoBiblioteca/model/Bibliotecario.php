@@ -6,7 +6,7 @@
 
         public function __construct()
         {
-        
+            
         }
 
         public function setIdUsuario(int $id_usuario){

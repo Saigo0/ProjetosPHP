@@ -45,15 +45,6 @@
             return $emprestimos;
         }
 
-        public function realizarEmprestimo(Leitor $leitor, array $exemplares){
-            
-        }
-
-        public function devolverEmprestimo(){
-            
-
-        }
-
         public function deletarEmprestimo(){
             $emprestimo = new Emprestimo();
             $emprestimoDAO = new EmprestimoDAO(Conexao::getPDO());

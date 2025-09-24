@@ -33,13 +33,20 @@
         public function getCodigoExemplar(){
             return $this->codigoExemplar;
         }
-
+        
         public function setStatus(string $status){
             $this->status = $status;
         }
 
         public function getStatus(){
             return $this->status;
+        }
+
+        public function isDisponivel(){
+            if($this->status == "Disponível"){
+                return true;
+            } else
+                return false;
         }
 
         public function __toString()
