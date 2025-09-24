@@ -45,7 +45,9 @@
         $exemplar->setLivroId("1");
         $exemplar->setStatus("Emprestado");
 
-        $exemplarDAO->create($exemplar);
+        $exemplar1 = $exemplarDAO->findByCodigoExemplar("cod1");
+        $exemplar1->setCodigoExemplar("cod2");
+        $exemplarDAO->update($exemplar1);
 
         $exemplares = $exemplarDAO->listAll();
         foreach($exemplares as $registroExemplar){

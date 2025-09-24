@@ -39,17 +39,17 @@
         }
 
         public function update(Exemplar $exemplar){
-            $sql = "UPDATE livros SET 
-                :codigoExemplar = codigoExemplar,
-                :livro_id = livro_id,
-                :status = status WHERE id = :id";
+            $sql = "UPDATE exemplar SET 
+                codigoExemplar = :codigoExemplar,
+                id_livro = :id_livro,
+                status = :status WHERE id = :id";
             
             $stmt = $this->pdo->prepare($sql);
 
             $stmt->execute([
                 'id' => $exemplar->getId(),
                 'codigoExemplar' => $exemplar->getCodigoExemplar(),
-                'livro_id' => $exemplar->getLivroId(),
+                'id_livro' => $exemplar->getLivroId(),
                 'status' => $exemplar->getStatus()
             ]);
         }
@@ -58,17 +58,16 @@
             $sql = "SELECT * FROM exemplar WHERE codigoExemplar = :codigoExemplar";
             $stmt = $this->pdo->prepare($sql);
             $stmt->execute(['codigoExemplar' => $codigoExemplar]);
-            $arrayAsso = $stmt->fetch();
-            $exemplares = [];
-            foreach($arrayAsso as $registroExemplar){
-                $exemplar = new Exemplar();
-                $exemplar->setID($registroExemplar['id']);
-                $exemplar->setCodigoExemplar($registroExemplar['codigoExemplar']);
-                $exemplar->setLivroId($registroExemplar['id_livro']);
-                $exemplar->setStatus($registroExemplar['status']);
-                $exemplares [] = $exemplar; 
-            }
-            return $exemplares;
+            $registroExemplar = $stmt->fetch(PDO::FETCH_ASSOC);
+            
+            $exemplar = new Exemplar();
+            $exemplar->setID($registroExemplar['id']);
+            $exemplar->setCodigoExemplar($registroExemplar['codigoExemplar']);
+            $exemplar->setLivroId($registroExemplar['id_livro']);
+            $exemplar->setStatus($registroExemplar['status']);
+            $exemplares [] = $exemplar; 
+            
+            return $exemplar;
         }
 
 
