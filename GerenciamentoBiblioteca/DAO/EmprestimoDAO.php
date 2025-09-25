@@ -100,14 +100,8 @@
                 $item->setExemplar($exemplarDAO->findByID($registroItem['id_exemplar']));
                 $item->setIdEmprestimo($registroItem['id_emprestimo']);
                 $itensEmprestimo [] = $item;
+                
             }
-
-            $itensEmprestimo = [];
-            $itemEmprestimo = new ItemEmprestimo();
-            $itemEmprestimo->setId($registroEmprestimo['id_itememprestimo']);
-            $itemEmprestimo->setIdEmprestimo($registroEmprestimo['id_emprestimo']);
-            $itemEmprestimo->setExemplar($exemplarDAO->findByID($registroEmprestimo['id_exemplar']));
-            $itensEmprestimo [] = $itemEmprestimo;
 
             
 
