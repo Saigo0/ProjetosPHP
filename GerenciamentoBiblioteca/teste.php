@@ -35,23 +35,45 @@
         require_once "controller/EmprestimoController.php";
 
         require_once "service/AuthService.php";
+        require_once "service/EmprestimoService.php";
 
 
         $pdo = new PDO("mysql:host=localhost;dbname=gerenciamentobiblioteca", "root", "");
 
+        $emprestimoDAO = new EmprestimoDAO(Conexao::getPDO());
+        $emprestimo = new Emprestimo();
         $exemplarDAO = new ExemplarDAO(Conexao::getPDO());
         $exemplar = new Exemplar();
-        $exemplar->setCodigoExemplar("cod1");
-        $exemplar->setLivroId("1");
-        $exemplar->setStatus("Emprestado");
+        $exemplar1 = new Exemplar();
+        $leitorDAO = new LeitorDAO(Conexao::getPDO());
+        $leitor = new Leitor();
+        $leitor = $leitorDAO->findByID(30);
 
-        $exemplar1 = $exemplarDAO->findByCodigoExemplar("cod1");
-        $exemplar1->setCodigoExemplar("cod2");
+        $exemplar = $exemplarDAO->findByCodigoExemplar("cod2");
+        $exemplar1 = $exemplarDAO->findByCodigoExemplar("cod3");
+
+        $exemplar->setStatus("Disponivel");
+        $exemplar1->setStatus("Disponivel");
+
+        $exemplarDAO->update($exemplar);
         $exemplarDAO->update($exemplar1);
 
-        $exemplares = $exemplarDAO->listAll();
-        foreach($exemplares as $registroExemplar){
-            echo "ID: ". $registroExemplar->getId() ."<br>Código de exemplar: ". $registroExemplar->getCodigoExemplar() . "<br>ID do livro: " . $registroExemplar->getLivroId(). "<br>Status: " . $registroExemplar->getStatus();
+        $emprestimoService = new EmprestimoService();
+
+        $listaExemplares = [];
+        $listaExemplares [] = $exemplarDAO->findByCodigoExemplar("cod2");
+        $listaExemplares [] = $exemplarDAO->findByCodigoExemplar("cod3");
+
+        $emprestimoService->realizarEmprestimo($leitor, $listaExemplares);
+
+        $emprestimos = $emprestimoDAO->listAll();
+
+        foreach($emprestimos as $registroEmprestimo){
+            echo "ID: ". $registroEmprestimo->getId() ."<br>Id do leitor: ". $registroEmprestimo->getLeitor()->getId() . "<br>Data do empréstimo: " . $registroEmprestimo->getDataEmprestimo()->format('Y-m-d'). "<br>Data de devolução: " . $registroEmprestimo->getDataDevolucao()->format('Y-m-d') . "<br>Status: " . $registroEmprestimo->getStatus() . "<br> Descrição: " . $registroEmprestimo->getDescricao() . "<br> Itens do empréstimo: ";
+
+            foreach($registroEmprestimo->getItensEmprestimo() as $itemEmprestimo){
+                echo "<br>ID do item do empréstimo: " .$itemEmprestimo->getId(). "<br>ID do exemplar: " . $itemEmprestimo->getIdExemplar() . "<br>ID do empréstimo: " . $itemEmprestimo->getIdEmprestimo() . "<br><br><br>";
+            }
         }
 
     ?>

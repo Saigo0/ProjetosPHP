@@ -9,10 +9,9 @@
         }
 
         public function create(Emprestimo $emprestimo){
-            $sqlEmprestimo = "INSERT INTO emprestimo (id_item_emprestimo, id_leitor, dataEmprestimo, dataDevolucao, status, descricao) VALUES (:id_item_emprestimo, :id_leitor, :dataEmprestimo, :dataDevolucao, :status, :descricao)";
+            $sqlEmprestimo = "INSERT INTO emprestimo (id_leitor, dataEmprestimo, dataDevolucao, status, descricao) VALUES (:id_leitor, :dataEmprestimo, :dataDevolucao, :status, :descricao)";
             $stmt = $this->pdo->prepare($sqlEmprestimo);
             $stmt->execute([
-                'id_item_emprestimo' => $emprestimo->getIdItemEmprestimo(),
                 'id_leitor' => $emprestimo->getLeitor()->getId(),
                 'dataEmprestimo' => $emprestimo->getDataEmprestimo()->format('Y-m-d'),
                 'dataDevolucao' => $emprestimo->getDataDevolucao()->format('Y-m-d'),
@@ -67,17 +66,56 @@
         }
 
         public function listAll(){
-            $sql = "SELECT * FROM emprestimo";
+            $leitorDAO = new LeitorDAO(Conexao::getPDO());
+            $sql = "SELECT e.id AS id_emprestimo,
+                    e.id_leitor,
+                    e.dataEmprestimo,
+                    e.dataDevolucao,
+                    e.status,
+                    e.descricao,
+                    i.id AS id_itememprestimo,
+                    i.id_exemplar
+                    FROM emprestimo e
+                    LEFT JOIN itememprestimo i
+                    ON e.id = i.id_emprestimo";
+                    
             $stmt = $this->pdo->query($sql);
-            $stmt->execute([PDO::FETCH_ASSOC]);
-            $emprestimos = $stmt->fetchAll();
+            $stmt->execute();
+            $arrayAsso = $stmt->fetchAll(PDO::FETCH_ASSOC);
+
+            $emprestimos = [];
+
+            foreach($arrayAsso as $registroEmprestimo){
+                $emprestimo = new Emprestimo();
+                $emprestimo->setId($registroEmprestimo['id']);
+                $emprestimo->setLeitor($leitorDAO->findByID($registroEmprestimo['id_leitor']));
+                $emprestimo->setDataDevolucao(new DateTime($registroEmprestimo['dataDevolucao']));
+                $emprestimo->setDataEmprestimo(new DateTime($registroEmprestimo['dataEmprestimo']));
+                $emprestimo->setStatus($registroEmprestimo['status']);
+                $emprestimo->setDescricao($registroEmprestimo['descricao']);
+                $emprestimos [] = $emprestimo;
+            }
+
             return $emprestimos;
         }
 
         public function findByID(int $id){
+            $leitorDAO = new LeitorDAO(Conexao::getPDO());
             $sql = "SELECT * FROM emprestimo WHERE id = :id";
             $stmt = $this->pdo->prepare($sql);
-            return $stmt->execute(['id' => $id]);
+            $stmt->execute(['id' => $id]);
+            $registroEmprestimo = $stmt->fetch(PDO::FETCH_ASSOC);
+
+            $emprestimo = new Emprestimo();
+
+            $emprestimo->setId($registroEmprestimo['id']);
+            $emprestimo->setLeitor($leitorDAO->findByID($registroEmprestimo['id_leitor']));
+            $emprestimo->setDataEmprestimo(new DateTime($registroEmprestimo['dataEmprestimo']));
+            $emprestimo->setDataDevolucao(new DateTime($registroEmprestimo['dataDevolucao']));
+            $emprestimo->setStatus($registroEmprestimo['status']);
+            $emprestimo->setDescricao($registroEmprestimo['descricao']);
+
+            return $emprestimo;
         }
 
         public function findByDate(DateTime $data){

@@ -64,7 +64,7 @@
         }
 
         public function __toString(){
-            return parent::__toString(). "/nLogin: ".$this->login."/nNível de acesso: ".$this->nivelAcesso."/nSenha: ".$this->senha."/nData de cadastro: ".$this->dataCadastro;
+            return parent::__toString(). "/nLogin: ".$this->login."/nNível de acesso: ".$this->nivelAcesso."/nSenha: ".$this->senha."/nData de cadastro: ".$this->dataCadastro->format('Y-m-d');
         }
 
         public function setIdPessoa(int $id_pessoa)

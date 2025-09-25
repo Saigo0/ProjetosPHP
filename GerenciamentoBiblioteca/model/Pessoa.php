@@ -87,7 +87,7 @@
         }
 
         public function __toString(){
-            return "Id: " .$this->id. "/nNome: ".$this->nome."/nRG: ".$this->RG."/nCPF: ".$this->CPF."/nData de nascimento: ".$this->dataNascimento.
+            return "Id: " .$this->id. "/nNome: ".$this->nome."/nRG: ".$this->RG."/nCPF: ".$this->CPF."/nData de nascimento: ".$this->dataNascimento->format('Y-m-d').
             "/nEmail: ".$this->email."/nEndereço: ".$this->endereco."/nTelefone: ".$this->telefone;
         }
 

@@ -74,9 +74,18 @@
         public function findByID(int $id){
             $sql = "SELECT * FROM exemplar WHERE id = :id";
             $stmt = $this->pdo->prepare($sql);
-            $exemplar = $stmt->execute([
+            $stmt->execute([
                 'id' => $id
             ]);
+
+            $registroExemplar = $stmt->fetch(PDO::FETCH_ASSOC);
+
+            $exemplar = new Exemplar();
+            $exemplar->setID($registroExemplar['id']);
+            $exemplar->setLivroId($registroExemplar['id_livro']);
+            $exemplar->setCodigoExemplar($registroExemplar['codigoExemplar']);
+            $exemplar->setStatus($registroExemplar['status']);
+            
             return $exemplar;
         }
 

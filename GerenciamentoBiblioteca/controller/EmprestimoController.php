@@ -48,7 +48,7 @@
         public function deletarEmprestimo(){
             $emprestimo = new Emprestimo();
             $emprestimoDAO = new EmprestimoDAO(Conexao::getPDO());
-            $emprestimo->setId($emprestimoDAO->findByID($_POST['id']));
+            $emprestimo->setId($emprestimoDAO->findByID($_POST['id'])->getId());
             $emprestimoDAO->delete($emprestimo);
         }
     }

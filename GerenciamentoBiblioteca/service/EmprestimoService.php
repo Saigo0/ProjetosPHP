@@ -23,18 +23,21 @@
                             $itemEmprestimo->setExemplar($exemplar);
                             $itemEmprestimo->getExemplar()->setStatus("Emprestado");
                             $emprestimo->addItemEmprestimo($itemEmprestimo);
-                            $emprestimo->setLeitor($leitor);
-                            $emprestimo->setDataEmprestimo($dataEmprestimo);
-                            $emprestimo->setDataDevolucao($dataDevolucao);
-                            $emprestimo->setStatus("Em andamento");
-                            $emprestimo->setDescricao("");
-                            $this->emprestimoDAO->create($emprestimo);
                         } else
                             throw new InvalidArgumentException("Exemplar não disponível");   
                     }
+                    
+                    $emprestimo->setLeitor($leitor);
+                    $emprestimo->setDataEmprestimo($dataEmprestimo);
+                    $emprestimo->setDataDevolucao($dataDevolucao);
+                    $emprestimo->setStatus("Em andamento");
+                    $emprestimo->setDescricao("");
+
+                    $this->emprestimoDAO->create($emprestimo);
                 } else
                     throw new InvalidArgumentException("Lista de exemplares ou leitor vazios ou nulos");   
-            }
+            } else
+                throw new InvalidArgumentException("O leitor possui multas pendentes, não é possível realizar o empréstimo");
         }
 
         public function devolverEmprestimo(Emprestimo $emprestimo){
