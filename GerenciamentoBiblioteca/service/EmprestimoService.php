@@ -3,12 +3,14 @@
         private EmprestimoDAO $emprestimoDAO;
         private ExemplarDAO $exemplarDAO;
         private LivroDAO $livroDAO;
+        private LeitorDAO $leitorDAO;
 
         public function __construct()
         {
             $this->emprestimoDAO = new EmprestimoDAO(Conexao::getPDO());
             $this->exemplarDAO = new ExemplarDAO(Conexao::getPDO());
             $this->livroDAO = new LivroDAO(Conexao::getPDO());
+            $this->leitorDAO = new LeitorDAO(Conexao::getPDO());
         }
 
         public function realizarEmprestimo(Leitor $leitor, array $listaExemplares){
@@ -22,6 +24,7 @@
                             $itemEmprestimo = new ItemEmprestimo();
                             $itemEmprestimo->setExemplar($exemplar);
                             $itemEmprestimo->getExemplar()->setStatus("Emprestado");
+                            $this->exemplarDAO->update($exemplar);
                             $emprestimo->addItemEmprestimo($itemEmprestimo);
                         } else
                             throw new InvalidArgumentException("Exemplar não disponível");   
@@ -42,7 +45,20 @@
 
         public function devolverEmprestimo(Emprestimo $emprestimo){
             if($emprestimo != null){
-                
+                $dataAtual = new DateTime();
+                $leitorEmprestimo = $this->leitorDAO->findByID($emprestimo->getLeitor()->getId());
+                if($dataAtual > $emprestimo->getDataDevolucao()){
+                    $leitorEmprestimo->setMultasPendentes(true);
+                    $this->leitorDAO->update($leitorEmprestimo);
+                }
+                foreach($emprestimo->getItensEmprestimo() as $itemEmprestimo){
+                    $itemEmprestimo->getExemplar()->setStatus("Disponivel");
+                    $this->exemplarDAO->update($itemEmprestimo->getExemplar());
+                }
+                $emprestimo->setStatus("Concluído");
+                $this->emprestimoDAO->update($emprestimo);
+            } else{
+                throw new InvalidArgumentException("Não há como realizar a devolução de um empréstimo nulo");
             }
         }
 

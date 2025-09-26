@@ -23,14 +23,6 @@
             return $this->id;
         }
 
-        public function getIdItemEmprestimo(){
-            
-        }
-
-        public function setIdItemEmprestimo(){
-
-        }
-
         public function getItensEmprestimo(){
             return $this->itensEmprestimo;
         }

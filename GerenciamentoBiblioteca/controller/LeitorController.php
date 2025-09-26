@@ -1,11 +1,15 @@
 <?php 
+    require_once '../service/AuthService.php';
     class LeitorController{
-        public function criarLeitor(){
+
+        
+        
+        public function cadastrarLeitor(){
             $leitor = new Leitor();
             $leitor->setNome($_POST['nome']);
             $leitor->setRG($_POST['RG']);
             $leitor->setCPF($_POST['CPF']);
-            $leitor->setDataNascimento($_POST['dataNascimento']);
+            $leitor->setDataNascimento(DateTime::createFromFormat('Y-m-d', $_POST['dataNascimento']));
             $leitor->setEmail($_POST['email']);
             $leitor->setEndereco($_POST['endereco']);
             $leitor->setTelefone($_POST['telefone']);
@@ -18,7 +22,7 @@
 
         public function atualizarLeitor(){
             $leitor = new Leitor();
-
+            $leitor->setId($_POST['id']);
             $leitor->setNome($_POST['nome']);
             $leitor->setRG($_POST['RG']);
             $leitor->setCPF($_POST['CPF']);

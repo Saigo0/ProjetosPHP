@@ -47,6 +47,9 @@
         $exemplar1 = new Exemplar();
         $leitorDAO = new LeitorDAO(Conexao::getPDO());
         $leitor = new Leitor();
+        $emprestimoService = new EmprestimoService();
+
+        /*
         $leitor = $leitorDAO->findByID(30);
 
         $exemplar = $exemplarDAO->findByCodigoExemplar("cod2");
@@ -58,22 +61,25 @@
         $exemplarDAO->update($exemplar);
         $exemplarDAO->update($exemplar1);
 
-        $emprestimoService = new EmprestimoService();
+        
 
         $listaExemplares = [];
         $listaExemplares [] = $exemplarDAO->findByCodigoExemplar("cod2");
         $listaExemplares [] = $exemplarDAO->findByCodigoExemplar("cod3");
 
-        $emprestimoService->realizarEmprestimo($leitor, $listaExemplares);
+        $emprestimoService->realizarEmprestimo($leitor, $listaExemplares);*/
+
+        $emprestimoService->devolverEmprestimo($emprestimoDAO->findByID(44));
 
         $emprestimos = $emprestimoDAO->listAll();
 
         foreach($emprestimos as $registroEmprestimo){
-            echo "ID: ". $registroEmprestimo->getId() ."<br>Id do leitor: ". $registroEmprestimo->getLeitor()->getId() . "<br>Data do empréstimo: " . $registroEmprestimo->getDataEmprestimo()->format('Y-m-d'). "<br>Data de devolução: " . $registroEmprestimo->getDataDevolucao()->format('Y-m-d') . "<br>Status: " . $registroEmprestimo->getStatus() . "<br> Descrição: " . $registroEmprestimo->getDescricao() . "<br> Itens do empréstimo: ";
+            echo "<br>ID do empréstimo: ". $registroEmprestimo->getId() ."<br>Id do leitor: ". $registroEmprestimo->getLeitor()->getId() . "<br>Data do empréstimo: " . $registroEmprestimo->getDataEmprestimo()->format('Y-m-d'). "<br>Data de devolução: " . $registroEmprestimo->getDataDevolucao()->format('Y-m-d') . "<br>Status: " . $registroEmprestimo->getStatus() . "<br> Descrição: " . $registroEmprestimo->getDescricao() . "<br><br> Itens do empréstimo: ";
 
             foreach($registroEmprestimo->getItensEmprestimo() as $itemEmprestimo){
-                echo "<br>ID do item do empréstimo: " .$itemEmprestimo->getId(). "<br>ID do exemplar: " . $itemEmprestimo->getIdExemplar() . "<br>ID do empréstimo: " . $itemEmprestimo->getIdEmprestimo() . "<br><br><br>";
+                echo "<br><br>[ID do item do empréstimo: " .$itemEmprestimo->getId(). "<br>ID do exemplar: " . $itemEmprestimo->getIdExemplar() . "<br>ID do empréstimo: " . $itemEmprestimo->getIdEmprestimo() . "]";
             }
+            echo "<br><br>";
         }
 
     ?>
