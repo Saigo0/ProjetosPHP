@@ -1,5 +1,9 @@
 <?php 
+
     require_once '../service/AuthService.php';
+    require_once '../model/Leitor.php';
+    require_once '../connection/Conexao.php';
+
     class LeitorController{
 
         
