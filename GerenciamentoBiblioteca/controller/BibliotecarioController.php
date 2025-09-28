@@ -1,4 +1,5 @@
 <?php 
+    require_once __DIR__ . '/../bootstrap.php';
     class BibliotecarioController{
         public function criarBibliotecario(){
             $bibliotecario = new Bibliotecario();

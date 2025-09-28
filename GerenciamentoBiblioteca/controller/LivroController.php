@@ -1,6 +1,5 @@
 <?php 
-    require_once 'DAO/LivroDAO.php';
-    require_once 'model/Livro.php';
+    require_once __DIR__ . '/../bootstrap.php';
 
     class LivroController{
 

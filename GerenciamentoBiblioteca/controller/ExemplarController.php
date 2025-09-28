@@ -1,4 +1,5 @@
 <?php 
+    require_once __DIR__ . '/../bootstrap.php';
     class ExemplarController{
         public function criarExemplar(){
             $exemplar = new Exemplar();
@@ -36,7 +37,7 @@
         public function deletarExemplar(){
             $exemplar = new Exemplar();
             $exemplarDAO = new ExemplarDAO(Conexao::getPDO());
-            $exemplar->setId($exemplarDAO->findById($_POST['id']));
+            $exemplar->setId($exemplarDAO->findById($_POST['id'])->getId());
             $exemplarDAO->delete($exemplar);
         }
     }

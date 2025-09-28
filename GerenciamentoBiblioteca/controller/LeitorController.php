@@ -1,8 +1,7 @@
 <?php 
 
-    require_once '../service/AuthService.php';
-    require_once '../model/Leitor.php';
-    require_once '../connection/Conexao.php';
+    require_once __DIR__ . '/../bootstrap.php';
+
 
     class LeitorController{
 
@@ -19,9 +18,12 @@
             $leitor->setTelefone($_POST['telefone']);
             $leitor->setLogin($_POST['login']);
             $leitor->setSenha($_POST['senha']);
+            $leitor->setNivelAcesso("Leitor");
+            $leitor->setMultasPendentes(0);
 
             $leitorDAO = new LeitorDAO(Conexao::getPDO());
             $leitorDAO->create($leitor);
+            header("Location: ../view/TelaInicialBibliotecario.html");
         }
 
         public function atualizarLeitor(){

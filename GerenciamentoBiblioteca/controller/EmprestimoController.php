@@ -1,10 +1,10 @@
 <?php 
+    require_once __DIR__ . '/../bootstrap.php';
     class EmprestimoController{
         public function criarEmprestimo() {
             $emprestimo = new Emprestimo();
             $emprestimoDAO = new EmprestimoDAO(Conexao::getPDO());
             $leitorDAO = new LeitorDAO(Conexao::getPDO());
-            $emprestimo->setIdItemEmprestimo($_POST['id_item_emprestimo']);
             $emprestimo->setLeitor($leitorDAO->findByID($_POST['id_leitor']));
             $emprestimo->setDataDevolucao($_POST['dataDevolucao']);
             $emprestimo->setStatus($_POST['status']);
@@ -16,7 +16,6 @@
             $emprestimo = new Emprestimo();
             $emprestimoDAO = new EmprestimoDAO(Conexao::getPDO());
             $leitorDAO = new LeitorDAO(Conexao::getPDO());
-            $emprestimo->setIdItemEmprestimo($_POST['id_item_emprestimo']);
             $emprestimo->setLeitor($leitorDAO->findByID($_POST['id_leitor']));
             $emprestimo->setDataDevolucao($_POST['dataDevolucao']);
             $emprestimo->setStatus($_POST['stauts']);
@@ -33,7 +32,6 @@
             foreach($arrayAsso as $registroEmprestimo){
                 $emprestimo = new Emprestimo();
                 $emprestimo->setId($registroEmprestimo['id']);
-                $emprestimo->setIdItemEmprestimo($registroEmprestimo['id_item_emprestimo']);
                 $emprestimo->setLeitor($leitorDAO->findByID($registroEmprestimo['id_leitor']));
                 $emprestimo->setDataEmprestimo($registroEmprestimo['dataEmprestimo']);
                 $emprestimo->setDataDevolucao($registroEmprestimo['dataDevolucao']);

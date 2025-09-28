@@ -4,8 +4,6 @@
 
         private ?int $id_pessoa = null;
         private string $login;
-
-
         private string $nivelAcesso;
         private string $senha;
         private DateTime $dataCadastro;
