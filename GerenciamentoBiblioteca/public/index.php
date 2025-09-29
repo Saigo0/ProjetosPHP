@@ -6,10 +6,12 @@ $action = $_GET['action'] ?? '';
 
 switch($action){
     case 'cadastrarLeitor':
-        $controller = new LeitorController();
+        $controller = new BibliotecarioController();
         $controller->cadastrarLeitor();
         break;
     
+    case 'loginBibliotecario':
+            
     default:
         echo "Ação inválida";
 }

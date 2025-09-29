@@ -14,6 +14,7 @@
         }
 
         public function autenticar(string $login, string $senhaDigitada){
+            
             $usuario = $this->usuarioDAO->findByLogin($login);
             $idUsuario = $usuario->getId();
 
@@ -22,25 +23,59 @@
                 return false;
             } 
 
-            if(password_verify($senhaDigitada, $usuario->getSenha())){
-                $nivelAcesso = mb_strtoupper($usuario->getNivelAcesso());
-                switch ($nivelAcesso){
+            if(!password_verify($senhaDigitada, $usuario->getSenha())){
+                throw new InvalidArgumentException("Verificação da senha aponta discrepância entre a senha digitada e a senha correta");
+            } 
+
+            if(session_status() !== PHP_SESSION_ACTIVE){
+                session_start([
+                    'cookie_httponly' => true,
+                    'cookie_secure' => !empty($_SERVER['HTTPS']) && $_SERVER['HTTPS'] !== 'off',
+                    'cookie_samesite' => 'Lax',
+                    'use_strict_mode' => true
+                ]);
+            }
+
+            session_regenerate_id(true);
+
+            $_SESSION['idUsuario'] = $usuario->getId();
+            $_SESSION['nivelAcesso'] = $usuario->getNivelAcesso();
+            $_SESSION['last_activity'] = time();
+            $_SESSION['created'] = time();
+
+            $nivelAcesso = mb_strtoupper($usuario->getNivelAcesso());
+            switch ($nivelAcesso){
                     case mb_strtoupper("LEITOR"):
-                        return $this->leitorDAO->findByIdUsuario($idUsuario);
+                        $leitor = $this->leitorDAO->findByIdUsuario($idUsuario);
+                        $_SESSION['idPerfil'] = $leitor->getId();
+                        break;
                     
                     case mb_strtoupper("BIBLIOTECARIO"):
-                        return $this->bibliotecarioDAO->findByIdUsuario($idUsuario);
+                        $bibliotecario = $this->bibliotecarioDAO->findByIdUsuario($idUsuario);
+                        $_SESSION['idPerfil'] = $bibliotecario->getId();
+                        break;
                     
                     case mb_strtoupper("ADMINISTRADOR"):
-                        return $this->administradorDAO->findByIdUsuario($idUsuario);
+                        $administrador = $this->administradorDAO->findByIdUsuario($idUsuario);
+                        $_SESSION['idPerfil'] = $administrador->getId();
+                        break;
 
                     default:
                         throw new RuntimeException("Nível de acesso não identificado");
-                }
-            } else{
-                echo "Erro password_verify";
             }
-            
+            return true;
+        }
+
+        public function logout(){
+            session_start();
+            $_SESSION = [];
+            if(ini_get('session.use_cookies')){
+                $p = session_get_cookie_params();
+                setcookie(session_name(), '', time() - 42000,
+                    $p['path'], $p['domain'], $p['secure'], $p['httponly']
+                );
+            }
+            session_destroy();
         }
     }
 
