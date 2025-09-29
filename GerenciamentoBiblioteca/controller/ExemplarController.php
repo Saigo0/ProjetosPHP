@@ -6,7 +6,7 @@
             $exemplarDAO = new ExemplarDAO(Conexao::getPDO());
 
             $exemplar->setCodigoExemplar($_POST['codExemplar']);
-            $exemplar->setStatus($_POST['statusExemplar']);
+            $exemplar->setLivroId($_POST['id_livro']);
 
             $exemplarDAO->create($exemplar);
         }
