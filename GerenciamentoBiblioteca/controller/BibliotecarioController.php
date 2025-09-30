@@ -3,10 +3,8 @@
     class BibliotecarioController{
 
         public function loginBibliotecario(){
-            $login = $_POST['login'];
-            $senha = $_POST['senha'];
-            $autenticacao = new AuthService();
-            $usuario = $autenticacao->autenticar($login, $senha);
+            header("Location: ../view/TelaPrincipalBibliotecario.php");
+            exit;
         }
 
         public function cadastrarLeitor(){
@@ -25,7 +23,7 @@
 
             $leitorDAO = new LeitorDAO(Conexao::getPDO());
             $leitorDAO->create($leitor);
-            header("Location: ../view/TelaInicialBibliotecario.html");
+            header("Location: ../view/TelaPrincipalBibliotecario.php");
             exit;
         }
 
@@ -73,4 +71,5 @@
         public function realizarEmprestimo(){
             
         }
+
     }

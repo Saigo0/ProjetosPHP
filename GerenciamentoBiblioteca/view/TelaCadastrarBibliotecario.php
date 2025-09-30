@@ -35,5 +35,6 @@
             <input type="submit" value = "Cadastrar">
         </form>
     </main>
+    
 </body>
 </html>

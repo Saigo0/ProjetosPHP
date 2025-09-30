@@ -37,7 +37,7 @@
     </main>
 
     <section>
-        <a href="TelaPrincipalBibliotecario.html">Voltar para a página inicial</a>
+        <a href="TelaPrincipalBibliotecario.php">Voltar para a página inicial</a>
     </section>
 </body>
 </html>

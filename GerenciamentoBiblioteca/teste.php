@@ -7,35 +7,7 @@
 <body>
 
     <?php
-        require_once "connection/Conexao.php";
-        require_once "connection/PDO.php";
-        require_once "model/Usuario.php";
-        require_once "model/Pessoa.php";
-        require_once "model/Livro.php";
-        require_once "model/Leitor.php";
-        require_once "model/ItemEmprestimo.php";
-        require_once "model/Exemplar.php";
-        require_once "model/Emprestimo.php";
-        require_once "model/Bibliotecario.php";
-        require_once "model/Administrador.php";
-
-        require_once "DAO/UsuarioDAO.php";
-        require_once "DAO/PessoaDAO.php";
-        require_once "DAO/LivroDAO.php";
-        require_once "DAO/LeitorDAO.php";
-        
-        require_once "DAO/ExemplarDAO.php";
-        require_once "DAO/EmprestimoDAO.php";
-        require_once "DAO/BibliotecarioDAO.php";
-        require_once "DAO/AdministradorDAO.php";
-
-        require_once "controller/UsuarioController.php";
-        require_once "controller/LeitorController.php";
-        require_once "controller/LivroController.php";
-        require_once "controller/EmprestimoController.php";
-
-        require_once "service/AuthService.php";
-        require_once "service/EmprestimoService.php";
+        require_once __DIR__ . "/bootstrap.php";
 
 
         $pdo = new PDO("mysql:host=localhost;dbname=gerenciamentobiblioteca", "root", "");
@@ -48,7 +20,22 @@
         $leitorDAO = new LeitorDAO(Conexao::getPDO());
         $leitor = new Leitor();
         $emprestimoService = new EmprestimoService();
-
+        $bibliotecarioDAO = new BibliotecarioDAO(Conexao::getPDO());
+        $bibliotecario = new Bibliotecario();
+        $bibliotecario->setNome("Rivaldo");
+        $bibliotecario->setRG("890098089");
+        $bibliotecario->setCPF("08744978934");
+        $bibliotecario->setDataNascimento(new DateTime());
+        $bibliotecario->setEmail("sdaosido@gmail.com");
+        $bibliotecario->setEndereco("rararasd");
+        $bibliotecario->setTelefone("78978786767");
+        $bibliotecario->setLogin("riv234");
+        $bibliotecario->setSenha("riv23456");
+        $bibliotecario->setNivelAcesso("BIBLIOTECARIO");
+        $bibliotecario->setDataCadastro(new DateTime());
+        $bibliotecario->setRegistroCRB("registro");
+        $bibliotecario->setValorCRB(234);
+        $bibliotecarioDAO->create($bibliotecario);
         /*
         $leitor = $leitorDAO->findByID(30);
 
@@ -69,18 +56,9 @@
 
         $emprestimoService->realizarEmprestimo($leitor, $listaExemplares);*/
 
-        $emprestimoService->devolverEmprestimo($emprestimoDAO->findByID(44));
+        
 
-        $emprestimos = $emprestimoDAO->listAll();
-
-        foreach($emprestimos as $registroEmprestimo){
-            echo "<br>ID do empréstimo: ". $registroEmprestimo->getId() ."<br>Id do leitor: ". $registroEmprestimo->getLeitor()->getId() . "<br>Data do empréstimo: " . $registroEmprestimo->getDataEmprestimo()->format('Y-m-d'). "<br>Data de devolução: " . $registroEmprestimo->getDataDevolucao()->format('Y-m-d') . "<br>Status: " . $registroEmprestimo->getStatus() . "<br> Descrição: " . $registroEmprestimo->getDescricao() . "<br><br> Itens do empréstimo: ";
-
-            foreach($registroEmprestimo->getItensEmprestimo() as $itemEmprestimo){
-                echo "<br><br>[ID do item do empréstimo: " .$itemEmprestimo->getId(). "<br>ID do exemplar: " . $itemEmprestimo->getIdExemplar() . "<br>ID do empréstimo: " . $itemEmprestimo->getIdEmprestimo() . "]";
-            }
-            echo "<br><br>";
-        }
+        
 
     ?>
 

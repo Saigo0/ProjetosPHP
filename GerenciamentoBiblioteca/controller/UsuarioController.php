@@ -37,15 +37,15 @@
             return $usuarioDAO->delete($usuario);
         }
 
-        public function autenticarUsuario(){
-            $usuarioDao = new UsuarioDAO(Conexao::getPDO());
-            $serviceAuteticacao = new AuthService($usuarioDao);
-            $login = $_POST['login'];
-            $senha = $_POST['senha'];
-            if($serviceAuteticacao->autenticar($login, $senha)){
-                $_SESSION['usuario'] = $login;
-            }
+
+        public function deslogarUsuario(){
+            $serviceAutenticacao = new AuthService();
+            $serviceAutenticacao->logout();
+            header("Location: ../view/TelaLogin.php");
+            exit;
         }
+
+        
     }
 
 ?>

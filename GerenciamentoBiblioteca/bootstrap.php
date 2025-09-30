@@ -17,7 +17,6 @@
  require_once __DIR__ . '/DAO/ExemplarDAO.php';
  require_once __DIR__ . '/DAO/ItemEmprestimoDAO.php';
  require_once __DIR__ . '/DAO/LivroDAO.php';
- require_once __DIR__ . '/controller/LeitorController.php';
  require_once __DIR__ . '/controller/AdministradorController.php';
  require_once __DIR__ . '/controller/BibliotecarioController.php';
  require_once __DIR__ . '/controller/EmprestimoController.php';

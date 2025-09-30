@@ -20,7 +20,7 @@
 
             
             if($usuario == null){
-                return false;
+                throw new InvalidArgumentException("Usuário nulo");
             } 
 
             if(!password_verify($senhaDigitada, $usuario->getSenha())){
@@ -48,16 +48,19 @@
                     case mb_strtoupper("LEITOR"):
                         $leitor = $this->leitorDAO->findByIdUsuario($idUsuario);
                         $_SESSION['idPerfil'] = $leitor->getId();
+                        
                         break;
                     
                     case mb_strtoupper("BIBLIOTECARIO"):
                         $bibliotecario = $this->bibliotecarioDAO->findByIdUsuario($idUsuario);
                         $_SESSION['idPerfil'] = $bibliotecario->getId();
+                        
                         break;
                     
                     case mb_strtoupper("ADMINISTRADOR"):
                         $administrador = $this->administradorDAO->findByIdUsuario($idUsuario);
                         $_SESSION['idPerfil'] = $administrador->getId();
+                        
                         break;
 
                     default:
@@ -67,7 +70,6 @@
         }
 
         public function logout(){
-            session_start();
             $_SESSION = [];
             if(ini_get('session.use_cookies')){
                 $p = session_get_cookie_params();

@@ -17,5 +17,8 @@
             <input type="submit" name="Cadastrar" id="Cadastrar" value = "Cadastrar">
         </form>
     </main>
+    <section>
+        <a href="TelaPrincipalBibliotecario.php">Voltar para a página inicial</a>
+    </section>
 </body>
 </html>
