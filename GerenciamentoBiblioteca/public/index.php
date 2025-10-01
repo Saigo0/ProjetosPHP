@@ -43,6 +43,7 @@ switch($action){
         break;
 
     default:
+        echo "Ação não reconhecida";
         
             
 }
