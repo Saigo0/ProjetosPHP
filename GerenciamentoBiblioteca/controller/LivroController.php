@@ -14,6 +14,9 @@
 
             $livroDAO = new LivroDAO(Conexao::getPDO());
             $livroDAO->create($livro);
+
+            header("Location: ../view/TelaCadastrarLivro.php");
+            exit;
         }
 
         public function atualizarLivro(){

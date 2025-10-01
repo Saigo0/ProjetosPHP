@@ -20,22 +20,20 @@
         $leitorDAO = new LeitorDAO(Conexao::getPDO());
         $leitor = new Leitor();
         $emprestimoService = new EmprestimoService();
-        $bibliotecarioDAO = new BibliotecarioDAO(Conexao::getPDO());
-        $bibliotecario = new Bibliotecario();
-        $bibliotecario->setNome("Rivaldo");
-        $bibliotecario->setRG("890098089");
-        $bibliotecario->setCPF("08744978934");
-        $bibliotecario->setDataNascimento(new DateTime());
-        $bibliotecario->setEmail("sdaosido@gmail.com");
-        $bibliotecario->setEndereco("rararasd");
-        $bibliotecario->setTelefone("78978786767");
-        $bibliotecario->setLogin("riv234");
-        $bibliotecario->setSenha("riv23456");
-        $bibliotecario->setNivelAcesso("BIBLIOTECARIO");
-        $bibliotecario->setDataCadastro(new DateTime());
-        $bibliotecario->setRegistroCRB("registro");
-        $bibliotecario->setValorCRB(234);
-        $bibliotecarioDAO->create($bibliotecario);
+        $administradorDAO = new AdministradorDAO(Conexao::getPDO());
+        $administrador = new Administrador();
+        $administrador->setNome("Gus");
+        $administrador->setRG("890098089");
+        $administrador->setCPF("08744978934");
+        $administrador->setDataNascimento(new DateTime());
+        $administrador->setEmail("sdaosido@gmail.com");
+        $administrador->setEndereco("rararasd");
+        $administrador->setTelefone("78978786767");
+        $administrador->setLogin("gus234");
+        $administrador->setSenha("gus23456");
+        $administrador->setNivelAcesso("ADMINISTRADOR");
+        $administrador->setDataCadastro(new DateTime());
+        $administradorDAO->create($administrador);
         /*
         $leitor = $leitorDAO->findByID(30);
 

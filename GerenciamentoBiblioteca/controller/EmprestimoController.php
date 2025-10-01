@@ -49,5 +49,13 @@
             $emprestimo->setId($emprestimoDAO->findByID($_POST['id'])->getId());
             $emprestimoDAO->delete($emprestimo);
         }
+
+        public function realizarEmprestimo(){
+
+        }
+
+        public function devolverEmprestimo(){
+
+        }
     }
 

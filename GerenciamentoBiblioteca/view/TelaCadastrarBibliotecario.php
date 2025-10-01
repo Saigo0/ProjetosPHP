@@ -35,6 +35,8 @@
             <input type="submit" value = "Cadastrar">
         </form>
     </main>
+    <section>
+        <a href="TelaPrincipalAdministrador.php">Voltar para a página inicial</a>
     
 </body>
 </html>

@@ -43,10 +43,34 @@
         }
 
         public function listAll(){
-            $sql = "SELECT * FROM bibliotecario";
+            $sql = "SELECT b.*, u.id_pessoa, u.login, u.senha, u.nivelAcesso, u.dataCadastro, p.nome, p.RG, p.CPF, p.dataNascimento, p.email, p.endereco, p.telefone from bibliotecario b
+            JOIN usuario u on u.id = b.id_usuario
+            JOIN pessoa p on p.id = u.id_pessoa";
+
             $stmt = $this->pdo->query($sql);
 
-            $bibliotecarios = $stmt->execute([PDO::FETCH_ASSOC]);
+            $stmt->execute();
+            $arrayAssoBibliotecario = $stmt->fetchAll(PDO::FETCH_ASSOC);
+            foreach($arrayAssoBibliotecario as $registroBibliotecario){
+                $bibliotecario = new Bibliotecario();
+                $bibliotecario->setId($registroBibliotecario['id']);
+                $bibliotecario->setIdPessoa($registroBibliotecario['id_pessoa']);
+                $bibliotecario->setNome($registroBibliotecario['nome']);
+                $bibliotecario->setRG($registroBibliotecario['RG']);
+                $bibliotecario->setCPF($registroBibliotecario['CPF']);
+                $bibliotecario->setDataNascimento(new DateTime($registroBibliotecario['dataNascimento']));
+                $bibliotecario->setEmail($registroBibliotecario['email']);
+                $bibliotecario->setEndereco($registroBibliotecario['endereco']);
+                $bibliotecario->setTelefone($registroBibliotecario['telefone']);
+                $bibliotecario->setLogin($registroBibliotecario['login']);
+                $bibliotecario->setSenha($registroBibliotecario['senha']);
+                $bibliotecario->setDataCadastro(new DateTime($registroBibliotecario['dataCadastro']));
+                $bibliotecario->setNivelAcesso($registroBibliotecario['nivelAcesso']);
+                $bibliotecario->setIdUsuario($registroBibliotecario['id_usuario']);
+                $bibliotecario->setRegistroCRB($registroBibliotecario['registroCRB']);
+                $bibliotecario->setValorCRB($registroBibliotecario['valorCRB']);
+                $bibliotecarios []= $bibliotecario;
+            }
 
             return $bibliotecarios;
         }

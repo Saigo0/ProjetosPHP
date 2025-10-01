@@ -6,7 +6,6 @@ $action = strtolower(trim($_GET['action'] ?? ''));
 $login = $_POST['loginUsuario'] ?? '';
 $senha = $_POST['senhaUsuario'] ?? '';
 
-var_dump($action);
 
 session_start();
 
@@ -28,7 +27,8 @@ switch($action){
                 exit;
             } 
             if($usuario->getNivelAcesso() === 'ADMINISTRADOR'){
-                header("Location: ../view/TelaPrincipalAdministrador.php");
+                $controller = new AdministradorController();
+                $controller->loginAdministrador();
                 exit;
             }
         } else{
@@ -42,8 +42,36 @@ switch($action){
         $controller->deslogarUsuario();
         break;
 
+    case 'cadastrarLivro':
+        $controller = new LivroController();
+        $controller->criarLivro();
+        break;
+
+    case 'cadastrarExemplar':
+        $controller = new ExemplarController();
+        $controller->criarExemplar();
+        break;
+    
+    case 'realizarEmprestimo':
+        $controller = new EmprestimoController();
+        $controller->realizarEmprestimo();
+        break;
+       
+    case 'devolverEmprestimo':
+        $controller = new EmprestimoController();
+        $controller->devolverEmprestimo();
+        break;
+
+    case 'cadastrarBibliotecario':
+        $controller = new AdministradorController();
+        $controller->criarBibliotecario();
+        break;
+
+    case 'excluirBibliotecario':
+        $controller = new AdministradorController();
+        $controller->deletarBibliotecario();
+        break;
+
     default:
-        echo "Ação não reconhecida";
-        
-            
+        echo "Default index";
 }

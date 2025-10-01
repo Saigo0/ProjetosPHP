@@ -9,6 +9,9 @@
             $exemplar->setLivroId($_POST['id_livro']);
 
             $exemplarDAO->create($exemplar);
+
+            header("Location: ../view/TelaCadastrarExemplar.php");
+            exit;
         }
 
         public function atualizarExemplar(){
