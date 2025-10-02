@@ -14,6 +14,10 @@
             exit;
         }
 
+        public function telaCadastrarExemplar(){
+            require __DIR__ . '/../view/TelaCadastrarExemplar.php';
+        }
+        
         public function atualizarExemplar(){
             $exemplar = new Exemplar();
             $exemplarDAO = new ExemplarDAO(Conexao::getPDO());

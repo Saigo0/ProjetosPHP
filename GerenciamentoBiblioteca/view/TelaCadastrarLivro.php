@@ -28,7 +28,7 @@
         </form>
     </main>
     <section>
-        <a href="TelaPrincipalBibliotecario.php">Voltar para a página inicial</a>
+        <a href="index.php?action=telaprincipalbibliotecario">Voltar para a página inicial</a>
     </section>
 </body>
 </html>

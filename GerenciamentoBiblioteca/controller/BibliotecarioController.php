@@ -2,9 +2,16 @@
     require_once __DIR__ . '/../bootstrap.php';
     class BibliotecarioController{
 
-        public function loginBibliotecario(){
-            header("Location: ../view/TelaPrincipalBibliotecario.php");
-            exit;
+        public function telaPrincipalBibliotecario(){
+            require __DIR__ . '/../view/TelaPrincipalBibliotecario.php';
+        }
+
+        public function telaGerenciarBibliotecarios(){
+            require __DIR__ . '/../view/TelaGerenciarBibliotecarios.php';
+        }
+
+        public function telaCadastrarLeitor(){
+            require __DIR__ . '/../view/TelaCadastrarLeitor.php';
         }
 
         public function cadastrarLeitor(){
@@ -23,7 +30,7 @@
 
             $leitorDAO = new LeitorDAO(Conexao::getPDO());
             $leitorDAO->create($leitor);
-            header("Location: ../view/TelaPrincipalBibliotecario.php");
+            header("Location: ../public/index.php?action=telaprincipalbibliotecario");
             exit;
         }
 

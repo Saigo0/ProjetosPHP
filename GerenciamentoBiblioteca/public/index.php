@@ -23,12 +23,12 @@ switch($action){
         if($authService->autenticar($login, $senha)){
             $usuario = $usuarioDAO->findByID($_SESSION['idUsuario']);
             if($usuario->getNivelAcesso() === 'BIBLIOTECARIO'){
-                $controller->loginBibliotecario();
+                $controller->telaPrincipalBibliotecario();
                 exit;
             } 
             if($usuario->getNivelAcesso() === 'ADMINISTRADOR'){
                 $controller = new AdministradorController();
-                $controller->loginAdministrador();
+                $controller->telaPrincipalAdministrador();
                 exit;
             }
         } else{
@@ -37,41 +37,86 @@ switch($action){
         
         break;
 
+    case 'telacadastrarleitor':
+        $controller = new BibliotecarioController();
+        $controller->telaCadastrarLeitor();
+        break;
+    
+    case 'telalogin':
+        $controller = new AuthService();
+        $controller->telaLogin();
+        break;
+
     case 'logout':
         $controller = new UsuarioController();
         $controller->deslogarUsuario();
         break;
 
-    case 'cadastrarLivro':
+    case 'cadastrarlivro':
         $controller = new LivroController();
         $controller->criarLivro();
         break;
 
-    case 'cadastrarExemplar':
+    case 'cadastrarexemplar':
         $controller = new ExemplarController();
         $controller->criarExemplar();
         break;
     
-    case 'realizarEmprestimo':
+    case 'telacadastrarlivro':
+        $controller = new LivroController();
+        $controller->telaCadastrarLivro();
+        break;
+    
+    case 'realizaremprestimo':
         $controller = new EmprestimoController();
         $controller->realizarEmprestimo();
         break;
        
-    case 'devolverEmprestimo':
+    case 'devolveremprestimo':
         $controller = new EmprestimoController();
         $controller->devolverEmprestimo();
         break;
 
-    case 'cadastrarBibliotecario':
+    case 'cadastrarbibliotecario':
         $controller = new AdministradorController();
         $controller->criarBibliotecario();
         break;
 
-    case 'excluirBibliotecario':
+    case 'excluirbibliotecario':
         $controller = new AdministradorController();
         $controller->deletarBibliotecario();
         break;
 
+    case 'gerenciarbibliotecarios':
+        $controller = new AdministradorController();
+        $controller->listarBibliotecarios();
+        break;
+
+    case 'telacadastrarbibliotecario':
+        
+        break;
+    
+    case 'telacadastrarexemplar':
+        $controller = new ExemplarController();
+        $controller->telaCadastrarExemplar();
+        break;
+
+    case 'telaprincipaladministrador':
+        $controller = new AdministradorController();
+        $controller->telaPrincipalAdministrador();
+        break;
+
+    case 'telaprincipalbibliotecario':
+        $controller = new BibliotecarioController();
+        $controller->telaPrincipalBibliotecario();
+        break;
+    
+    case 'telagerenciarbibliotecarios':
+        $controller = new BibliotecarioController();
+        $controller->telaGerenciarBibliotecarios();
+        break;
+
     default:
         echo "Default index";
+        break;
 }

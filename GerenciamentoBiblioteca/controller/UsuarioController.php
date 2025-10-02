@@ -41,8 +41,7 @@
         public function deslogarUsuario(){
             $serviceAutenticacao = new AuthService();
             $serviceAutenticacao->logout();
-            header("Location: ../view/TelaLogin.php");
-            exit;
+            header("Location: ../public/index.php?action=telalogin");
         }
 
         

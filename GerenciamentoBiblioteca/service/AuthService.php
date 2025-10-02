@@ -13,6 +13,13 @@
             $this->administradorDAO = new AdministradorDAO(Conexao::getPDO());
         }
 
+        public function telaLogin(){
+            require __DIR__ . '/../view/TelaLogin.php';
+        }
+
+        public function verifLogin(string $login, string $senha){
+
+        }
         public function autenticar(string $login, string $senhaDigitada){
             
             $usuario = $this->usuarioDAO->findByLogin($login);

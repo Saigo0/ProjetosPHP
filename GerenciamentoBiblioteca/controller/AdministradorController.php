@@ -2,9 +2,8 @@
     require_once __DIR__ . '/../bootstrap.php';
     class AdministradorController{
         
-        public function loginAdministrador(){
-            header("Location: ../view/TelaPrincipalAdministrador.php");
-            exit;
+        public function telaPrincipalAdministrador(){
+            require __DIR__ . '/../view/TelaPrincipalAdministrador.php';
         }
         public function criarAdministrador(){
             $administrador = new Administrador();
@@ -57,7 +56,7 @@
             $bibliotecario->setValorCRB($_POST['valorCRB']);
             $bibliotecarioDAO->create($bibliotecario);
 
-            header("Location: ../view/TelaGerenciarBibliotecarios.php");
+            header("Location: ../public/index.php?action=gerenciarBibliotecarios");
             exit;
         }
 
@@ -74,9 +73,11 @@
             $bibliotecarioDAO->update($bibliotecario);
         }
 
-        public function listarBilbiotecarios(){
+        public function listarBibliotecarios(){
             $bibliotecarioDAO = new BibliotecarioDAO(Conexao::getPDO());
             return $bibliotecarioDAO->listAll();
+
+            require __DIR__ . '/../view/TelaGerenciarBibliotecarios.php';
         }
 
         public function deletarBibliotecario(){

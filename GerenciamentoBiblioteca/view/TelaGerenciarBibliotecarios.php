@@ -12,11 +12,9 @@
 
     <?php 
         require_once __DIR__ . '/../bootstrap.php';
-        $administradorController = new AdministradorController();
-        $bibliotecarios = $administradorController->listarBilbiotecarios();
     ?>
     <main>
-        <a href="TelaCadastrarBibliotecario.php">Novo Bibliotecário</a>
+        <a href="../public/index.php?action=telacadastrarbibliotecario">Novo Bibliotecário</a>
         <table>
             <thead>
                 <tr>

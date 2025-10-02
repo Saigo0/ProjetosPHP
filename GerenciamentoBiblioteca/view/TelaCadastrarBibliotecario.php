@@ -36,7 +36,7 @@
         </form>
     </main>
     <section>
-        <a href="TelaPrincipalAdministrador.php">Voltar para a página inicial</a>
+        <a href="index.php?action=telaprincipaladministrador">Voltar para a página inicial</a>
     
 </body>
 </html>

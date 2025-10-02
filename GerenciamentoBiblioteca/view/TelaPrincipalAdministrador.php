@@ -25,7 +25,7 @@
                 <h2>Funções Administrador</h2>
                 <section>
                     <h3>Bibliotecários</h3>
-                    <button onclick="window.location.assign('TelaGerenciarBibliotecarios.php')">Gerenciar bibliotecários</button>
+                    <button onclick="window.location.assign('../public/index.php?action=telagerenciarbibliotecarios')">Gerenciar bibliotecários</button>
                 </section>
                         
             </section>

@@ -19,6 +19,10 @@
             exit;
         }
 
+        public function telaCadastrarLivro(){
+            require __DIR__ . '/../view/TelaCadastrarLivro.php';
+        }
+
         public function atualizarLivro(){
             $livro = new Livro();
             $livro->setTitulo($_POST['titulo']);

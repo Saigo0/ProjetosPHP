@@ -25,9 +25,9 @@
         
     </header>
     <main>
-        <section><a href="TelaCadastrarLeitor.php">Cadastrar novo leitor</a></section>
-        <section><a href="TelaCadastrarLivro.php">Cadastrar novo livro</a></section>
-        <section><a href="TelaCadastrarExemplar.php">Cadastrar novo exemplar</a></section>
+        <section><a href="index.php?action=telacadastrarleitor">Cadastrar novo leitor</a></section>
+        <section><a href="index.php?action=telacadastrarlivro">Cadastrar novo livro</a></section>
+        <section><a href="index.php?action=telacadastrarexemplar">Cadastrar novo exemplar</a></section>
     </main>
 
     <div>
