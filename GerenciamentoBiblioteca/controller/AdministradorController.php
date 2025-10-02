@@ -36,14 +36,7 @@
             return $administradorDAO->listAll();
         }
 
-        public function editarBibliotecario(){
-            $bibliotecario = new Bibliotecario();
-            $bibliotecarioDAO = new BibliotecarioDAO(Conexao::getPDO());
-            $bibliotecario->setId($_GET['id']);
-            $bibliotecario = $bibliotecarioDAO->findByID($bibliotecario->getId());
-
-            require __DIR__ . '/../view/TelaEditarBibliotecario.php';
-        }
+        
 
         public function deletarAdministrador(){
             $administrador = new Administrador();
@@ -70,6 +63,15 @@
 
             header("Location: ../public/index.php?action=gerenciarBibliotecarios");
             exit;
+        }
+
+        public function editarBibliotecario(){
+            $bibliotecario = new Bibliotecario();
+            $bibliotecarioDAO = new BibliotecarioDAO(Conexao::getPDO());
+            $bibliotecario->setId($_GET['id']);
+            $bibliotecario = $bibliotecarioDAO->findByID($bibliotecario->getId());
+
+            require __DIR__ . '/../view/TelaEditarBibliotecario.php';
         }
 
         public function atualizarBibliotecario(){
