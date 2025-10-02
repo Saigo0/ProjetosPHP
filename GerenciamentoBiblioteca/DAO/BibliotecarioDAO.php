@@ -11,18 +11,45 @@
 
         public function create(Bibliotecario $bibliotecario){
 
-            $usuario = $bibliotecario;
-            $idUsuario = $this->usuarioDAO->create($usuario);
+             $sqlPessoa = "INSERT INTO pessoa (nome, RG, CPF, dataNascimento, email, endereco, telefone) VALUES (:nome, :RG, :CPF, :dataNascimento, :email, :endereco, :telefone)";
+
+            $stmt = $this->pdo->prepare($sqlPessoa);
+            $stmt->execute([
+                'nome' => $bibliotecario->getNome(),
+                'RG' => $bibliotecario->getRG(),
+                'CPF' => $bibliotecario->getCPF(),
+                'dataNascimento' => $bibliotecario->getDataNascimento()->format('Y-m-d'),
+                'email' => $bibliotecario->getEmail(),
+                'endereco' => $bibliotecario->getEndereco(),
+                'telefone' => $bibliotecario->getTelefone()
+            ]);
+
+            $idPessoa = (int)$this->pdo->lastInsertId();
+            $bibliotecario->setIdPessoa($idPessoa);
             
+            $sqlUsuario = "INSERT INTO usuario (id_pessoa, login, nivelAcesso, senha, dataCadastro) VALUES (:id_pessoa, :login, :nivelAcesso, :senha, :dataCadastro)";
+
+            $stmt = $this->pdo->prepare($sqlUsuario);
+            $stmt ->execute([
+                'id_pessoa' => $bibliotecario->getIdPessoa(),
+                'login' => $bibliotecario->getLogin(),
+                'nivelAcesso' => $bibliotecario->getNivelAcesso(),
+                'senha' => $bibliotecario->getSenha(),
+                'dataCadastro' => $bibliotecario->getDataCadastro()->format('Y-m-d')
+            ]);
+
+            $idUsuario = (int)$this->pdo->lastInsertId();
             $bibliotecario->setIdUsuario($idUsuario);
 
-            $sql = "INSERT INTO bibliotecario (id_usuario, registroCRB, valorCRB) VALUES (:id_usuario, :registroCRB, :valorCRB)";
-            $stmt = $this->pdo->prepare($sql);
+            $sqlLeitor = "INSERT INTO bibliotecario (id_usuario, registroCRB, valorCRB) VALUES (:id_usuario, :registroCRB, :valorCRB)";
+            $stmt = $this->pdo->prepare($sqlLeitor);
             $stmt->execute([
                 'id_usuario' => $bibliotecario->getIdUsuario(),
                 'registroCRB' => $bibliotecario->getRegistroCRB(),
-                'valorCRB' => $bibliotecario ->getValorCRB()
+                'valorCRB' => $bibliotecario->getValorCRB()
             ]);
+
+            return $this->pdo->lastInsertId();
         }
 
         public function update(Bibliotecario $bibliotecario){
@@ -76,7 +103,7 @@
         }
 
         public function findByID(int $id){
-            $sql = "SELECT * FROM WHERE id = :id";
+            $sql = "SELECT * FROM bibliotecario WHERE id = :id";
             $stmt = $this->pdo->prepare($sql);
             return $stmt->execute(['id' => $id]);
         }
@@ -144,7 +171,7 @@
         }
 
         public function delete(Bibliotecario $bibliotecario){
-            $sql = "DELETE FROM bilbiotecario WHERE id = :id";
+            $sql = "DELETE FROM bibliotecario WHERE id = :id";
             $stmt = $this->pdo->prepare($sql);
             $stmt->execute([
                 'id' => $bibliotecario->getId()

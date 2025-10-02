@@ -6,10 +6,6 @@
             require __DIR__ . '/../view/TelaPrincipalBibliotecario.php';
         }
 
-        public function telaGerenciarBibliotecarios(){
-            require __DIR__ . '/../view/TelaGerenciarBibliotecarios.php';
-        }
-
         public function telaCadastrarLeitor(){
             require __DIR__ . '/../view/TelaCadastrarLeitor.php';
         }

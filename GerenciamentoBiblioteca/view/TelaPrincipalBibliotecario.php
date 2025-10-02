@@ -34,6 +34,6 @@
         <form action="../public/index.php?action=logout" method = "post">
             <input type="submit" name="logout" id="logout" value="Fazer logout">
         </form>
-</div>
+    </div>
 </body>
 </html>

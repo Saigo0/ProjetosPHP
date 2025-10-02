@@ -36,6 +36,15 @@
             return $administradorDAO->listAll();
         }
 
+        public function editarBibliotecario(){
+            $bibliotecario = new Bibliotecario();
+            $bibliotecarioDAO = new BibliotecarioDAO(Conexao::getPDO());
+            $bibliotecario->setId($_GET['id']);
+            $bibliotecario = $bibliotecarioDAO->findByID($bibliotecario->getId());
+
+            require __DIR__ . '/../view/TelaEditarBibliotecario.php';
+        }
+
         public function deletarAdministrador(){
             $administrador = new Administrador();
             $administradorDAO = new AdministradorDAO(Conexao::getPDO());
@@ -48,12 +57,15 @@
             $bibliotecario->setNome($_POST['nome']);
             $bibliotecario->setRG($_POST['RG']);
             $bibliotecario->setCPF($_POST['CPF']);
-            $bibliotecario->setDataNascimento($_POST['dataNascimento']);
+            $bibliotecario->setDataNascimento(DateTime::createFromFormat('Y-m-d', $_POST['dataNascimento']));
             $bibliotecario->setEmail($_POST['email']);
             $bibliotecario->setEndereco($_POST['endereco']);
             $bibliotecario->setTelefone($_POST['telefone']);
             $bibliotecario->setRegistroCRB($_POST['registroCRB']);
             $bibliotecario->setValorCRB($_POST['valorCRB']);
+            $bibliotecario->setLogin($_POST['login']);
+            $bibliotecario->setSenha($_POST['senha']);
+            $bibliotecario->setNivelAcesso("BIBLIOTECARIO");
             $bibliotecarioDAO->create($bibliotecario);
 
             header("Location: ../public/index.php?action=gerenciarBibliotecarios");
@@ -66,7 +78,7 @@
             $bibliotecario->setNome($_POST['nome']);
             $bibliotecario->setRG($_POST['RG']);
             $bibliotecario->setCPF($_POST['CPF']);
-            $bibliotecario->setDataNascimento($_POST['dataNascimento']);
+            $bibliotecario->setDataNascimento(new DateTime($_POST['dataNascimento']));
             $bibliotecario->setEmail($_POST['email']);
             $bibliotecario->setEndereco($_POST['endereco']);
             $bibliotecario->setTelefone($_POST['telefone']);
@@ -75,7 +87,7 @@
 
         public function listarBibliotecarios(){
             $bibliotecarioDAO = new BibliotecarioDAO(Conexao::getPDO());
-            return $bibliotecarioDAO->listAll();
+            $bibliotecarios = $bibliotecarioDAO->listAll();
 
             require __DIR__ . '/../view/TelaGerenciarBibliotecarios.php';
         }
@@ -84,7 +96,10 @@
             $bibliotecario = new Bibliotecario();
             $bibliotecarioDAO = new BibliotecarioDAO(Conexao::getPDO());
 
-            $bibliotecario->setId($bibliotecarioDAO->findByID($_POST['id']));
+            $bibliotecario->setId($bibliotecarioDAO->findByID($_GET['id']));
             $bibliotecarioDAO->delete($bibliotecario);
+
+            header("Location: ../public/index.php?action=gerenciarBibliotecarios");
+            exit;
         }
     }

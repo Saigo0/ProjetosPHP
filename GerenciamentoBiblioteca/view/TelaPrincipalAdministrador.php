@@ -14,7 +14,7 @@
         }
 
         if(!isset($_SESSION['idUsuario']) || $_SESSION['nivelAcesso'] !== 'ADMINISTRADOR'){
-            header("Location: TelaLogin.php");
+            header("Location: ../public/index?action=telalogin");
             exit;
         }
     ?>
@@ -25,7 +25,7 @@
                 <h2>Funções Administrador</h2>
                 <section>
                     <h3>Bibliotecários</h3>
-                    <button onclick="window.location.assign('../public/index.php?action=telagerenciarbibliotecarios')">Gerenciar bibliotecários</button>
+                    <button onclick="window.location.assign('../public/index.php?action=gerenciarbibliotecarios')">Gerenciar bibliotecários</button>
                 </section>
                         
             </section>
@@ -52,6 +52,12 @@
                         
                     </section>
             </section>
+
+            <div>
+                <form action="../public/index.php?action=logout" method = "post">
+                    <input type="submit" name="logout" id="logout" value="Fazer logout">
+                </form>
+            </div>
            
         
     

@@ -87,13 +87,23 @@ switch($action){
         $controller->deletarBibliotecario();
         break;
 
+    case 'editarbibliotecario':
+        $controller = new AdministradorController();
+        $controller->editarBibliotecario();
+        break;
+
+    case 'atualizarbibliotecario':
+        $controller = new AdministradorController();
+        $controller->atualizarBibliotecario();
+        break;
+
     case 'gerenciarbibliotecarios':
         $controller = new AdministradorController();
         $controller->listarBibliotecarios();
         break;
 
     case 'telacadastrarbibliotecario':
-        
+        require __DIR__ . '/../view/TelaCadastrarBibliotecario.php';
         break;
     
     case 'telacadastrarexemplar':
@@ -109,11 +119,6 @@ switch($action){
     case 'telaprincipalbibliotecario':
         $controller = new BibliotecarioController();
         $controller->telaPrincipalBibliotecario();
-        break;
-    
-    case 'telagerenciarbibliotecarios':
-        $controller = new BibliotecarioController();
-        $controller->telaGerenciarBibliotecarios();
         break;
 
     default:
