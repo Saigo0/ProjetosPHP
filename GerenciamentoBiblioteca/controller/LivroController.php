@@ -39,10 +39,7 @@
         public function listarLivros(){
             $livroDAO = new LivroDAO(Conexao::getPDO());
             $livros = $livroDAO->listAll();
-            
-            require __DIR__ . '/../view/TelaRealizarEmprestimo.php';
-            require __DIR__ . '/../view/TelaGerenciarLivros.php';
-            
+            return $livros;
         }
 
         public function deletar(){

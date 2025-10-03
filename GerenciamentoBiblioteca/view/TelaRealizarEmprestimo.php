@@ -9,7 +9,7 @@
 <body>
     <main>
         <h1>Realizar Empréstimo</h1>
-        <form action="">
+        <form action="index.php?action=realizaremprestimo" method="POST">
             <label for="leitor">Selecione o leitor:</label>
             <select name="leitor" id="leitor" required>
                 <?php foreach($leitores as $leitor): ?>

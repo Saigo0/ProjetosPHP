@@ -13,23 +13,24 @@
             $this->leitorDAO = new LeitorDAO(Conexao::getPDO());
         }
 
-        public function realizarEmprestimo(Leitor $leitor, array $listaExemplares){
+        public function realizarEmprestimo(Leitor $leitor, array $listaLivros){
             if(!$leitor->getMultasPendentes()){
                 $dataEmprestimo = new DateTime();
                 $dataDevolucao = (clone $dataEmprestimo)->add(new DateInterval('P7D'));
-                if($listaExemplares != null && $leitor != null){
+                if($listaLivros != null && $leitor != null){
                     $emprestimo = new Emprestimo();
-                    foreach($listaExemplares as $exemplar){
-                        if($exemplar->isDisponivel()){
-                            $itemEmprestimo = new ItemEmprestimo();
-                            $itemEmprestimo->setExemplar($exemplar);
-                            $itemEmprestimo->getExemplar()->setStatus("Emprestado");
-                            $this->exemplarDAO->update($exemplar);
-                            $emprestimo->addItemEmprestimo($itemEmprestimo);
-                        } else
-                            throw new InvalidArgumentException("Exemplar não disponível");   
+                    foreach($listaLivros as $livro){
+                        foreach($livro->getExemplares() as $exemplar){
+                            if($exemplar->isDisponivel()){
+                                $itemEmprestimo = new ItemEmprestimo();
+                                $itemEmprestimo->setExemplar($exemplar);
+                                $itemEmprestimo->getExemplar()->setStatus("Emprestado");
+                                $this->exemplarDAO->update($exemplar);
+                                $emprestimo->addItemEmprestimo($itemEmprestimo);
+                            } else
+                                throw new InvalidArgumentException("Exemplar não disponível");   
+                        }        
                     }
-                    
                     $emprestimo->setLeitor($leitor);
                     $emprestimo->setDataEmprestimo($dataEmprestimo);
                     $emprestimo->setDataDevolucao($dataDevolucao);

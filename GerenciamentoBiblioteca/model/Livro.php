@@ -8,6 +8,7 @@
         private int $anoEdicao;
         private int $numPaginas;
         private string $localEdicao;
+        private array $exemplares = [];
 
         public function __construct()
         {
@@ -72,6 +73,14 @@
 
         public function setLocalEdicao(string $localEdicao){
             $this->localEdicao = $localEdicao;
+        }
+
+        public function addExemplar(Exemplar $exemplar){
+            $this->exemplares[] = $exemplar;
+        }
+
+        public function getExemplares(){
+            return $this->exemplares;
         }
 
         public function getLocalEdicao(){

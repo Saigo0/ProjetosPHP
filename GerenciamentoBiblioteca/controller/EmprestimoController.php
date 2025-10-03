@@ -51,7 +51,18 @@
         }
 
         public function realizarEmprestimo(){
+            $emprestimoService = new EmprestimoService();
+            $leitorDAO = new LeitorDAO(Conexao::getPDO());
+            $livroDAO = new LivroDAO(Conexao::getPDO());
+            $leitor = $leitorDAO->findByID($_POST['leitor']);
+            $idLivros = $_POST['livros'];
+            foreach($idLivros as $idLivro){
+                $livros[] = $livroDAO->findByID((int)$idLivro);
+            }    
+            $emprestimoService->realizarEmprestimo($leitor, $livros);
 
+            header('Location: ../public/index.php?action=telaprincipal');
+            exit;
         }
 
         public function devolverEmprestimo(){

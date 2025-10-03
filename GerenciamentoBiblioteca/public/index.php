@@ -53,7 +53,8 @@ switch($action){
         break;
 
     case 'telarealizaremprestimo':
-        require __DIR__ . '/../view/TelaRealizarEmprestimo.php';
+        $controller = new TelaController();
+        $controller->telaRealizarEmprestimo();
         break;
 
     case 'cadastrarlivro':
