@@ -77,6 +77,9 @@
         public function atualizarBibliotecario(){
             $bibliotecario = new Bibliotecario();
             $bibliotecarioDAO = new BibliotecarioDAO(Conexao::getPDO());
+            $bibliotecario->setId($_POST['id']);
+            $bibliotecario->setIdUsuario($bibliotecarioDAO->findByID($bibliotecario->getId())->getIdUsuario());
+            $bibliotecario->setIdPessoa($bibliotecarioDAO->findByID($bibliotecario->getId())->getIdPessoa());
             $bibliotecario->setNome($_POST['nome']);
             $bibliotecario->setRG($_POST['RG']);
             $bibliotecario->setCPF($_POST['CPF']);
@@ -84,7 +87,15 @@
             $bibliotecario->setEmail($_POST['email']);
             $bibliotecario->setEndereco($_POST['endereco']);
             $bibliotecario->setTelefone($_POST['telefone']);
+            $bibliotecario->setRegistroCRB($bibliotecarioDAO->findByID($bibliotecario->getId())->getRegistroCRB());
+            $bibliotecario->setValorCRB($bibliotecarioDAO->findByID($bibliotecario->getId())->getValorCRB());
+            $bibliotecario->setLogin($bibliotecarioDAO->findByID($bibliotecario->getId())->getLogin());
+            $bibliotecario->setSenha($bibliotecarioDAO->findByID($bibliotecario->getId())->getSenha());
+            $bibliotecario->setNivelAcesso("BIBLIOTECARIO");
+
             $bibliotecarioDAO->update($bibliotecario);
+            header("Location: ../public/index.php?action=gerenciarbibliotecarios");
+            exit;
         }
 
         public function listarBibliotecarios(){
@@ -98,7 +109,7 @@
             $bibliotecario = new Bibliotecario();
             $bibliotecarioDAO = new BibliotecarioDAO(Conexao::getPDO());
 
-            $bibliotecario->setId($bibliotecarioDAO->findByID($_GET['id']));
+            $bibliotecario->setId($bibliotecarioDAO->findByID($_GET['id'])->getId());
             $bibliotecarioDAO->delete($bibliotecario);
 
             header("Location: ../public/index.php?action=gerenciarBibliotecarios");

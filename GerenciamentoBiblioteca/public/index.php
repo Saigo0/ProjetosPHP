@@ -52,6 +52,10 @@ switch($action){
         $controller->deslogarUsuario();
         break;
 
+    case 'telarealizaremprestimo':
+        require __DIR__ . '/../view/TelaRealizarEmprestimo.php';
+        break;
+
     case 'cadastrarlivro':
         $controller = new LivroController();
         $controller->criarLivro();
@@ -112,16 +116,21 @@ switch($action){
         break;
 
     case 'telaprincipaladministrador':
-        $controller = new AdministradorController();
+        $controller = new TelaController();
         $controller->telaPrincipalAdministrador();
         break;
 
     case 'telaprincipalbibliotecario':
-        $controller = new BibliotecarioController();
+        $controller = new TelaController();
         $controller->telaPrincipalBibliotecario();
         break;
 
+    case 'telaprincipal':
+        $controller = new TelaController();
+        $controller->redirecionarPorNivelAcesso();
+        break;
+
     default:
-        echo "Default index";
+        echo "Rota não encontrada.";
         break;
 }

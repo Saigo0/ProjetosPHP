@@ -54,16 +54,49 @@
 
         public function update(Bibliotecario $bibliotecario){
 
-            $this->usuarioDAO->update($bibliotecario);
-
-
-            $sql = "UPDATE bilbiotecario SET
-                id_usuario = :id_usuario,
-                multasPendentes = :multasPendentes";
-
-            $stmt = $this->pdo->prepare($sql);
+            $sqlPessoa = "UPDATE pessoa SET
+                  nome = :nome,
+                  RG = :RG,
+                  CPF = :CPF,
+                  dataNascimento = :dataNascimento,
+                  email = :email,
+                  endereco = :endereco,
+                  telefone = :telefone
+                  WHERE id = :id_pessoa";
+            $stmt = $this->pdo->prepare($sqlPessoa);
             $stmt->execute([
-                'id_usuario' => $bibliotecario->getIdUsuario(),
+                'nome' => $bibliotecario->getNome(),
+                'RG' => $bibliotecario->getRG(),
+                'CPF' => $bibliotecario->getCPF(),
+                'dataNascimento' => $bibliotecario->getDataNascimento()->format('Y-m-d'),
+                'email' => $bibliotecario->getEmail(),
+                'endereco' => $bibliotecario->getEndereco(),
+                'telefone' => $bibliotecario->getTelefone(),
+                'id_pessoa' => $bibliotecario->getIdPessoa()
+            ]);
+
+            $sqlUsuario = "UPDATE usuario SET
+                   login = :login,
+                   nivelAcesso = :nivelAcesso,
+                   senha = :senha,
+                   dataCadastro = :dataCadastro
+                   WHERE id = :id_usuario";
+            $stmt = $this->pdo->prepare($sqlUsuario);
+            $stmt->execute([
+                'login' => $bibliotecario->getLogin(),
+                'nivelAcesso' => $bibliotecario->getNivelAcesso(),
+                'senha' => $bibliotecario->getSenha(),
+                'dataCadastro' => $bibliotecario->getDataCadastro()->format('Y-m-d'),
+                'id_usuario' => $bibliotecario->getIdUsuario()
+            ]);
+
+            $sqlLeitor = "UPDATE bibliotecario SET 
+                registroCRB = :registroCRB,
+                valorCRB = :valorCRB
+                WHERE id = :id";
+            $stmtLeitor = $this->pdo->prepare($sqlLeitor);
+            $stmtLeitor->execute([
+                'id' => $bibliotecario->getId(),
                 'registroCRB' => $bibliotecario->getRegistroCRB(),
                 'valorCRB' => $bibliotecario->getValorCRB()
             ]);
@@ -103,9 +136,31 @@
         }
 
         public function findByID(int $id){
-            $sql = "SELECT * FROM bibliotecario WHERE id = :id";
+            $sql = "SELECT b.*, u.id_pessoa, u.login, u.senha, u.nivelAcesso, u.dataCadastro, p.nome, p.RG, p.CPF, p.dataNascimento, p.email, p.endereco, p.telefone from bibliotecario b
+            JOIN usuario u on u.id = b.id_usuario
+            JOIN pessoa p on p.id = u.id_pessoa
+            WHERE b.id = :id";
             $stmt = $this->pdo->prepare($sql);
-            return $stmt->execute(['id' => $id]);
+            $stmt->execute(['id' => $id]);
+            $registroBibliotecario = $stmt->fetch(PDO::FETCH_ASSOC);
+            $bibliotecario = new Bibliotecario();
+            $bibliotecario->setId($registroBibliotecario['id']);
+            $bibliotecario->setIdPessoa($registroBibliotecario['id_pessoa']);
+            $bibliotecario->setIdUsuario($registroBibliotecario['id_usuario']);
+            $bibliotecario->setNome($registroBibliotecario['nome']);
+            $bibliotecario->setRG($registroBibliotecario['RG']);
+            $bibliotecario->setCPF($registroBibliotecario['CPF']);
+            $bibliotecario->setDataNascimento(new DateTime($registroBibliotecario['dataNascimento']));
+            $bibliotecario->setEmail($registroBibliotecario['email']);
+            $bibliotecario->setEndereco($registroBibliotecario['endereco']);
+            $bibliotecario->setTelefone($registroBibliotecario['telefone']);
+            $bibliotecario->setLogin($registroBibliotecario['login']);
+            $bibliotecario->setSenha($registroBibliotecario['senha']);
+            $bibliotecario->setDataCadastro(new DateTime($registroBibliotecario['dataCadastro']));
+            $bibliotecario->setNivelAcesso($registroBibliotecario['nivelAcesso']);
+            $bibliotecario->setRegistroCRB($registroBibliotecario['registroCRB']);
+            $bibliotecario->setValorCRB($registroBibliotecario['valorCRB']);
+            return $bibliotecario;
         }
 
         public function findByIdUsuario(int $id){

@@ -28,6 +28,7 @@
         <section><a href="index.php?action=telacadastrarleitor">Cadastrar novo leitor</a></section>
         <section><a href="index.php?action=telacadastrarlivro">Cadastrar novo livro</a></section>
         <section><a href="index.php?action=telacadastrarexemplar">Cadastrar novo exemplar</a></section>
+        <section><a href="index.php?action=telarealizaremprestimo">Realizar empréstimo</a></section>
     </main>
 
     <div>

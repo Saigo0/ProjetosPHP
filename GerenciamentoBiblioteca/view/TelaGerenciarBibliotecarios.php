@@ -32,17 +32,15 @@
                     if(!empty($bibliotecarios)){
                         foreach($bibliotecarios as $bibliotecario){
                             echo "<tr>";
-                                
                                 echo "<td>" . htmlspecialchars($bibliotecario->getId()) . "</td>";
                                 echo "<td>" . htmlspecialchars($bibliotecario->getNome()) . "</td>";
                                 echo "<td>" . htmlspecialchars($bibliotecario->getEmail()) . "</td>";
                                 echo "<td>" . htmlspecialchars($bibliotecario->getTelefone()) . "</td>";
                                 echo "<td>" . htmlspecialchars($bibliotecario->getRegistroCRB()) . "</td>";
                                 echo "<td>";
-                                    echo "<a href = '../public/index.php?action=editarBibliotecario&id=". htmlspecialchars($bibliotecario->getId()) ." '>Editar</a>";
-                                    echo "<a href = '../public/index.php?action=excluirBibliotecario&id=". htmlspecialchars($bibliotecario->getId()) ."' onclick=\"return confirm('Tem certeza que deseja excluir este bibliotecário?');\" '>Excluir</a>";
+                                    echo "<a href = '../public/index.php?action=editarbibliotecario&id=". htmlspecialchars($bibliotecario->getId()) ." '>Editar</a>";
+                                    echo "<a href = '../public/index.php?action=excluirbibliotecario&id=". htmlspecialchars($bibliotecario->getId()) ."' onclick=\"return confirm('Tem certeza que deseja excluir este bibliotecário?');\" '>Excluir</a>";
                                 echo "</td>";
-
                             echo "</tr>";
                         }
                     } else
@@ -51,5 +49,6 @@
             </tbody>
         </table>
     </main>
+    <div><a href="index.php?action=telaprincipal">Voltar para a página principal</a></div>
 </body>
 </html>

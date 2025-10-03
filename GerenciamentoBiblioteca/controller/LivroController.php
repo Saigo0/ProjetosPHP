@@ -38,24 +38,11 @@
 
         public function listarLivros(){
             $livroDAO = new LivroDAO(Conexao::getPDO());
-            $arrayAsso = $livroDAO->listAll();
-            $livros = [];
-            foreach($arrayAsso as $registroLivro){
-                
-                $livro = new Livro();
-                $livro->setID($registroLivro['id']);
-                $livro->setISBN($registroLivro['ISBN']);
-                $livro->setTitulo($registroLivro['titulo']);
-                $livro->setAutor($registroLivro['autor']);
-                $livro->setEditora($registroLivro['editora']);
-                $livro->setAnoEdicao($registroLivro['anoEdicao']);
-                $livro->setNumPaginas($registroLivro['numPaginas']);
-                $livro->setLocalEdicao($registroLivro['localEdicao']);
-
-                $livros [] = $livro;
-            }
-
-            return $livros;
+            $livros = $livroDAO->listAll();
+            
+            require __DIR__ . '/../view/TelaRealizarEmprestimo.php';
+            require __DIR__ . '/../view/TelaGerenciarLivros.php';
+            
         }
 
         public function deletar(){

@@ -26,7 +26,7 @@
 
             $leitorDAO = new LeitorDAO(Conexao::getPDO());
             $leitorDAO->create($leitor);
-            header("Location: ../public/index.php?action=telaprincipalbibliotecario");
+            header("Location: ../public/index.php?action=telaprincipal");
             exit;
         }
 

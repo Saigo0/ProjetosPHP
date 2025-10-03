@@ -28,3 +28,4 @@
  require_once __DIR__ . '/service/AuthService.php';
  require_once __DIR__ . '/service/EmprestimoService.php';
  require_once __DIR__ . '/public/index.php';
+ require_once __DIR__ . '/controller/TelaController.php';
