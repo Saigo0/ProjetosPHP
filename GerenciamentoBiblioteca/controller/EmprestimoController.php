@@ -25,22 +25,9 @@
 
         public function listarEmprestimos(){
             $emprestimoDAO = new EmprestimoDAO(Conexao::getPDO());
-            $leitorDAO = new LeitorDAO(Conexao::getPDO());
-            $arrayAsso = $emprestimoDAO->listAll();
+            $emprestimos = $emprestimoDAO->listAll();
 
-            $emprestimos = [];
-            foreach($arrayAsso as $registroEmprestimo){
-                $emprestimo = new Emprestimo();
-                $emprestimo->setId($registroEmprestimo['id']);
-                $emprestimo->setLeitor($leitorDAO->findByID($registroEmprestimo['id_leitor']));
-                $emprestimo->setDataEmprestimo($registroEmprestimo['dataEmprestimo']);
-                $emprestimo->setDataDevolucao($registroEmprestimo['dataDevolucao']);
-                $emprestimo->setStatus($registroEmprestimo['status']);
-                $emprestimo->setDescricao($registroEmprestimo['descricao']);
-                $emprestimos [] = $emprestimo;
-            }
-
-            return $emprestimos;
+            require __DIR__ . '/../view/TelaGerenciarEmprestimos.php';
         }
 
         public function deletarEmprestimo(){

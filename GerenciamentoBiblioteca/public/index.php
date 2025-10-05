@@ -192,6 +192,11 @@ switch($action){
         $controller->deletarExemplar();
         break;
 
+    case 'gerenciaremprestimos':
+        $controller = new EmprestimoController();
+        $controller->listarEmprestimos();
+        break;
+
     default:
         echo "Rota não encontrada.";
         break;

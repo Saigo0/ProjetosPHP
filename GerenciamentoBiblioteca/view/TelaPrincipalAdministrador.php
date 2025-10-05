@@ -48,7 +48,7 @@
 
                     <section>
                         <h3>Empréstimos</h3>
-                        <button>Gerenciar empréstimos</button>    
+                        <button onclick="window.location.assign('../public/index.php?action=gerenciaremprestimos')">Gerenciar empréstimos</button>    
                     </section>
 
                     <section>
