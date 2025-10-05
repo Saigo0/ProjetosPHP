@@ -10,7 +10,7 @@ $senha = $_POST['senhaUsuario'] ?? '';
 session_start();
 
 switch($action){
-    case 'cadastrarLeitor':
+    case 'cadastrarleitor':
         $controller = new BibliotecarioController();
         $controller->cadastrarLeitor();
         break;
@@ -121,6 +121,25 @@ switch($action){
         $controller->telaPrincipalAdministrador();
         break;
 
+    case 'gerenciarleitores':
+        $controller = new TelaController();
+        $controller->telaGerenciarLeitores();
+        break;
+
+    case 'editarleitor':
+        $controller = new TelaController();
+        $controller->editarLeitor();
+        break;
+
+    case 'atualizarleitor':
+        $controller = new BibliotecarioController();
+        $controller->atualizarLeitor();
+        break;
+
+    case 'excluirleitor':
+        $controller = new BibliotecarioController();
+        $controller->deletarLeitor();
+
     case 'telaprincipalbibliotecario':
         $controller = new TelaController();
         $controller->telaPrincipalBibliotecario();
@@ -129,6 +148,26 @@ switch($action){
     case 'telaprincipal':
         $controller = new TelaController();
         $controller->redirecionarPorNivelAcesso();
+        break;
+    
+    case 'gerenciarlivros':
+        $controller = new TelaController();
+        $controller->telaGerenciarLivros();
+        break;
+    
+    case 'editarlivro':
+        $controller = new TelaController();
+        $controller->editarLivro();
+        break;
+    
+    case 'atualizarlivro':
+        $controller = new LivroController();
+        $controller->atualizarLivro();
+        break;
+
+    case 'excluirlivro':
+        $controller = new LivroController();
+        $controller->deletarLivro();
         break;
 
     default:

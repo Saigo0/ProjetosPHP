@@ -35,7 +35,7 @@
                     <section>
                         <h3>Leitores</h3>
                         
-                        <button>Gerenciar leitores</button>
+                        <button onclick="window.location.assign('../public/index.php?action=gerenciarleitores')">Gerenciar leitores</button>
                         
                     
                     
@@ -43,7 +43,7 @@
                     <br>
                     <section>
                         <h3>Livros</h3>
-                        <button>Gerenciar livros</button>
+                        <button onclick="window.location.assign('../public/index.php?action=gerenciarlivros')">Gerenciar livros</button>
                     </section>
                     <br>
                     <section>

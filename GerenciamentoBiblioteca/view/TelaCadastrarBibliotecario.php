@@ -37,6 +37,10 @@
     </main>
     <section>
         <a href="index.php?action=telaprincipal">Voltar para a página inicial</a>
-    
+        
+    </section>
+    <section>
+        <a href="index.php?action=gerenciarbibliotecarios">Voltar para a página de bibliotecários</a>
+    </section>
 </body>
 </html>

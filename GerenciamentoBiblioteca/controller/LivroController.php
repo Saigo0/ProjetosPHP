@@ -11,11 +11,13 @@
             $livro->setEditora($_POST['editora']);
             $livro->setAnoEdicao($_POST['anoEdicao']);
             $livro->setNumPaginas($_POST['numPaginas']);
+            $livro->setLocalEdicao($_POST['localEdicao']);
+
 
             $livroDAO = new LivroDAO(Conexao::getPDO());
             $livroDAO->create($livro);
 
-            header("Location: ../view/TelaCadastrarLivro.php");
+            header("Location: ../public/index.php?action=gerenciarlivros");
             exit;
         }
 
@@ -25,15 +27,22 @@
 
         public function atualizarLivro(){
             $livro = new Livro();
+            $livroDAO = new LivroDAO(Conexao::getPDO());
+            $livro->setId($_POST['id']);
             $livro->setTitulo($_POST['titulo']);
-            $livro->setISBN($_POST['ISBN']);
+            $livro->setISBN($livroDAO->findByID($livro->getId())->getISBN());
             $livro->setAutor($_POST['autor']);
             $livro->setEditora($_POST['editora']);
             $livro->setAnoEdicao($_POST['anoEdicao']);
+            $livro->setLocalEdicao($_POST['localEdicao']);
+
             $livro->setNumPaginas($_POST['numPaginas']);
 
-            $livroDAO = new LivroDAO(Conexao::getPDO());
+            
             $livroDAO->update($livro);
+
+            header("Location: ../public/index.php?action=gerenciarlivros");
+            exit;
         }
 
         public function listarLivros(){
@@ -42,7 +51,7 @@
             return $livros;
         }
 
-        public function deletar(){
+        public function deletarLivro(){
             $livro = new Livro();
             
             $livroDAO = new LivroDAO(Conexao::getPDO());
@@ -50,6 +59,9 @@
             $livro->setID($livroDAO->findByID($_POST['id'])->getId());
             
             $livroDAO->delete($livro);
+
+            header("Location: ../public/index.php?action=gerenciarlivros");
+            exit;
         }
 
 

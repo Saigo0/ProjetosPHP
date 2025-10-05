@@ -32,19 +32,28 @@
 
         public function atualizarLeitor(){
             $leitor = new Leitor();
+            $leitorDAO = new LeitorDAO(Conexao::getPDO());
             $leitor->setId($_POST['id']);
             $leitor->setNome($_POST['nome']);
             $leitor->setRG($_POST['RG']);
             $leitor->setCPF($_POST['CPF']);
-            $leitor->setDataNascimento($_POST['dataNascimento']);
+            $leitor->setDataCadastro($leitorDAO->findByID($leitor->getId())->getDataCadastro());
+            $leitor->setDataNascimento(new DateTime($_POST['dataNascimento']));
             $leitor->setEmail($_POST['email']);
             $leitor->setEndereco($_POST['endereco']);
             $leitor->setTelefone($_POST['telefone']);
-            $leitor->setLogin($_POST['login']);
-            $leitor->setSenha($_POST['senha']);
+            $leitor->setNivelAcesso($leitorDAO->findByID($leitor->getId())->getNivelAcesso());
+            $leitor->setLogin($leitorDAO->findByID($leitor->getId())->getLogin());
+            $leitor->setSenha($leitorDAO->findByID($leitor->getId())->getSenha());
+            $leitor->setIdUsuario($leitorDAO->findByID($leitor->getId())->getIdUsuario());
+            $leitor->setIdPessoa($leitorDAO->findByID($leitor->getId())->getIdPessoa());
+            $leitor->setMultasPendentes($leitorDAO->findByID($leitor->getId())->getMultasPendentes());
 
-            $leitorDAO = new LeitorDAO(Conexao::getPDO());
+            
             $leitorDAO->update($leitor);
+
+            header("Location: ../public/index.php?action=gerenciarleitores");
+            exit;
         }
 
         public function listarLeitores(){
@@ -69,6 +78,9 @@
             $leitorDAO = new LeitorDAO(Conexao::getPDO());
             $leitor->setId($leitorDAO->findById($_POST['id'])->getId());
             $leitorDAO->delete($leitor);
+
+            header("Location: ../public/index.php?action=gerenciarleitores");
+            exit;
         }
 
         public function realizarEmprestimo(){

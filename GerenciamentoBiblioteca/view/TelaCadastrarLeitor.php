@@ -13,7 +13,7 @@
     
     
     <main>
-        <form action="../public/index.php?action=cadastrarLeitor" method="POST">
+        <form action="../public/index.php?action=cadastrarleitor" method="POST">
             <label for="nome">Nome</label>
             <input type="text" name="nome" id="nome">
             <label for="RG">RG</label>
@@ -38,6 +38,10 @@
 
     <section>
         <a href="index.php?action=telaprincipal">Voltar para a página inicial</a>
+    </section>
+
+    <section>
+        <a href="index.php?action=gerenciarleitores">Cancelar</a>
     </section>
 </body>
 </html>

@@ -20,5 +20,8 @@
     <section>
         <a href="index.php?action=telaprincipal">Voltar para a página inicial</a>
     </section>
+    <section>
+        <a href="index.php?action=gerenciarleitores">Voltar</a>
+    </section>
 </body>
 </html>

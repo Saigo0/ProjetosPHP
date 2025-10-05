@@ -43,4 +43,29 @@ require_once __DIR__ . '/../bootstrap.php';
         
             require __DIR__ . '/../view/TelaRealizarEmprestimo.php';
         }
+
+        public function telaGerenciarLeitores(){
+            $leitorDAO = new LeitorDAO(Conexao::getPDO());
+            $leitores = $leitorDAO->listAll();
+
+            require __DIR__ . '/../view/TelaGerenciarLeitores.php';
+        }
+
+        public function editarLeitor(){
+            $leitor = new Leitor();
+            $leitorDAO = new LeitorDAO(Conexao::getPDO());
+            $leitor->setId($_GET['id']);
+            $leitor = $leitorDAO->findByID($leitor->getId());
+
+            require __DIR__ . '/../view/TelaEditarLeitor.php';
+        }
+
+        public function editarLivro(){
+            $livro = new Livro();
+            $livroDAO = new LivroDAO(Conexao::getPDO());
+            $livro->setId($_GET['id']);
+            $livro = $livroDAO->findByID($livro->getId());
+
+            require __DIR__ . '/../view/TelaEditarLivro.php';
+        }
     }

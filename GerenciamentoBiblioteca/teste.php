@@ -22,18 +22,19 @@
         $emprestimoService = new EmprestimoService();
         $administradorDAO = new AdministradorDAO(Conexao::getPDO());
         $administrador = new Administrador();
-        $administrador->setNome("Gus");
+        $administrador->setNome("José");
         $administrador->setRG("890098089");
         $administrador->setCPF("08744978934");
         $administrador->setDataNascimento(new DateTime());
         $administrador->setEmail("sdaosido@gmail.com");
         $administrador->setEndereco("rararasd");
         $administrador->setTelefone("78978786767");
-        $administrador->setLogin("gus234");
-        $administrador->setSenha("gus23456");
+        $administrador->setLogin("jos123");
+        $administrador->setSenha("jos123456");
         $administrador->setNivelAcesso("ADMINISTRADOR");
         $administrador->setDataCadastro(new DateTime());
         $administradorDAO->create($administrador);
+        
         /*
         $leitor = $leitorDAO->findByID(30);
 
