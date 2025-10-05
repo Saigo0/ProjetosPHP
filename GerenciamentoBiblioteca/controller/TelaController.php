@@ -68,4 +68,13 @@ require_once __DIR__ . '/../bootstrap.php';
 
             require __DIR__ . '/../view/TelaEditarLivro.php';
         }
+
+        public function editarExemplar(){
+            $exemplar = new Exemplar();
+            $exemplarDAO = new ExemplarDAO(Conexao::getPDO());
+            $exemplar->setId($_GET['id']);
+            $exemplar = $exemplarDAO->findById($exemplar->getId());
+
+            require __DIR__ . '/../view/TelaEditarExemplar.php';
+        }
     }

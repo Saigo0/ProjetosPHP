@@ -9,11 +9,13 @@
 <body>
     <header><h1>Cadastrar novo exemplar</h1></header>
     <main>
-        <form action="../public/index.php?action=cadastrarExemplar">
-            <label for="codigoExemplar">Código do exemplar</label>
-            <input type="text" name="codigoExemplar" id="codigoExemplar">
+        <form action="../public/index.php?action=cadastrarexemplar" method="POST">
+            <label for="codExemplar">Código do exemplar</label>
+            <input type="text" name="codExemplar" id="codExemplar">
+
             <label for="id_livro">ID do livro</label>
             <input type="number" name="id_livro" id="id_livro">
+
             <input type="submit" name="Cadastrar" id="Cadastrar" value = "Cadastrar">
         </form>
     </main>
@@ -21,7 +23,7 @@
         <a href="index.php?action=telaprincipal">Voltar para a página inicial</a>
     </section>
     <section>
-        <a href="index.php?action=gerenciarleitores">Voltar</a>
+        <a href="index.php?action=gerenciarexemplares">Voltar</a>
     </section>
 </body>
 </html>

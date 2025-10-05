@@ -62,10 +62,7 @@ switch($action){
         $controller->criarLivro();
         break;
 
-    case 'cadastrarexemplar':
-        $controller = new ExemplarController();
-        $controller->criarExemplar();
-        break;
+    
     
     case 'telacadastrarlivro':
         $controller = new LivroController();
@@ -168,6 +165,31 @@ switch($action){
     case 'excluirlivro':
         $controller = new LivroController();
         $controller->deletarLivro();
+        break;
+
+    case 'gerenciarexemplares':
+        $controller = new ExemplarController();
+        $controller->listarExemplares();
+        break;
+    
+    case 'cadastrarexemplar':
+        $controller = new ExemplarController();
+        $controller->criarExemplar();
+        break;
+    
+    case 'editarexemplar':
+        $controller = new TelaController();
+        $controller->editarExemplar();
+        break;
+    
+    case 'atualizarexemplar':
+        $controller = new ExemplarController();
+        $controller->atualizarExemplar();
+        break;
+    
+    case 'excluirexemplar':
+        $controller = new ExemplarController();
+        $controller->deletarExemplar();
         break;
 
     default:

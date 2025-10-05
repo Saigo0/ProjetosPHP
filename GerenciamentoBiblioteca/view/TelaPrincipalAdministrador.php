@@ -34,22 +34,26 @@
                 <h2>Funções Bibliotecário</h2>
                     <section>
                         <h3>Leitores</h3>
-                        
                         <button onclick="window.location.assign('../public/index.php?action=gerenciarleitores')">Gerenciar leitores</button>
-                        
-                    
-                    
                     </section>
+
                     <br>
+
                     <section>
                         <h3>Livros</h3>
                         <button onclick="window.location.assign('../public/index.php?action=gerenciarlivros')">Gerenciar livros</button>
                     </section>
+                    
                     <br>
+
                     <section>
                         <h3>Empréstimos</h3>
-                        <button>Gerenciar empréstimos</button>
-                        
+                        <button>Gerenciar empréstimos</button>    
+                    </section>
+
+                    <section>
+                        <h3>Exemplares</h3>
+                        <button onclick="window.location.assign('../public/index.php?action=gerenciarexemplares')">Gerenciar exemplares</button>
                     </section>
             </section>
 
