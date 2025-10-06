@@ -23,7 +23,7 @@ body {
 }
 
 header, main, section, article {
-    max-width: 700px;
+    max-width: 1200px;
 }
 
 header > h1 {

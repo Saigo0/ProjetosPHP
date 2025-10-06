@@ -58,20 +58,20 @@
             if($emprestimo != null){
                 if($emprestimo->getStatus() != "Concluído"){
                     $dataAtual = new DateTime();
-                $leitorEmprestimo = $this->leitorDAO->findByID($emprestimo->getLeitor()->getId());
-                $leitorEmprestimo->setMultasPendentes(false);
-                $this->leitorDAO->update($leitorEmprestimo);
-                foreach($emprestimo->getItensEmprestimo() as $itemEmprestimo){
-                    $itemEmprestimo->getExemplar()->setStatus("DISPONIVEL");
-                    $this->exemplarDAO->update($itemEmprestimo->getExemplar());
-                }
-                $emprestimo->setStatus("Concluído");
-                if($emprestimo->getStatus() != "Concluído"){
-                    $emprestimo->setDataDevolucao($dataAtual);
-                }
-                $this->emprestimoDAO->update($emprestimo);
+                    $leitorEmprestimo = $this->leitorDAO->findByID($emprestimo->getLeitor()->getId());
+                    $leitorEmprestimo->setMultasPendentes(false);
+                    $this->leitorDAO->update($leitorEmprestimo);
+                    foreach($emprestimo->getItensEmprestimo() as $itemEmprestimo){
+                        $itemEmprestimo->getExemplar()->setStatus("DISPONIVEL");
+                        $this->exemplarDAO->update($itemEmprestimo->getExemplar());
+                    }
+                    if($emprestimo->getStatus() != "Concluído"){
+                        $emprestimo->setDataDevolucao($dataAtual);
+                        $emprestimo->setStatus("Concluído");
+                    }
+                    $this->emprestimoDAO->update($emprestimo);
                 } else{
-                    throw new InvalidArgumentException("Empréstimo já está concluído, não é possível realizar a devolução novamente");
+                    
                 }
             } else{
                 throw new InvalidArgumentException("Não há como realizar a devolução de um empréstimo nulo");

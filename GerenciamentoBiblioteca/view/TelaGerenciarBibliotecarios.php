@@ -7,7 +7,9 @@
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
-    <h1>Bibliotecários</h1>
+    <header>
+        <h1>Bibliotecários</h1>
+    </header>
     
 
     <?php 
@@ -49,6 +51,8 @@
             </tbody>
         </table>
     </main>
-    <div><a href="index.php?action=telaprincipal">Voltar para a página principal</a></div>
+    <section>
+        <a href="index.php?action=telaprincipal">Voltar para a página principal</a>
+    </section>
 </body>
 </html>
