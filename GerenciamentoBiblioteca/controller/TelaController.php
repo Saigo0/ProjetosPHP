@@ -37,10 +37,21 @@ require_once __DIR__ . '/../bootstrap.php';
         public function telaRealizarEmprestimo() {
             $livroDAO = new LivroDAO(Conexao::getPDO());
             $livros = $livroDAO->listAll();
-        
+            $exemplarDAO = new ExemplarDAO(Conexao::getPDO());
+            $livrosDisponiveis = [];
+            foreach ($livros as $livro) {
+                $exemplares = $exemplarDAO->findByDisponibilidade('DISPONIVEL');
+                foreach ($exemplares as $exemplar) {
+                    if ($exemplar->getLivroId() == $livro->getId()) {
+                        $livrosDisponiveis[] = $livro;
+                        break; 
+                    }
+                }
+            }
             $leitorDAO = new LeitorDAO(Conexao::getPDO());
             $leitores = $leitorDAO->listAll();
-        
+            $livros = $livrosDisponiveis;
+
             require __DIR__ . '/../view/TelaRealizarEmprestimo.php';
         }
 

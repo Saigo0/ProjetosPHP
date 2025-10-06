@@ -39,7 +39,10 @@
         </form>
     </main>
     <section>
-        <a href="../public/index.php?action=telaprincipal">Voltar</a>
+        <a href="../public/index.php?action=gerenciaremprestimos">Voltar</a>
+    </section>
+    <section>
+        <a href="../public/index.php?action=telaprincipal">Voltar para a página principal</a>
     </section>
     
 </body>

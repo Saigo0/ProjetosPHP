@@ -30,11 +30,17 @@
             require __DIR__ . '/../view/TelaGerenciarEmprestimos.php';
         }
 
+        
         public function deletarEmprestimo(){
-            $emprestimo = new Emprestimo();
             $emprestimoDAO = new EmprestimoDAO(Conexao::getPDO());
-            $emprestimo->setId($emprestimoDAO->findByID($_POST['id'])->getId());
-            $emprestimoDAO->delete($emprestimo);
+            $emprestimo = $emprestimoDAO->findByID($_GET['id']);
+            if ($emprestimo) {
+                $service = new EmprestimoService();
+                $service->devolverEmprestimo($emprestimo); 
+                $emprestimoDAO->delete($emprestimo);       
+            }
+            header("Location: ../public/index.php?action=gerenciaremprestimos");
+            exit;
         }
 
         public function realizarEmprestimo(){
@@ -51,9 +57,25 @@
             header('Location: ../public/index.php?action=telaprincipal');
             exit;
         }
+        
+        public function devolverEmprestimo() {
+            try {
+                $id = $_GET['id'] ?? $_POST['id'] ?? null;
+                if (!$id) {
+                    throw new InvalidArgumentException("ID do empréstimo não informado.");
+                }
+                $emprestimoDAO = new EmprestimoDAO(Conexao::getPDO());
+                $emprestimo = $emprestimoDAO->findByID((int)$id);
 
-        public function devolverEmprestimo(){
+                $service = new EmprestimoService();
+                $service->devolverEmprestimo($emprestimo);
 
+                header("Location: ../public/index.php?action=gerenciaremprestimos");
+                exit;
+            } catch (InvalidArgumentException $e) {
+                header("Location: ../public/index.php?action=gerenciaremprestimos&erro=" . urlencode($e->getMessage()));
+                exit;
+            }
         }
     }
 

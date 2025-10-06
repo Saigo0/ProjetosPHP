@@ -47,7 +47,7 @@
             $leitor->setSenha($leitorDAO->findByID($leitor->getId())->getSenha());
             $leitor->setIdUsuario($leitorDAO->findByID($leitor->getId())->getIdUsuario());
             $leitor->setIdPessoa($leitorDAO->findByID($leitor->getId())->getIdPessoa());
-            $leitor->setMultasPendentes($leitorDAO->findByID($leitor->getId())->getMultasPendentes());
+            $leitor->setMultasPendentes($_POST['pendente']);
 
             
             $leitorDAO->update($leitor);

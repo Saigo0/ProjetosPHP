@@ -32,6 +32,11 @@
             <label for="telefone">Telefone</label>
             <input type="text" name="telefone" id="telefone" value="<?= htmlspecialchars($leitor->getTelefone()) ?>">
             
+            <label for="pendente">Pendente</label>
+            <select name="pendente" id="pendente">
+                <option value="1" <?= $leitor->getMultasPendentes() ? 'selected' : '' ?>>Sim</option>
+                <option value="0" <?= !$leitor->getMultasPendentes() ? 'selected' : '' ?>>Não</option>
+
             <input type="submit" value="Atualizar">
         </form>
     </main>

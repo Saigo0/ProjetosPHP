@@ -19,11 +19,14 @@
             <input type="submit" name="Cadastrar" id="Cadastrar" value = "Cadastrar">
         </form>
     </main>
-    <section>
-        <a href="index.php?action=telaprincipal">Voltar para a página inicial</a>
-    </section>
+
     <section>
         <a href="index.php?action=gerenciarexemplares">Voltar</a>
     </section>
+    
+    <section>
+        <a href="index.php?action=telaprincipal">Voltar para a página inicial</a>
+    </section>
+    
 </body>
 </html>

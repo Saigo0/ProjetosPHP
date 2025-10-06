@@ -105,8 +105,10 @@
             return $emprestimos;
         }
 
+    
         public function findByID(int $id){
             $leitorDAO = new LeitorDAO(Conexao::getPDO());
+            $exemplarDAO = new ExemplarDAO(Conexao::getPDO());
             $sql = "SELECT * FROM emprestimo WHERE id = :id";
             $stmt = $this->pdo->prepare($sql);
             $stmt->execute(['id' => $id]);
@@ -120,6 +122,23 @@
             $emprestimo->setDataDevolucao(new DateTime($registroEmprestimo['dataDevolucao']));
             $emprestimo->setStatus($registroEmprestimo['status']);
             $emprestimo->setDescricao($registroEmprestimo['descricao']);
+
+            
+            $sqlItens = "SELECT * FROM itememprestimo WHERE id_emprestimo = :id_emprestimo";
+            $stmtItens = $this->pdo->prepare($sqlItens);
+            $stmtItens->execute(['id_emprestimo' => $registroEmprestimo['id']]);
+            $arrayItens = $stmtItens->fetchAll(PDO::FETCH_ASSOC);
+
+            $itensEmprestimo = [];
+            foreach($arrayItens as $registroItem){
+                $item = new ItemEmprestimo();
+                $item->setId($registroItem['id']);
+                $item->setExemplar($exemplarDAO->findByID($registroItem['id_exemplar']));
+                $item->setIdEmprestimo($registroItem['id_emprestimo']);
+                $itensEmprestimo[] = $item;
+            }
+            
+            $emprestimo->setItensEmprestimo($itensEmprestimo);
 
             return $emprestimo;
         }
@@ -144,12 +163,15 @@
             return $emprestimos;
         }
 
+        
         public function delete(Emprestimo $emprestimo){
-            $sql = "DELETE FROM emprestimo WHERE id = :id";
-            $stmt = $this->pdo->prepare($sql);
-            $stmt->execute([
-                'id' => $emprestimo->getId()
-            ]);
+            $sqlItens = "DELETE FROM itememprestimo WHERE id_emprestimo = :id_emprestimo";
+            $stmtItens = $this->pdo->prepare($sqlItens);
+            $stmtItens->execute(['id_emprestimo' => $emprestimo->getId()]);
+
+            $sqlEmprestimo = "DELETE FROM emprestimo WHERE id = :id";
+            $stmtEmprestimo = $this->pdo->prepare($sqlEmprestimo);
+            $stmtEmprestimo->execute(['id' => $emprestimo->getId()]);
         }
 
     }

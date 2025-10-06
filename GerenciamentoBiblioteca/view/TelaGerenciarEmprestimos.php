@@ -16,6 +16,18 @@
         require_once __DIR__ . '/../bootstrap.php';
     ?>
     <main>
+        <?php if (isset($_GET['erro'])): ?>
+            <div class="erro" style="color: red;">
+                <?= htmlspecialchars($_GET['erro']) ?>
+            </div>
+            <script>
+                if (window.history.replaceState) {
+                    const url = new URL(window.location);
+                    url.searchParams.delete('erro');
+                    window.history.replaceState({}, document.title, url);
+                }
+            </script>
+        <?php endif; ?>
         <a href="../public/index.php?action=telarealizaremprestimo">Novo Empréstimo</a>
         <table>
             <thead>
@@ -40,7 +52,7 @@
                                 echo "<td>" . htmlspecialchars($emprestimo->getDataDevolucao()->format('Y-m-d')) . "</td>";
                                 echo "<td>" . htmlspecialchars($emprestimo->getStatus()) . "</td>";
                                 echo "<td>";
-                                    echo "<a href = '../public/index.php?action=editaremprestimo&id=". htmlspecialchars($emprestimo->getId()) ." '>Editar</a>";
+                                    echo "<a href = '../public/index.php?action=devolveremprestimo&id=". htmlspecialchars($emprestimo->getId()) ." '>Devolver</a>";
                                     echo "<a href = '../public/index.php?action=excluiremprestimo&id=". htmlspecialchars($emprestimo->getId()) ."' onclick=\"return confirm('Tem certeza que deseja excluir este empréstimo?');\" '>Excluir</a>";
                                 echo "</td>";
                             echo "</tr>";

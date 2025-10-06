@@ -79,8 +79,9 @@
             $this->exemplares[] = $exemplar;
         }
 
-        public function getExemplares(){
-            return $this->exemplares;
+        public function getExemplares() {
+            $exemplarDAO = new ExemplarDAO(Conexao::getPDO());
+            return $exemplarDAO->findByLivroId($this->getId());
         }
 
         public function getLocalEdicao(){

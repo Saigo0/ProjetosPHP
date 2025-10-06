@@ -13,23 +13,33 @@
             $this->leitorDAO = new LeitorDAO(Conexao::getPDO());
         }
 
+        
         public function realizarEmprestimo(Leitor $leitor, array $listaLivros){
             if(!$leitor->getMultasPendentes()){
+                $leitor->setMultasPendentes(true);
+                $this->leitorDAO->update($leitor);
                 $dataEmprestimo = new DateTime();
                 $dataDevolucao = (clone $dataEmprestimo)->add(new DateInterval('P7D'));
                 if($listaLivros != null && $leitor != null){
                     $emprestimo = new Emprestimo();
                     foreach($listaLivros as $livro){
+                        var_dump($livro->getTitulo(), $livro->getExemplares());
+                        $exemplarAdicionado = false;
                         foreach($livro->getExemplares() as $exemplar){
+                                var_dump($exemplar->getStatus(), $exemplar->isDisponivel());
                             if($exemplar->isDisponivel()){
                                 $itemEmprestimo = new ItemEmprestimo();
                                 $itemEmprestimo->setExemplar($exemplar);
-                                $itemEmprestimo->getExemplar()->setStatus("Emprestado");
+                                $itemEmprestimo->getExemplar()->setStatus("EMPRESTADO");
                                 $this->exemplarDAO->update($exemplar);
                                 $emprestimo->addItemEmprestimo($itemEmprestimo);
-                            } else
-                                throw new InvalidArgumentException("Exemplar não disponível");   
-                        }        
+                                $exemplarAdicionado = true;
+                                break;
+                            }
+                        }
+                        if (!$exemplarAdicionado) {
+                            throw new InvalidArgumentException("Nenhum exemplar disponível para o livro: " . $livro->getTitulo());
+                        }
                     }
                     $emprestimo->setLeitor($leitor);
                     $emprestimo->setDataEmprestimo($dataEmprestimo);
@@ -46,18 +56,23 @@
 
         public function devolverEmprestimo(Emprestimo $emprestimo){
             if($emprestimo != null){
-                $dataAtual = new DateTime();
+                if($emprestimo->getStatus() != "Concluído"){
+                    $dataAtual = new DateTime();
                 $leitorEmprestimo = $this->leitorDAO->findByID($emprestimo->getLeitor()->getId());
-                if($dataAtual > $emprestimo->getDataDevolucao()){
-                    $leitorEmprestimo->setMultasPendentes(true);
-                    $this->leitorDAO->update($leitorEmprestimo);
-                }
+                $leitorEmprestimo->setMultasPendentes(false);
+                $this->leitorDAO->update($leitorEmprestimo);
                 foreach($emprestimo->getItensEmprestimo() as $itemEmprestimo){
-                    $itemEmprestimo->getExemplar()->setStatus("Disponivel");
+                    $itemEmprestimo->getExemplar()->setStatus("DISPONIVEL");
                     $this->exemplarDAO->update($itemEmprestimo->getExemplar());
                 }
                 $emprestimo->setStatus("Concluído");
+                if($emprestimo->getStatus() != "Concluído"){
+                    $emprestimo->setDataDevolucao($dataAtual);
+                }
                 $this->emprestimoDAO->update($emprestimo);
+                } else{
+                    throw new InvalidArgumentException("Empréstimo já está concluído, não é possível realizar a devolução novamente");
+                }
             } else{
                 throw new InvalidArgumentException("Não há como realizar a devolução de um empréstimo nulo");
             }

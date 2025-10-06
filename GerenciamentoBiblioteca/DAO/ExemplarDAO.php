@@ -89,6 +89,22 @@
             return $exemplar;
         }
 
+        
+        public function findByLivroId(int $livroId) {
+            $stmt = $this->pdo->prepare("SELECT * FROM exemplar WHERE id_livro = ?");
+            $stmt->execute([$livroId]);
+            $result = [];
+            while ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
+                $exemplar = new Exemplar();
+                $exemplar->setID($row['id']);
+                $exemplar->setLivroId($row['id_livro']);
+                $exemplar->setCodigoExemplar($row['codigoExemplar']);
+                $exemplar->setStatus($row['status']);
+                $result[] = $exemplar;
+            }
+            return $result;
+        }
+
         public function findByDisponibilidade(string $status){
             $sql = "SELECT * FROM exemplar WHERE status = :status";
             $stmt = $this->pdo->prepare($sql);

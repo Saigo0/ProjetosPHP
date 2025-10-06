@@ -43,7 +43,7 @@
         }
 
         public function isDisponivel(){
-            if($this->status == "Disponível" || $this->status == "Disponivel"){
+            if($this->status == "DISPONÍVEL" || $this->status == "DISPONIVEL"){
                 return true;
             } else
                 return false;

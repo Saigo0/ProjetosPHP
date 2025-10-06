@@ -28,6 +28,9 @@
         </form>
     </main>
     <section>
+        <a href="index.php?action=gerenciarlivros">Voltar</a>
+    </section>
+    <section>
         <a href="index.php?action=telaprincipal">Voltar para a página inicial</a>
     </section>
 </body>

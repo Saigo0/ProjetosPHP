@@ -37,11 +37,13 @@
     </main>
 
     <section>
-        <a href="index.php?action=telaprincipal">Voltar para a página inicial</a>
+        <a href="index.php?action=gerenciarleitores">Cancelar</a>
     </section>
 
     <section>
-        <a href="index.php?action=gerenciarleitores">Cancelar</a>
+        <a href="index.php?action=telaprincipal">Voltar para a página inicial</a>
     </section>
+
+    
 </body>
 </html>

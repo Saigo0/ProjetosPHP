@@ -196,6 +196,11 @@ switch($action){
         $controller = new EmprestimoController();
         $controller->listarEmprestimos();
         break;
+    
+    case 'excluiremprestimo':
+        $controller = new EmprestimoController();
+        $controller->deletarEmprestimo();
+        break;
 
     default:
         echo "Rota não encontrada.";

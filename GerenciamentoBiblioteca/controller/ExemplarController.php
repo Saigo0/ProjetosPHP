@@ -25,7 +25,7 @@
             $exemplar->setId($_POST['id']);
             $exemplar->setLivroId($exemplarDAO->findById($exemplar->getId())->getLivroId());
             $exemplar->setCodigoExemplar($_POST['codExemplar']);
-            $exemplar->setStatus($exemplarDAO->findById($exemplar->getId())->getStatus());
+            $exemplar->setStatus($_POST['status']);
             $exemplarDAO->update($exemplar);
             header("Location: ../public/index.php?action=gerenciarexemplares");
             exit;
