@@ -34,7 +34,16 @@ Route::get('/home', function () {
     return view('welcome');
 })->name('home-index');
 
-Route::get('/testecontroller', [MeuController1::class, 'metodo1']);
+Route::get('/testecontroller', [MeuController1::class, 'returnAll']);
+
+Route::prefix('pessoas')->group(function () {
+    Route::get('/', [MeuController1::class, 'returnAll'])->name('pessoas.index');
+    Route::get('/create', [MeuController1::class, 'create'])->name('pessoas-create');
+    Route::post('/pessoas', [MeuController1::class, 'store'])->name('pessoas-store');
+    Route::get('/{id}/edit', [MeuController1::class, 'Edit'])->where('id', '[0-9]+')->name('pessoas-edit');
+});
+
+
 
 Route::fallback(function () {
     return view('tela8');
