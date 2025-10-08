@@ -12,4 +12,9 @@ class Pessoa extends Model
         'telefone',
         'endereco',
     ];
+
+    public function usuario()
+    {
+        return $this->hasOne(Usuario::class);
+    }
 }
