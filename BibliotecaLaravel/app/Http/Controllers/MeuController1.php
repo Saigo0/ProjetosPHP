@@ -32,14 +32,39 @@ class MeuController1 extends Controller
 
         Pessoa::create($validated);
 
-        return redirect()->route('pessoas.index');
+        return redirect()->route('pessoas-index');
     }
 
     public function edit($id){
         $pessoas = Pessoa::where('id', $id)->first();
         if(!empty($pessoas)){
-            dd($pessoas);
+            return view('telaspadrao.edit', ['pessoas' => $pessoas]);
         } else
-        return redirect()->route('pessoas.index');
+        return redirect()->route('pessoas-index');
+    }
+
+    public function update(Request $request){
+        $validated = $request->validate([
+            'id' => 'required|integer',
+            'nome' => 'required|max:55',
+            'email' => 'required|email|max:100',
+            'endereco' => 'required|max:255',
+            'telefone' => 'required|max:20',
+        ]);
+
+        $pessoas = Pessoa::where('id', $request->id)->first();
+        if(!empty($pessoas)){
+            $pessoas->update($validated);
+        }
+
+        return redirect()->route('pessoas-index');
+    }
+
+    public function destroy($id){
+        $pessoas = Pessoa::where('id', $id)->first();
+        if(!empty($pessoas)){
+            $pessoas->delete();
+        }
+        return redirect()->route('pessoas-index');
     }
 }
