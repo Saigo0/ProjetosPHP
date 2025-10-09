@@ -8,27 +8,17 @@
     <div class="container mt-5">
         <h1>Crie uma nova pessoa</h1>
         <hr>
-        <form action="{{ route('pessoas-store') }}" method="POST">
+        <form action="{{ route('exemplares-store') }}" method="POST">
             @csrf
             <div class="form-group">
                 <div class="form-group">
-                    <label for="nome">Nome:</label>
-                    <input type="text" class="form-control" name="nome" id="nome" placeholder="Nome da pessoa">
+                    <label for="nome">Código de exemplar:</label>
+                    <input type="text" class="form-control" name="codigoExemplar" id="codigoExemplar" placeholder="Código do exemplar">
                 </div>
                 <br>
                 <div class="form-group">
-                    <label for="email">Email:</label>
-                    <input type="email" class="form-control" name="email" id="email" placeholder="Email">
-                </div>
-                <br>
-                <div class="form-group">
-                    <label for="telefone">Telefone:</label>
-                    <input type="text" class="form-control" name="telefone" id="telefone" placeholder="Telefone">
-                </div>
-                <br>
-                <div class="form-group">
-                    <label for="endereco">Endereço:</label>
-                    <input type="text" class="form-control" name="endereco" id="endereco" placeholder="Endereço">
+                    <label for="email">ISBN do livro:</label>
+                    <input type="email" class="form-control" name="livroISBN" id="livroISBN" placeholder="ISBN do livro">
                 </div>
                 <br>
                 <div class="form-group">

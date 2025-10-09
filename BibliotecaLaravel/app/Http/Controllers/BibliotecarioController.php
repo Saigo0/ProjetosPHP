@@ -5,7 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Models\Pessoa;
 
-class BibliotecarioControllerC extends Controller
+class BibliotecarioController extends Controller
 {
     public function index()
     {

@@ -65,6 +65,6 @@ class LeitorController extends Controller
     public function index()
     {
         $pessoas = Pessoa::all();
-        return response()->json($pessoas);
+        return redirect()->route('pessoas-index', ['pessoas' => $pessoas]);
     } 
 }

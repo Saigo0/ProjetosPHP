@@ -19,7 +19,7 @@ class LivroController extends Controller
         if ($livro) {
             return response()->json($livro);
         } else {
-            return response()->json(['message' => 'Livro não encontrado'], 404);
+            return redirect()->route('livros-index');
         }
     }
 
@@ -36,7 +36,7 @@ class LivroController extends Controller
         ]);
 
         $livro = Livro::create($request->all());
-        return response()->json($livro, 201);
+        return redirect()->route('livros-index');
     }
 
     public function update(Request $request, $id)
@@ -57,7 +57,7 @@ class LivroController extends Controller
         ]);
 
         $livro->update($request->all());
-        return response()->json($livro);
+        return redirect()->route('livros-index');
     }
 
     public function destroy($id)
@@ -68,6 +68,6 @@ class LivroController extends Controller
         }
 
         $livro->delete();
-        return response()->json(['message' => 'Livro deletado com sucesso']);
+        return redirect()->route('livros-index');
     }    
 }

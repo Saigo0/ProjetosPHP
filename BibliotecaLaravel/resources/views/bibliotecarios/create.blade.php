@@ -6,9 +6,9 @@
 @section('content')
     <h1>Teste</h1>
     <div class="container mt-5">
-        <h1>Crie uma nova pessoa</h1>
+        <h1>Crie um novo bibliotecário</h1>
         <hr>
-        <form action="{{ route('pessoas-store') }}" method="POST">
+        <form action="{{ route('bibliotecarios-store') }}" method="POST">
             @csrf
             <div class="form-group">
                 <div class="form-group">
@@ -32,7 +32,17 @@
                 </div>
                 <br>
                 <div class="form-group">
-                    <input type="submit" class="btn btn-primary" name="submit" id="submit" placeholder="Nome da pessoa">
+                    <label for="registroCRB">RegistroCRB:</label>
+                    <input type="text" class="form-control" name="registroCRB" id="registroCRB" placeholder="RegistroCRB">
+                </div>
+                <br>
+                <div class="form-group">
+                    <label for="valorCRB">ValorCRB:</label>
+                    <input type="text" class="form-control" name="endereco" id="endereco" placeholder="ValorCRB">
+                </div>
+                <br>
+                <div class="form-group">
+                    <input type="submit" class="btn btn-primary" name="submit" id="submit" placeholder="Criar">
                 </div>
             </div>
         </form>
