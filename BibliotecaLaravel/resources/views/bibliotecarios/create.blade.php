@@ -32,13 +32,23 @@
                 </div>
                 <br>
                 <div class="form-group">
+                    <label for="login">Login:</label>
+                    <input type="text" class="form-control" name="login" id="login" placeholder="Login">
+                </div>
+                <br>
+                <div class="form-group">
+                    <label for="endereco">Senha:</label>
+                    <input type="password" class="form-control" name="senha" id="senha" placeholder="Senha">
+                </div>
+                <br>
+                <div class="form-group">
                     <label for="registroCRB">RegistroCRB:</label>
                     <input type="text" class="form-control" name="registroCRB" id="registroCRB" placeholder="RegistroCRB">
                 </div>
                 <br>
                 <div class="form-group">
                     <label for="valorCRB">ValorCRB:</label>
-                    <input type="text" class="form-control" name="endereco" id="endereco" placeholder="ValorCRB">
+                    <input type="text" class="form-control" name="valorCRB" id="valorCRB" placeholder="ValorCRB">
                 </div>
                 <br>
                 <div class="form-group">

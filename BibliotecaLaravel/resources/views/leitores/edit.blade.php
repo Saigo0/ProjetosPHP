@@ -4,9 +4,8 @@
 
 
 @section('content')
-    <h1>Teste</h1>
     <div class="container mt-5">
-        <h1>Editar pessoa</h1>
+        <h1>Editar Leitor</h1>
         <hr>
         <form action="{{ route('leitores-update', ['id'=>$leitores->id]) }}" method="POST">
             @csrf
@@ -14,33 +13,32 @@
             <div class="form-group">
                 <div class="form-group">
                     <label for="nome">Nome:</label>
-                    <input type="text" class="form-control" name="nome" id="nome" value="{{ $leitores->nome }}" placeholder="Nome do leitor">
+                    <input type="text" class="form-control" name="nome" id="nome" value="{{ $leitores->usuario->pessoa->nome }}" placeholder="Nome do leitor">
                 </div>
                 <br>
                 <div class="form-group">
                     <label for="email">Email:</label>
-                    <input type="email" class="form-control" name="email" id="email" value="{{ $leitores->email }}" placeholder="Email">
+                    <input type="email" class="form-control" name="email" id="email" value="{{ $leitores->usuario->pessoa->email }}" placeholder="Email">
                 </div>
                 <br>
                 <div class="form-group">
                     <label for="telefone">Telefone:</label>
-                    <input type="text" class="form-control" name="telefone" id="telefone" value="{{ $leitores->telefone }}" placeholder="Telefone">
+                    <input type="text" class="form-control" name="telefone" id="telefone" value="{{ $leitores->usuario->pessoa->telefone }}" placeholder="Telefone">
                 </div>
                 <br>
                 <div class="form-group">
                     <label for="endereco">Endereço:</label>
-                    <input type="text" class="form-control" name="endereco" id="endereco" value="{{ $leitores->endereco }}" placeholder="Endereço">
+                    <input type="text" class="form-control" name="endereco" id="endereco" value="{{ $leitores->usuario->pessoa->endereco }}" placeholder="Endereço">
                 </div>
                 <br>
                 <div class="form-group">
-                    <label for="login">Login:</label>
-                    <input type="text" class="form-control" name="login" id="login" value="{{ $leitores->login }}" placeholder="Login">
+                    <label for="pendente">Status:</label>
+                    <select name="pendente" id="pendente" class="form-control">
+                        <option value="1" {{ $leitores->pendente == 1 ? 'selected' : '' }}>Pendente</option>
+                        <option value="0" {{ $leitores->pendente == 0 ? 'selected' : '' }}>Não pendente</option>
+                    </select>
                 </div>
-                <br>
-                <div class="form-group">
-                    <label for="senha">Senha:</label>
-                    <input type="text" class="form-control" name="senha" id="senha" value="{{ $leitores->senha }}" placeholder="Senha">
-                </div>
+
                 <div class="form-group">
                     <input type="submit" class="btn btn-success" value="Atualizar" name="submit" id="submit">
                 </div>

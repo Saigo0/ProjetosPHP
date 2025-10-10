@@ -6,7 +6,7 @@
 @section('content')
     <h1>Teste</h1>
     <div class="container mt-5">
-        <h1>Crie uma nova pessoa</h1>
+        <h1>Crie uma novo livro</h1>
         <hr>
         <form action="{{ route('pessoas-store') }}" method="POST">
             @csrf

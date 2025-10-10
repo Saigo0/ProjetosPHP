@@ -7,67 +7,95 @@ use App\Models\Livro;
 
 class LivroController extends Controller
 {
-    public function index()
+    public function create()
     {
-        $livros = Livro::all();
-        return response()->json($livros);
+        return view('livros.create');
+    }
+
+    public function store(Request $request)
+        {
+            $livro = Livro::create([
+                'titulo' => $request->titulo,
+                'email' => $request->email,
+                'telefone' => $request->telefone,
+                'endereco' => $request->endereco,
+            ]);
+
+            $usuario = Usuario::create([
+                'pessoa_id' => $pessoa->id,
+                'nivelAcesso' => 'LEITOR',
+                'login' => $request->input('login'),
+                'senha' => bcrypt($request->input('senha')),
+            ]);
+
+            $leitor = Leitor::create([
+                'usuario_id' => $usuario->id,
+                'pendente' => false,
+            ]);
+
+            return redirect()->route('leitores-index');
+    }
+
+    public function edit($id)
+    {
+        $leitores = Leitor::with('usuario.pessoa')->where('id', $id)->first();
+        if (!empty($leitores)) {
+            return view('leitores.edit', ['leitores' => $leitores]);
+        } else {
+            return redirect()->route('leitores-index');
+        }
     }
 
     public function show($id)
     {
-        $livro = Livro::find($id);
-        if ($livro) {
-            return response()->json($livro);
+        $pessoa = Pessoa::find($id);
+        if ($pessoa) {
+            return response()->json($pessoa);
         } else {
-            return redirect()->route('livros-index');
+            return response()->json(['message' => 'Pessoa não encontrada'], 404);
         }
-    }
-
-    public function store(Request $request)
-    {
-        $request->validate([
-            'titulo' => 'required|string|max:255',
-            'autor' => 'required|string|max:255',
-            'isbn' => 'required|string|max:13|unique:livros,isbn',
-            'anoEdicao' => 'required|integer',
-            'editora' => 'required|string|max:255',
-            'numPaginas' => 'required|integer',
-            'localEdicao' => 'required|string|max:255',
-        ]);
-
-        $livro = Livro::create($request->all());
-        return redirect()->route('livros-index');
     }
 
     public function update(Request $request, $id)
     {
-        $livro = Livro::find($id);
-        if (!$livro) {
-            return response()->json(['message' => 'Livro não encontrado'], 404);
-        }
+        $leitor = Leitor::find($id);
 
-        $request->validate([
-            'titulo' => 'sometimes|required|string|max:255',
-            'autor' => 'sometimes|required|string|max:255',
-            'isbn' => "sometimes|required|string|max:13|unique:livros,isbn,$id",
-            'anoEdicao' => 'sometimes|required|integer',
-            'editora' => 'sometimes|required|string|max:255',
-            'numPaginas' => 'sometimes|required|integer',
-            'localEdicao' => 'sometimes|required|string|max:255',
+        $usuario = $leitor->usuario;
+
+        $pessoa = $usuario->pessoa;
+
+
+        $pessoa->update([
+            'nome' => $request->nome,
+            'email' => $request->email,
+            'telefone' => $request->telefone,
+            'endereco' => $request->endereco,
         ]);
 
-        $livro->update($request->all());
-        return redirect()->route('livros-index');
+        $leitor->update([
+            'pendente' => $request->input('pendente', $leitor->pendente),
+        ]);
+
+        return redirect()->route('leitores-index')->with('success', 'Leitor atualizado com sucesso');
     }
 
     public function destroy($id)
     {
-        $livro = Livro::find($id);
-        if (!$livro) {
-            return response()->json(['message' => 'Livro não encontrado'], 404);
+        $leitor = Leitor::find($id);
+        $usuario = $leitor->usuario;
+        $pessoa = $usuario->pessoa;
+        if (!$pessoa) {
+            return response()->json(['message' => 'Pessoa não encontrada'], 404);
         }
 
-        $livro->delete();
-        return redirect()->route('livros-index');
+        $pessoa->delete();
+
+        return redirect()->route('leitores-index')->with('success', 'Leitor deletado com sucesso');
+    }
+
+    public function index()
+    {
+        $leitores = Leitor::with('usuario.pessoa')->get();
+        return view('leitores.index', compact('leitores'));
     }    
 }

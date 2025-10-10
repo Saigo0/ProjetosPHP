@@ -17,4 +17,9 @@ class Livro extends Model
         'numPaginas',
         'localEdicao',
     ];
+
+    public function emprestimos()
+    {
+        return $this->belongsTo(EmprestimoLivro::class);
+    }
 }

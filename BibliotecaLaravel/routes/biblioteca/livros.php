@@ -1,17 +1,18 @@
-<?php 
+<?php
 
-use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\LivroController;
-use App\Models\Livro;
-use Illuminate\Http\Request;
-use App\Http\Controllers\LeitorController;
-use App\Models\Pessoa;
-use App\Http\Controllers\BibliotecarioControllerC;
-use App\Models\Bibliotecario;
+use Illuminate\Support\Facades\Route;
 
 
-Route::get('/livros', [LivroController::class, 'index'])->name('livros-index');
-Route::get('/livros/{id}', [LivroController::class, 'show'])->name('livros-show');
-Route::post('/livros', [LivroController::class, 'store'])->name('livros-store');
-Route::put('/livros/{id}', [LivroController::class, 'update'])->name('livros-update');
-Route::delete('/livros/{id}', [LivroController::class, 'destroy'])->name('livros-destroy');
+Route::prefix('livros')->group(function () {
+    Route::get('/', [LivroController::class, 'index'])->name('livros-index');
+    Route::get('/create', [LivroController::class, 'create'])->name('livros-create');
+    Route::post('/livros', [LivroController::class, 'store'])->name('livros-store');
+    Route::get('/{id}/edit', [LivroController::class, 'edit'])->where('id', '[0-9]+')->name('livros-edit');
+    Route::put('/update/{id}', [LivroController::class, 'update'])->name('livros-update');
+    Route::delete('/{id}', [LivroController::class, 'destroy'])->where('id', '[0-9]+')->name('livros-destroy');
+});     
+
+Route::fallback(function () {
+    return view('leitores.fallback');
+});

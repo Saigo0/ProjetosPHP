@@ -4,9 +4,8 @@
 
 
 @section('content')
-    <h1>Teste</h1>
     <div class="container mt-5">
-        <h1>Crie uma nova pessoa</h1>
+        <h1>Crie um novo leitor</h1>
         <hr>
         <form action="{{ route('leitores-store') }}" method="POST">
             @csrf

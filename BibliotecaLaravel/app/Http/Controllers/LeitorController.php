@@ -4,21 +4,48 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\Pessoa;
+use App\Models\Leitor;
+use App\Models\Usuario;
 
 class LeitorController extends Controller
 {
-    public function create(Request $request)
+    public function create()
     {
-        $data = $request->validate([
-            'nome' => 'required|string|max:100',
-            'email' => 'required|email|max:100|unique:pessoas,email',
-            'telefone' => 'nullable|string|max:15',
-            'endereco' => 'nullable|string|max:255',
-        ]);
+        return view('leitores.create');
+    }
 
-        $pessoa = Pessoa::create($data);
+    public function store(Request $request)
+        {
+            $pessoa = Pessoa::create([
+                'nome' => $request->nome,
+                'email' => $request->email,
+                'telefone' => $request->telefone,
+                'endereco' => $request->endereco,
+            ]);
 
-        return response()->json(['message' => 'Pessoa criada com sucesso', 'pessoa' => $pessoa], 201);
+            $usuario = Usuario::create([
+                'pessoa_id' => $pessoa->id,
+                'nivelAcesso' => 'LEITOR',
+                'login' => $request->input('login'),
+                'senha' => bcrypt($request->input('senha')),
+            ]);
+
+            $leitor = Leitor::create([
+                'usuario_id' => $usuario->id,
+                'pendente' => false,
+            ]);
+
+            return redirect()->route('leitores-index');
+    }
+
+    public function edit($id)
+    {
+        $leitores = Leitor::with('usuario.pessoa')->where('id', $id)->first();
+        if (!empty($leitores)) {
+            return view('leitores.edit', ['leitores' => $leitores]);
+        } else {
+            return redirect()->route('leitores-index');
+        }
     }
 
     public function show($id)
@@ -33,38 +60,44 @@ class LeitorController extends Controller
 
     public function update(Request $request, $id)
     {
-        $pessoa = Pessoa::find($id);
-        if (!$pessoa) {
-            return response()->json(['message' => 'Pessoa não encontrada'], 404);
-        }
+        $leitor = Leitor::find($id);
 
-        $data = $request->validate([
-            'nome' => 'sometimes|required|string|max:100',
-            'email' => "sometimes|required|email|max:100|unique:pessoas,email,$id",
-            'telefone' => 'nullable|string|max:15',
-            'endereco' => 'nullable|string|max:255',
+        $usuario = $leitor->usuario;
+
+        $pessoa = $usuario->pessoa;
+
+
+        $pessoa->update([
+            'nome' => $request->nome,
+            'email' => $request->email,
+            'telefone' => $request->telefone,
+            'endereco' => $request->endereco,
         ]);
 
-        $pessoa->update($data);
+        $leitor->update([
+            'pendente' => $request->input('pendente', $leitor->pendente),
+        ]);
 
-        return response()->json(['message' => 'Pessoa atualizada com sucesso', 'pessoa' => $pessoa]);
+        return redirect()->route('leitores-index')->with('success', 'Leitor atualizado com sucesso');
     }
 
-    public function delete($id)
+    public function destroy($id)
     {
-        $pessoa = Pessoa::find($id);
+        $leitor = Leitor::find($id);
+        $usuario = $leitor->usuario;
+        $pessoa = $usuario->pessoa;
         if (!$pessoa) {
             return response()->json(['message' => 'Pessoa não encontrada'], 404);
         }
 
         $pessoa->delete();
 
-        return response()->json(['message' => 'Pessoa deletada com sucesso']);
+        return redirect()->route('leitores-index')->with('success', 'Leitor deletado com sucesso');
     }
 
     public function index()
     {
-        $pessoas = Pessoa::all();
-        return redirect()->route('pessoas-index', ['pessoas' => $pessoas]);
+        $leitores = Leitor::with('usuario.pessoa')->get();
+        return view('leitores.index', compact('leitores'));
     } 
 }
