@@ -13,6 +13,3 @@ Route::prefix('livros')->group(function () {
     Route::delete('/{id}', [LivroController::class, 'destroy'])->where('id', '[0-9]+')->name('livros-destroy');
 });     
 
-Route::fallback(function () {
-    return view('leitores.fallback');
-});

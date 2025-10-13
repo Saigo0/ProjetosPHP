@@ -20,6 +20,16 @@ class Livro extends Model
 
     public function emprestimos()
     {
-        return $this->belongsTo(EmprestimoLivro::class);
+        return $this->belongsToMany(Emprestimo::class, 'emprestimo_livro', 'livro_id', 'emprestimo_id');
+    }
+
+    public function scopeDisponiveis($query)
+    {
+        return $query->whereNotExists(function ($sub) {
+        $sub->from('emprestimo_livro')
+            ->join('emprestimos', 'emprestimos.id', '=', 'emprestimo_livro.emprestimo_id')
+            ->whereColumn('livros.id', 'emprestimo_livro.livro_id')
+            ->whereNull('emprestimos.dataDevolucao');
+        });
     }
 }

@@ -4,7 +4,7 @@
 
 
 @section('content')
-    <h1>Teste</h1>
+
     <div class="container mt-5">
         <h1>Editar pessoa</h1>
         <hr>

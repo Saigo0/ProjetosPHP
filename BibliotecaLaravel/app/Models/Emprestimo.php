@@ -24,4 +24,10 @@ class Emprestimo extends Model
     {
         return $this->hasOne(EmprestimoLivro::class);
     }
+
+    public function livros()
+    {
+        return $this->belongsToMany(Livro::class, 'emprestimo_livro', 'emprestimo_id', 'livro_id')
+                    ->withPivot('dataDevolucao', 'status');
+    }
 }

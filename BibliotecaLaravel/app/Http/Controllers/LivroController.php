@@ -16,86 +16,69 @@ class LivroController extends Controller
         {
             $livro = Livro::create([
                 'titulo' => $request->titulo,
-                'email' => $request->email,
-                'telefone' => $request->telefone,
-                'endereco' => $request->endereco,
+                'isbn' => $request->isbn,
+                'autor' => $request->autor,
+                'editora' => $request->editora,
+                'anoEdicao' => $request->anoEdicao,
+                'localEdicao' => $request->localEdicao,
+                'numPaginas' => $request->numPaginas,
             ]);
 
-            $usuario = Usuario::create([
-                'pessoa_id' => $pessoa->id,
-                'nivelAcesso' => 'LEITOR',
-                'login' => $request->input('login'),
-                'senha' => bcrypt($request->input('senha')),
-            ]);
-
-            $leitor = Leitor::create([
-                'usuario_id' => $usuario->id,
-                'pendente' => false,
-            ]);
-
-            return redirect()->route('leitores-index');
+            return redirect()->route('livros-index')->with('success', 'Livro criado com sucesso');
     }
 
     public function edit($id)
     {
-        $leitores = Leitor::with('usuario.pessoa')->where('id', $id)->first();
-        if (!empty($leitores)) {
-            return view('leitores.edit', ['leitores' => $leitores]);
+        $livros = Livro::where('id', $id)->first();
+        if (!empty($livros)) {
+            return view('livros.edit', ['livros' => $livros]);
         } else {
-            return redirect()->route('leitores-index');
+            return redirect()->route('livros-index');
         }
     }
 
     public function show($id)
     {
-        $pessoa = Pessoa::find($id);
-        if ($pessoa) {
-            return response()->json($pessoa);
+        $livro = Livro::find($id);
+        if ($livro) {
+            return response()->json($livro);
         } else {
-            return response()->json(['message' => 'Pessoa não encontrada'], 404);
+            return response()->json(['message' => 'livro não encontrada'], 404);
         }
     }
 
     public function update(Request $request, $id)
     {
-        $leitor = Leitor::find($id);
+        $livro = Livro::find($id);
 
-        $usuario = $leitor->usuario;
-
-        $pessoa = $usuario->pessoa;
-
-
-        $pessoa->update([
-            'nome' => $request->nome,
-            'email' => $request->email,
-            'telefone' => $request->telefone,
-            'endereco' => $request->endereco,
+        $livro->update([
+            'titulo' => $request->input('titulo', $livro->titulo),
+            'isbn' => $request->input('isbn', $livro->isbn),
+            'autor' => $request->input('autor', $livro->autor),
+            'editora' => $request->input('editora', $livro->editora),
+            'anoEdicao' => $request->input('anoEdicao', $livro->anoEdicao),
+            'localEdicao' => $request->input('localEdicao', $livro->localEdicao),
+            'numPaginas' => $request->input('numPaginas', $livro->numPaginas),
         ]);
 
-        $leitor->update([
-            'pendente' => $request->input('pendente', $leitor->pendente),
-        ]);
-
-        return redirect()->route('leitores-index')->with('success', 'Leitor atualizado com sucesso');
+        return redirect()->route('livros-index')->with('success', 'Livro atualizado com sucesso');
     }
 
     public function destroy($id)
     {
-        $leitor = Leitor::find($id);
-        $usuario = $leitor->usuario;
-        $pessoa = $usuario->pessoa;
-        if (!$pessoa) {
-            return response()->json(['message' => 'Pessoa não encontrada'], 404);
+        $livro = Livro::find($id);
+        if (!$livro) {
+            return response()->json(['message' => 'livro não encontrado'], 404);
         }
 
-        $pessoa->delete();
+        $livro->delete();
 
-        return redirect()->route('leitores-index')->with('success', 'Leitor deletado com sucesso');
+        return redirect()->route('livros-index')->with('success', 'Livro deletado com sucesso');
     }
 
     public function index()
     {
-        $leitores = Leitor::with('usuario.pessoa')->get();
-        return view('leitores.index', compact('leitores'));
+        $livros = Livro::get();
+        return view('livros.index', compact('livros'));
     }    
 }

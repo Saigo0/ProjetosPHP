@@ -13,11 +13,6 @@ class EmprestimoLivro extends Model
         'livro_id',
     ];
 
-    public function emprestimo()
-    {
-        return $this->belongsTo(Emprestimo::class);
-    }
-
     public function livro()
     {
         return $this->belongsTo(Livro::class);

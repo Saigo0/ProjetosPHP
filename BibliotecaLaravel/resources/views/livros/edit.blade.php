@@ -4,32 +4,46 @@
 
 
 @section('content')
-    <h1>Teste</h1>
     <div class="container mt-5">
-        <h1>Editar pessoa</h1>
+        <h1>Editar livro</h1>
         <hr>
-        <form action="{{ route('pessoas-update', ['id'=>$pessoas->id]) }}" method="POST">
+        <form action="{{ route('livros-update', ['id'=>$livros->id]) }}" method="POST">
             @csrf
             @method('PUT')
             <div class="form-group">
                 <div class="form-group">
-                    <label for="nome">Nome:</label>
-                    <input type="text" class="form-control" name="nome" id="nome" value="{{ $pessoas->nome }}" placeholder="Nome da pessoa">
+                    <label for="titulo">Título:</label>
+                    <input type="text" class="form-control" name="titulo" id="titulo" value="{{ $livros->titulo }}" placeholder="Título do livro">
                 </div>
                 <br>
                 <div class="form-group">
-                    <label for="email">Email:</label>
-                    <input type="email" class="form-control" name="email" id="email" value="{{ $pessoas->email }}" placeholder="Email">
+                    <label for="isbn">ISBN:</label>
+                    <input type="text" class="form-control" name="isbn" id="isbn" value="{{ $livros->isbn }}" placeholder="ISBN">
                 </div>
                 <br>
                 <div class="form-group">
-                    <label for="telefone">Telefone:</label>
-                    <input type="text" class="form-control" name="telefone" id="telefone" value="{{ $pessoas->telefone }}" placeholder="Telefone">
+                    <label for="autor">Autor:</label>
+                    <input type="text" class="form-control" name="autor" id="autor" value="{{ $livros->autor }}" placeholder="Autor">
                 </div>
                 <br>
                 <div class="form-group">
-                    <label for="endereco">Endereço:</label>
-                    <input type="text" class="form-control" name="endereco" id="endereco" value="{{ $pessoas->endereco }}" placeholder="Endereço">
+                    <label for="editora">Editora:</label>
+                    <input type="text" class="form-control" name="editora" id="editora" value="{{ $livros->editora }}" placeholder="Editora">
+                </div>
+                <br>
+                <div class="form-group">
+                    <label for="numPaginas">Páginas:</label>
+                    <input type="text" class="form-control" name="numPaginas" id="numPaginas" value="{{ $livros->numPaginas }}" placeholder="Número de páginas">
+                </div>
+                <br>
+                <div class="form-group">
+                    <label for="anoEdicao">Ano de edição:</label>
+                    <input type="text" class="form-control" name="anoEdicao" id="anoEdicao" value="{{ $livros->anoEdicao }}" placeholder="Ano de edição">
+                </div>
+                <br>
+                <div class="form-group">
+                    <label for="localEdicao">Local de edição:</label>
+                    <input type="text" class="form-control" name="localEdicao" id="localEdicao" value="{{ $livros->localEdicao }}" placeholder="Local de edição">
                 </div>
                 <br>
                 <div class="form-group">

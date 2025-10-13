@@ -15,6 +15,10 @@ class Usuario extends Model
         'nivelAcesso',
     ];
 
+    protected $hidden = [
+        'senha',
+    ];
+
     public function pessoa()
     {
         return $this->belongsTo(Pessoa::class);
