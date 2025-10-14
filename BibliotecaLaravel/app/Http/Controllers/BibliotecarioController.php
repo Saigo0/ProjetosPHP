@@ -25,7 +25,7 @@ class BibliotecarioController extends Controller
 
             $usuario = Usuario::create([
                 'pessoa_id' => $pessoa->id,
-                'nivelAcesso' => 'Bibliotecario',
+                'nivelAcesso' => 'BIBLIOTECARIO',
                 'login' => $request->input('login'),
                 'senha' => bcrypt($request->input('senha')),
             ]);

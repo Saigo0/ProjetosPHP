@@ -34,7 +34,10 @@ return Application::configure(basePath: dirname(__DIR__))
         }
     )
     ->withMiddleware(function (Middleware $middleware): void {
-        
+        $middleware->alias([
+            'bibliotecario' => \App\Http\Middleware\BibliotecarioMiddleware::class,
+            'administrador' => \App\Http\Middleware\AdministradorMiddleware::class,
+        ]);
     })
     ->withExceptions(function (Exceptions $exceptions): void {
         
