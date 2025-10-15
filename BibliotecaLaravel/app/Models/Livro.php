@@ -3,6 +3,7 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Support\Facades\DB;
 
 class Livro extends Model
 {
@@ -31,5 +32,13 @@ class Livro extends Model
             ->whereColumn('livros.id', 'emprestimo_livro.livro_id')
             ->whereNull('emprestimos.dataDevolucao');
         });
+    }
+
+    public function getEstaEmprestadoAttribute(){
+        return DB::table('emprestimo_livro')
+            ->join('emprestimos', 'emprestimos.id', '=', 'emprestimo_livro.emprestimo_id')
+            ->where('emprestimo_livro.livro_id', $this->id)
+            ->whereNull('emprestimos.dataDevolucao')
+            ->exists();
     }
 }

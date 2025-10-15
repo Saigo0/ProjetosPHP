@@ -37,6 +37,7 @@ return Application::configure(basePath: dirname(__DIR__))
         $middleware->alias([
             'bibliotecario' => \App\Http\Middleware\BibliotecarioMiddleware::class,
             'administrador' => \App\Http\Middleware\AdministradorMiddleware::class,
+            'bibliotecarioOuAdministrador' => \App\Http\Middleware\CheckBibliotecarioOuAdministrador::class,
         ]);
     })
     ->withExceptions(function (Exceptions $exceptions): void {

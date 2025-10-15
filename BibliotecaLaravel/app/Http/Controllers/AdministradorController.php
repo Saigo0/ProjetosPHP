@@ -43,5 +43,16 @@ class AdministradorController extends Controller
 
             return redirect()->route('administradores-index');
     }
+
     
+    
+    public function destroy($id)
+    {
+        $administrador = Administrador::findOrFail($id);
+        $usuario = Usuario::findOrFail($administrador->usuario_id);
+        $pessoa = Pessoa::findOrFail($usuario->pessoa_id);
+        $pessoa->delete();
+
+        return redirect()->route('administradores-index');
+    }
 }

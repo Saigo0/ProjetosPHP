@@ -239,8 +239,8 @@ input[type=radio] + label, input[type=checkbox] + label {
     <title>@yield('title') - GN</title>
 </head>
 <body>
-    <main>
+    
       @yield('content')
-    </main>
+    
 </body>
 </html>

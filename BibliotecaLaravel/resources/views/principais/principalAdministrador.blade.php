@@ -3,12 +3,15 @@
 @section('title', 'Principal Administrador')
 
 @section('content')
+        <header>
+            <h1>Bem vindo(a), @php
+                $usuario = session('usuario_id') ? \App\Models\Usuario::with('pessoa')->find(session('usuario_id')) : null;
+                echo $usuario ? $usuario->pessoa->nome : 'Administrador';
+            @endphp</h1>
+        </header>
     <main>
-        <h1>Bem vindo(a), @php
-            $usuario = session('usuario_id') ? \App\Models\Usuario::with('pessoa')->find(session('usuario_id')) : null;
-            echo $usuario ? $usuario->pessoa->nome : 'Administrador';
-        @endphp</h1>
-        <main>
+        
+        
             <section><a href="{{ route('leitores-index') }}">Gerenciar Leitores</a>
             <br></section>
             
@@ -28,7 +31,7 @@
                 <br>
             </section>
             
-        </main>
+        
         <form action="{{ route('logout') }}" method="post">
         @csrf
         <button type="submit" class="btn btn-danger">Sair</button>

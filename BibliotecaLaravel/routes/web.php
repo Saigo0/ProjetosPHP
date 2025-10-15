@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\EmprestimoController;
 use App\Http\Controllers\MeuController1;
 use Illuminate\Support\Facades\Route;
 
@@ -21,6 +22,10 @@ Route::middleware(['bibliotecario'])->group(function () {
     Route::get('/bibliotecario/dashboard', function () {
         return view('principais.principalBibliotecario');
     })->name('bibliotecario-dashboard');
+});
+
+Route::middleware(['auth', 'bibliotecarioOuAdministrador'])->group(function(){
+    Route::resource('emprestimo', EmprestimoController::class);
 });
 
 Route::get('/testecontroller', [MeuController1::class, 'returnAll']);
