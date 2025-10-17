@@ -1,5 +1,8 @@
-import {loadGLTF} from "../../libs/loader.js";
+import {loadGLTF, loadAudio} from "../../libs/loader.js";
+import {mockWithVideo} from '../../libs/camera-mock.js';
 const THREE = window.MINDAR.IMAGE.THREE;
+
+mockWithVideo('../../assets/mock-videos/musicband1.mp4');
 
 document.addEventListener('DOMContentLoaded', () => {
   const start = async() => {
@@ -18,6 +21,26 @@ document.addEventListener('DOMContentLoaded', () => {
 
     const anchor = mindarThree.addAnchor(0);
     anchor.group.add(raccoon.scene);
+ 
+    const audioClip = await loadAudio('../../assets/sounds/musicband-background.mp3');
+
+    const listener = new THREE.AudioListener();
+    const audio = new THREE.PositionalAudio( listener );
+
+    camera.add(listener);
+    anchor.group.add(audio);
+
+    audio.setRefDistance(100);
+    audio.setBuffer(audioClip);
+    audio.setLoop(true);
+
+    anchor.onTargetFound = () => {
+      audio.play();
+    }
+
+    anchor.onTargetLost = () => {
+      audio.pause();
+    }
 
     await mindarThree.start();
     renderer.setAnimationLoop(() => {

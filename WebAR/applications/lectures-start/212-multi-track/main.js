@@ -1,11 +1,15 @@
 import {loadGLTF} from "../../libs/loader.js";
+import { mockWithVideo } from "../../libs/camera-mock.js"; 
 const THREE = window.MINDAR.IMAGE.THREE;
+
+mockWithVideo('../../assets/mock-videos/musicband2.mp4');
 
 document.addEventListener('DOMContentLoaded', () => {
   const start = async() => {
     const mindarThree = new window.MINDAR.IMAGE.MindARThree({
       container: document.body,
       imageTargetSrc: '../../assets/targets/musicband.mind',
+      maxTrack: 2,
     });
     const {renderer, scene, camera} = mindarThree;
 

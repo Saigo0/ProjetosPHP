@@ -1,7 +1,13 @@
 const THREE = window.MINDAR.IMAGE.THREE;
+import {mockWithVideo, mockWithImage} from '../../libs/camera-mock.js';
+
 
 document.addEventListener('DOMContentLoaded', () => {
   const start = async() => {
+
+    //mockWithVideo("../../assets/mock-videos/course-banner1.mp4");
+    mockWithImage("../../assets/mock-images/course-banner1.png");
+     
     const mindarThree = new window.MINDAR.IMAGE.MindARThree({
       container: document.body,
       imageTargetSrc: '../../assets/targets/course-banner.mind',

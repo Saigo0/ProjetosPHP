@@ -1,5 +1,8 @@
 import {loadGLTF} from "../../libs/loader.js";
+import {mockWithVideo} from '../../libs/camera-mock.js';  
 const THREE = window.MINDAR.IMAGE.THREE;
+
+mockWithVideo('../../assets/mock-videos/musicband1.mp4');
 
 document.addEventListener('DOMContentLoaded', () => {
   const start = async() => {
@@ -18,6 +21,14 @@ document.addEventListener('DOMContentLoaded', () => {
 
     const anchor = mindarThree.addAnchor(0);
     anchor.group.add(raccoon.scene);
+
+    anchor.onTargetFound = () => {
+      console.log("Target Found");
+    }
+
+    anchor.onTargetLost = () => {
+      console.log("Target Lost");
+    }
 
     await mindarThree.start();
     renderer.setAnimationLoop(() => {

@@ -1,5 +1,8 @@
 import {loadGLTF} from "../../libs/loader.js";
+import {mockWithVideo} from '../../libs/camera-mock.js';
 const THREE = window.MINDAR.IMAGE.THREE;
+
+mockWithVideo('../../assets/mock-videos/musicband1.mp4');
 
 document.addEventListener('DOMContentLoaded', () => {
   const start = async() => {
@@ -19,8 +22,19 @@ document.addEventListener('DOMContentLoaded', () => {
     const anchor = mindarThree.addAnchor(0);
     anchor.group.add(gltf.scene);
 
+    const mixer = new THREE.AnimationMixer(gltf.scene);
+    const action = mixer.clipAction(gltf.animations[0]);
+    action.play();
+
+    const clock = new THREE.Clock();
+
     await mindarThree.start();
     renderer.setAnimationLoop(() => {
+      const delta = clock.getDelta();
+
+      gltf.scene.rotation.set(0, gltf.scene.rotation.y + delta, 0);
+
+      mixer.update(delta);
       renderer.render(scene, camera);
     });
   }
