@@ -1,5 +1,9 @@
-import {loadGLTF} from "../../libs/loader.js";
+import {loadGLTF, loadVideo} from "../../libs/loader.js";
+
+
 const THREE = window.MINDAR.IMAGE.THREE;
+
+
 
 document.addEventListener('DOMContentLoaded', () => {
   const start = async() => {
@@ -9,7 +13,27 @@ document.addEventListener('DOMContentLoaded', () => {
     });
     const {renderer, scene, camera} = mindarThree;
     
+    const video = await loadVideo("../../assets/videos/sintel/sintel.mp4");
+    const texture = new THREE.VideoTexture( video );
+
+    const geometry = new THREE.PlaneGeometry(1,204/480);
+    const material = new THREE.MeshBasicMaterial( { map: texture } );
+    const plane = new  THREE.Mesh(geometry, material);
+
     const anchor = mindarThree.addAnchor(0);
+    anchor.group.add(plane);
+
+    anchor.ontTargetFound = () => {
+      video.play();
+    }
+
+    anchor.onTargetLost = () => {
+      video.pause();
+    }
+
+    video.addEventListener("play", () => {
+      video.currentTime = 6;
+    });
 
     await mindarThree.start();
     renderer.setAnimationLoop(() => {

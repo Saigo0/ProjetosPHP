@@ -1,4 +1,5 @@
 import {loadGLTF} from "../../libs/loader.js";
+import {mockWithVideo} from '../../libs/camera-mock.js';
 const THREE = window.MINDAR.FACE.THREE;
 
 document.addEventListener('DOMContentLoaded', () => {
@@ -11,6 +12,12 @@ document.addEventListener('DOMContentLoaded', () => {
 
     const light = new THREE.HemisphereLight( 0xffffff, 0xbbbbff, 1 );
     scene.add(light);
+
+    const glasses = await loadGLTF('../../assets/models/glasses1/scene.gltf');
+    glasses.scene.scale.set(0.01, 0.01, 0.01);
+
+    const anchor = mindarThree.addAnchor(168);
+    anchor.group.add(glasses.scene);
 
     await mindarThree.start();
     renderer.setAnimationLoop(() => {
