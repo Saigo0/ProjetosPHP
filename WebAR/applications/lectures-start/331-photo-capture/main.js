@@ -1,6 +1,34 @@
 import {loadGLTF} from "../../libs/loader.js";
 const THREE = window.MINDAR.FACE.THREE;
 
+const capture = (mindarThree) =>{
+  const {video, renderer, scene, camera} = mindarThree;
+  const renderCanvas = renderer.domElement;
+
+  const canvas = documento.createElement("canvas");
+  const context = canvas.getContext("2d");
+  canvas.width = renderCanvas.width;
+  canvas.height = renderCanvas.height;
+
+  const sx = (video.clientWidth - renderCanvas.width) / 2 * (video.videoWidth / video.clientWidth);
+  const sw = video.videoWidth - sx * 2;
+  const sy = (video.clientHeight - renderCanvas.height) / 2 * (video.videoHeight / video.clientHeight);
+  const sh = video.videoHeight - sy * 2;
+
+  context.drawImage(video, sx, sy, sw, sh, 0, 0, canvas.width, canvas.height); 
+
+  renderer.preserveDrawingBuffer = true;
+  renderer.render(scene, camera);
+  context.drawImage(renderCanvas, 0, 0, canvas.width, canvas.height);
+  renderer.preserveDrawingBuffer = false;
+
+  const link = document.createElement("a");
+  link.download = "photo.png";
+  link.href = canvas.toDataURL("image/png");
+  link.click();
+   
+}
+
 document.addEventListener('DOMContentLoaded', () => {
   const start = async() => {
     const mindarThree = new window.MINDAR.FACE.MindARThree({
@@ -16,6 +44,8 @@ document.addEventListener('DOMContentLoaded', () => {
 
     const anchor = mindarThree.addAnchor(168);
     anchor.group.add(glasses.scene);
+
+    document.querySelector("#capture").addEventListener("click", () => capture(mindarThree));
 
     await mindarThree.start();
     renderer.setAnimationLoop(() => {

@@ -17,7 +17,7 @@ document.addEventListener('DOMContentLoaded', () => {
     plane2.visible = false;
 
     const anchor = mindarThree.addAnchor(0);
-    anchor.group.add(plane);
+    anchor.group.add(plane); 
     anchor.group.add(plane2);
 
     const model = await handpose.load();
@@ -30,12 +30,14 @@ document.addEventListener('DOMContentLoaded', () => {
     const video = mindarThree.video;
     let skipCount = 0;
     const detect = async () => {
+      
       if (skipCount < 10) {
-	skipCount += 1;
-	window.requestAnimationFrame(detect);
-	return;
+        skipCount += 1;
+        window.requestAnimationFrame(detect);
+        return;
       }
-      skipCount = 0;
+
+      skipCount = 0;  
 
       const predictions = await model.estimateHands(video);
 
